@@ -294,16 +294,22 @@ body { background-color:#dcc3a0; background-size:800px; }
 .footer-credit .credit-label {font:700 10px/1.5 'Courier New',monospace;letter-spacing:.04em;color:#d5bea4;}
 .footer-credit .credit-name {font:700 clamp(25px,2.5vw,36px)/1.12 Georgia,serif;letter-spacing:-.025em;color:#f8e4c9;}
 
-/* Uma passagem de marca-texto, somente quando a investigação é acionada. */
+/* Um único chamado em tinta vermelha, depois o papel volta ao normal. */
 .mission-command-card {position:relative;isolation:isolate;scroll-margin-block:24px;}
 .mission-command-card:focus:not(:focus-visible) {outline:none;}
-.mission-command-card::after {content:'';position:absolute;inset:0;z-index:-1;background:#e5ad4447;transform-origin:left;opacity:0;pointer-events:none;}
-.mission-command-card.instruction-focus::after {animation:instructionMark 1600ms var(--ease) both;}
-@keyframes instructionMark {
-  0% {transform:scaleX(0);opacity:0;}
-  35%,65% {transform:scaleX(1);opacity:1;}
-  100% {transform:scaleX(1);opacity:0;}
+.mission-command-card.instruction-focus {animation:instructionCallout 2400ms var(--ease) both;}
+.mission-command-card.instruction-focus .prompt-note {background:#fff0d8;color:#80262b;}
+@keyframes instructionCallout {
+  0%,100% {background-color:#f2e7d5;color:var(--ink);transform:scale(1);outline:3px solid transparent;outline-offset:0;box-shadow:5px 6px 0 #9b7d5a2c;}
+  18%,65% {background-color:#80262b;color:#fff0d8;transform:scale(1.025);outline:3px solid #b73b3c;outline-offset:6px;box-shadow:7px 12px 20px #50202340;}
 }
+
+/* Palavras entram em sequência quando cada texto chega à área de leitura. */
+.scroll-word {display:inline-block;}
+.words-waiting .scroll-word {opacity:0;transform:translateY(16px);}
+.words-visible .scroll-word {animation:wordArrival 650ms var(--ease) var(--word-delay) both;}
+@keyframes wordArrival {from {opacity:0;transform:translateY(16px);}to {opacity:1;transform:translateY(0);}}
+@media print {.words-waiting .scroll-word,.words-visible .scroll-word {opacity:1;transform:none;animation:none;}}
 
 /* Movimento acompanha navegação, controles e conteúdo que muda. */
 .header-links a,.header-guide,.footer a,.hint-toggle,.text-button {transition:color 180ms ease,text-decoration-color 180ms ease,background-color 180ms ease;}
@@ -329,6 +335,12 @@ body { background-color:#dcc3a0; background-size:800px; }
 @media(prefers-reduced-motion:reduce) {
   .mission-inner,.hint-text:not([hidden]),.manifesto-result {animation:none;}
   .button:hover:not(:disabled) span,.music-track:hover .track-open {transform:none;}
-  .mission-command-card.instruction-focus::after {animation:instructionMarkQuiet 1200ms ease-out !important;}
-  @keyframes instructionMarkQuiet {0%,65% {opacity:1;}100% {opacity:0;}}
+  .words-waiting .scroll-word,.words-visible .scroll-word {opacity:1;transform:none;animation:none;}
+  .mission-command-card.instruction-focus {animation:instructionCalloutQuiet 2000ms ease-out !important;}
+  @keyframes instructionCalloutQuiet {
+    0%,70% {background-color:#80262b;color:#fff0d8;}
+    100% {background-color:#f2e7d5;color:var(--ink);}
+  }
 }
+/* Os invólucros de animação herdam a tinta do texto original. */
+.footer-logo .scroll-word,.context-section>h2>.scroll-word,.investigation-heading>h2>.scroll-word {color:inherit;}

@@ -164,7 +164,12 @@
         card.classList.remove('instruction-focus');
         void card.offsetWidth;
         card.classList.add('instruction-focus');
-        card.addEventListener('animationend', () => card.classList.remove('instruction-focus'), {once: true});
+        const clearFocus = (event) => {
+          if (event.target !== card || !event.animationName.startsWith('instruction')) return;
+          card.classList.remove('instruction-focus');
+          card.removeEventListener('animationend', clearFocus);
+        };
+        card.addEventListener('animationend', clearFocus);
         return;
       }
       frame = requestAnimationFrame(onArrival);
@@ -172,5 +177,52 @@
     frame = requestAnimationFrame(onArrival);
   });
   $('#reset-button').addEventListener('click',()=>{if(!confirm('Reiniciar todas as fases desta experiência neste navegador?'))return;current=0;unlocked=false;save();render();document.getElementById('missao').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});});
-  render();
+  // Preserva os elementos de ênfase e revela cada palavra uma vez ao entrar na tela.
+  const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const textSelector = '.hero h1, .hero .hand-text, .hero-description, .briefing h2, .briefing-lead, .briefing-steps h3, .briefing-steps p, .investigation-heading h2, .investigation-heading p, .mission-title, .mission-desc, .mission-command, .context-section h2, .newsprint-block h3, .newsprint-block p, .context-note blockquote, .reveal h3, .reveal > p, .end-sheet h2, .end-sheet > p, .footer-logo, .credit-name';
+  if ('IntersectionObserver' in window) {
+    const textObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.replace('words-waiting', 'words-visible');
+        textObserver.unobserve(entry.target);
+      });
+    }, {threshold: 0, rootMargin: '0px 0px -6% 0px'});
+    function prepareText() {
+      document.querySelectorAll(textSelector).forEach(element => {
+        if (element.dataset.wordsPrepared || motionPreference.matches) return;
+        element.dataset.wordsPrepared = 'true';
+        const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+        const nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        let index = 0;
+        nodes.forEach(node => {
+          const fragment = document.createDocumentFragment();
+          node.textContent.split(/(\s+)/).forEach(word => {
+            if (!word) return;
+            if (/^\s+$/.test(word)) {fragment.append(document.createTextNode(word)); return;}
+            const span = document.createElement('span');
+            span.className = 'scroll-word';
+            span.textContent = word;
+            span.style.setProperty('--word-delay', `${Math.min(index++ * 32, 480)}ms`);
+            fragment.append(span);
+          });
+          node.replaceWith(fragment);
+        });
+        element.classList.add('words-waiting');
+        textObserver.observe(element);
+      });
+    }
+    new MutationObserver(prepareText).observe(missionContainer, {childList: true, subtree: true});
+    motionPreference.addEventListener('change', () => {
+      if (motionPreference.matches) {
+        document.querySelectorAll('.words-waiting').forEach(element => {
+          element.classList.replace('words-waiting', 'words-visible');
+          textObserver.unobserve(element);
+        });
+      } else prepareText();
+    });
+    render();
+    prepareText();
+  } else render();
 })();
