@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#2a211c">
+  <meta name="description" content="A Parede Fala: descubra as pistas escondidas na parede, responda às missões e explore a arte e a crítica ao ufanismo no Brasil.">
+  <title>A Parede Fala — Modernismo Hoje</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="refine.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#missao">Ir direto à investigação</a>
+  <header class="masthead">
+    <a class="brand" href="#inicio" aria-label="A Parede Fala, voltar ao começo"><span class="brand-mark">AP<span class="brand-dot">.</span></span><span class="brand-title">A PAREDE<br>FALA</span></a>
+    <div class="header-note"><span class="live-dot"></span> EXPERIÊNCIA FÍSICA + DIGITAL <span class="header-year">/ MODERNISMO HOJE</span></div>
+    <nav class="header-links" aria-label="Navegação principal"><a href="#como-funciona">COMO FUNCIONA</a><a class="header-cta" href="#missao">INVESTIGAR ↗</a></nav>
+  </header>
+  <main>
+    <section class="hero canvas" id="inicio" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <div class="serial">EXPOSIÇÃO INTERATIVA <span aria-hidden="true">✳</span> ARTE, CRÍTICA E IDENTIDADE</div>
+        <div class="label-red"><span>MODERNISMO</span><span>HOJE.</span></div>
+        <h1 id="hero-title">O BRASIL<br>EM <span class="headline-ink">DISPUTA<span class="asterisk">*</span></span></h1>
+        <p class="hand-text">Um país. Muitas vozes.</p>
+        <p class="hero-description">Há respostas que <strong>não estão nesta tela.</strong> Explore a parede real, descubra palavras escondidas e abra uma história de cada vez.</p>
+        <div class="cta-row"><button class="button button--red" id="start-button" type="button">COMEÇAR A INVESTIGAÇÃO <span aria-hidden="true">↗</span></button><span class="cta-meta">SIGA AS PISTAS<br>DESCUBRA O BRASIL</span></div>
+      </div>
+      <div class="hero-art" aria-label="Colagem de referências sobre a arte brasileira: cédula Zero Cruzeiro, bandeira reinterpretada, rádio e poesia">
+        <div class="art-paper art-paper--back" aria-hidden="true"></div>
+        <div class="art-headline" aria-hidden="true">EM TEMPOS DE OPINIÕES<br><strong>QUEM ESCUTA QUEM?</strong></div>
+        <figure class="art-photo"><img src="assets/cildo-zero-cruzeiro.webp" width="1209" height="559" alt="Cédula da obra Zero Cruzeiro, de Cildo Meireles"><figcaption class="art-photo-label">01 / CILDO MEIRELES · ZERO CRUZEIRO</figcaption></figure>
+        <figure class="art-mini-photo"><img src="assets/cildo-zero-cruzeiro-verso.webp" width="1207" height="566" alt="Outra face da obra Zero Cruzeiro"><figcaption>O VALOR DOS SÍMBOLOS</figcaption></figure>
+        <figure class="art-flag-photo"><img src="assets/cildo-bandeira.webp" width="989" height="1521" alt="Reinterpretação crítica da bandeira brasileira, obra de Cildo Meireles"><figcaption>02 / QUEM DEFINE A PÁTRIA?</figcaption></figure>
+        <div class="art-record" aria-hidden="true"><div class="record-hole"></div></div>
+        <div class="art-megaphone"><img src="assets/megafone-recorte.svg" alt="" aria-hidden="true"></div>
+        <div class="art-paper-caption" aria-hidden="true">POESIA <span>+</span> MÚSICA <span>+</span> DEBATE</div>
+        <span class="art-staple art-staple--top" aria-hidden="true"></span><span class="art-staple art-staple--bottom" aria-hidden="true"></span>
+      </div>
+      <div class="hero-footnote"><span>UM MURAL NÃO CONTA A HISTÓRIA INTEIRA.</span><span>DESCUBRA O QUE ESTÁ POR TRÁS.</span></div>
+    </section>
+
+    <section class="briefing" id="como-funciona" aria-labelledby="briefing-title">
+      <div class="briefing-heading"><span class="eyebrow">INSTRUÇÕES PARA A EXPERIÊNCIA</span><h2 id="briefing-title">COMO<br><em>FUNCIONA?</em></h2><div class="briefing-sticker" aria-hidden="true">NÃO É SÓ<br>OLHAR!</div></div>
+      <div class="briefing-content">
+        <p class="briefing-lead"><strong>O site faz a pergunta. A parede esconde a resposta.</strong> Para avançar, você vai precisar interagir com os elementos físicos da exposição.</p>
+        <div class="briefing-steps">
+          <div><span class="step-num">01</span><h3>OLHE AO REDOR.</h3><p>Leia a missão do site e procure a peça indicada na parede.</p></div>
+          <div><span class="step-num">02</span><h3>MEXA NA PAREDE.</h3><p>Puxe um cordão, abra um jornal, gire a rádio ou vire um recorte.</p></div>
+          <div><span class="step-num">03</span><h3>REVELE A RESPOSTA.</h3><p>Digite a palavra encontrada e desbloqueie a próxima etapa.</p></div>
+        </div>
+        <div class="briefing-alert"><span aria-hidden="true">↘</span> <strong>IMPORTANTE:</strong> as palavras estão na parede de verdade, não nas imagens do site.</div>
+      </div>
+    </section>
+
+    <section class="mission-zone" id="missao" aria-labelledby="mission-heading">
+      <div class="investigation-heading"><div class="mission-topline"><span>PAINEL DE INVESTIGAÇÃO</span><span id="status-label" class="mission-status">PISTA ATUAL</span></div><h2 id="mission-heading">DESVENDE<br><span>A PAREDE.</span></h2><p>Uma pergunta por vez. A próxima só aparece quando você encontra a palavra certa.</p></div>
+      <div class="mission-paper" id="mission-container" aria-live="polite" aria-atomic="true"><noscript>Ative o JavaScript no navegador para participar da experiência.</noscript></div>
+      <div class="mission-endline"><span>ARTE • INVESTIGAÇÃO • BRASIL</span><button type="button" class="text-button" id="reset-button">REINICIAR EXPERIÊNCIA ↺</button></div>
+    </section>
+
+    <section class="context-section" id="contexto" aria-labelledby="context-title">
+      <div class="context-kicker">O DEBATE CONTINUA</div>
+      <h2 id="context-title">NACIONALISMO<br><span>OU UFANISMO?</span></h2>
+      <div class="context-grid">
+        <div class="newsprint-block"><div class="fake-newspaper-head"><span>EDIÇÃO EXTRA</span><span>ARTE E SOCIEDADE</span></div><h3>O que significa amar um país?</h3><p>O Modernismo brasileiro buscou novas maneiras de representar o Brasil. Suas correntes tinham visões diferentes sobre identidade nacional, cultura e pertencimento.</p><p>O <strong>ufanismo exacerbado</strong> transforma a exaltação nacional em uma visão que pode impedir críticas e tratar as diferenças como ameaças. Debater o país é também reconhecer suas contradições.</p><span class="newspaper-end">LEIA. QUESTIONE. CONVERSE.</span></div>
+        <div class="context-collage"><div class="context-note"><span class="note-clip" aria-hidden="true"></span><span class="note-corner">NOTA DA EXPOSIÇÃO</span><blockquote>“A crítica também pode ser uma forma de cuidado com o país.”</blockquote><p>Frase autoral deste trabalho escolar.</p></div><figure class="context-pic"><img src="assets/cildo-bandeira.webp" alt="Arte de Cildo Meireles que questiona os símbolos nacionais" loading="lazy"><figcaption>CILDO MEIRELES / ARTE E QUESTIONAMENTO</figcaption></figure></div>
+      </div>
+    </section>
+    <footer class="footer"><div class="footer-logo">A PAREDE FALA<span>.</span></div><div><strong>MODERNISMO HOJE</strong><br>Polarização e ufanismo exacerbado.</div><div class="footer-credit"><span class="credit-label">DESENVOLVIMENTO DO WEBSITE</span><strong class="credit-name">Murilo Gabriel</strong><span>Desenvolvedor do website</span><a href="#como-funciona">Rever as instruções ↗</a></div></footer>
+  </main>
+</body>
+</html>
