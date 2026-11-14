@@ -283,10 +283,52 @@ body { background-color:#dcc3a0; background-size:800px; }
 @media(max-width:530px) {.briefing h2{font-size:clamp(49px,12.4vw,62px);} .briefing-sticker{font-size:12px;margin:0 0 17px 9px;}}
 @media(max-width:365px){.briefing h2{font-size:45px;}}
 
-/* Crédito permanente — destaque editorial, sem competir com a investigação. */
-.footer-credit{display:flex;flex-direction:column;align-items:flex-start;gap:3px;padding:12px 0;border-left:2px solid #b7774f;padding-left:18px;}
-.footer-credit .credit-label{font:800 10px/1.4 'Courier New',monospace;letter-spacing:.11em;color:#d0a87e;}
-.footer-credit .credit-name{font:900 clamp(23px,2.25vw,36px)/1.07 Georgia,serif;letter-spacing:-.025em;color:#f8e4c9;}
-.footer-credit>span:nth-child(3){color:#edcfad;font-size:11px;}
-.footer-credit a{margin-top:7px;}
-@media(max-width:530px){.footer-credit{grid-column:1/-1;margin-top:4px;}.footer-credit .credit-name{font-size:26px;}}
+/* Fecho editorial: assinatura, tema e autoria com espaço para respirar. */
+.footer {grid-template-columns:1.15fr 1fr 1fr;gap:clamp(26px,4vw,64px);padding:48px max(6vw,20px) 52px;border-top:7px double #ad8158;align-items:start;}
+.footer-logo {font-size:clamp(27px,3vw,43px);line-height:1.1;letter-spacing:-.025em;max-width:240px;}
+.footer-logo span {color:#dfaa61;}
+.footer-theme strong {display:block;color:#f1dfc5;font-size:11px;letter-spacing:.1em;}
+.footer-theme p {max-width:27ch;margin:10px 0 18px;color:#d5bea4;line-height:1.7;}
+.footer a {display:inline-block;text-decoration-thickness:1px;text-underline-offset:5px;}
+.footer-credit {display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:0 0 0 26px;border-left:1px solid #ad815866;}
+.footer-credit .credit-label {font:700 10px/1.5 'Courier New',monospace;letter-spacing:.04em;color:#d5bea4;}
+.footer-credit .credit-name {font:700 clamp(25px,2.5vw,36px)/1.12 Georgia,serif;letter-spacing:-.025em;color:#f8e4c9;}
+
+/* Uma passagem de marca-texto, somente quando a investigação é acionada. */
+.mission-command-card {position:relative;isolation:isolate;scroll-margin-block:24px;}
+.mission-command-card:focus:not(:focus-visible) {outline:none;}
+.mission-command-card::after {content:'';position:absolute;inset:0;z-index:-1;background:#e5ad4447;transform-origin:left;opacity:0;pointer-events:none;}
+.mission-command-card.instruction-focus::after {animation:instructionMark 1600ms var(--ease) both;}
+@keyframes instructionMark {
+  0% {transform:scaleX(0);opacity:0;}
+  35%,65% {transform:scaleX(1);opacity:1;}
+  100% {transform:scaleX(1);opacity:0;}
+}
+
+/* Movimento acompanha navegação, controles e conteúdo que muda. */
+.header-links a,.header-guide,.footer a,.hint-toggle,.text-button {transition:color 180ms ease,text-decoration-color 180ms ease,background-color 180ms ease;}
+.footer a:hover,.footer a:focus-visible {color:#ffe3b5;}
+.input-box input,.manifesto-input {caret-color:var(--burgundy);transition:border-color 200ms ease,background-color 200ms ease,box-shadow 200ms ease;}
+.input-box input:focus,.manifesto-input:focus {background-color:#fffaf0;box-shadow:0 3px 12px #6147371a;}
+.button span,.track-open {display:inline-block;transition:transform 220ms var(--ease);}
+.button:hover:not(:disabled) span,.music-track:hover .track-open {transform:translate(2px,-2px);}
+.mission-inner {animation:paperChange 380ms var(--ease);}
+.hint-text:not([hidden]),.manifesto-result {animation:inkAppear 260ms ease-out;}
+@keyframes paperChange {from {opacity:.65;transform:translateY(8px);}to {opacity:1;transform:translateY(0);}}
+@keyframes inkAppear {from {opacity:.4;}to {opacity:1;}}
+@media(max-width:800px) {
+  .footer {grid-template-columns:1fr 1fr;gap:28px;}
+  .footer-logo {grid-column:1/-1;max-width:none;}
+}
+@media(max-width:530px) {
+  .footer {padding:34px 22px 38px;gap:25px;}
+  .footer-theme {grid-column:1/-1;}
+  .footer-theme p {max-width:none;margin-bottom:12px;}
+  .footer-credit {grid-column:1/-1;border-left:0;border-top:1px solid #ad815866;padding:22px 0 0;gap:9px;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .mission-inner,.hint-text:not([hidden]),.manifesto-result {animation:none;}
+  .button:hover:not(:disabled) span,.music-track:hover .track-open {transform:none;}
+  .mission-command-card.instruction-focus::after {animation:instructionMarkQuiet 1200ms ease-out !important;}
+  @keyframes instructionMarkQuiet {0%,65% {opacity:1;}100% {opacity:0;}}
+}

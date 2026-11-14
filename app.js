@@ -136,10 +136,41 @@
       $('#manifesto-text').textContent=value;
       $('#copy-manifesto').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(value);$('#copy-manifesto').textContent='COPIADO ✓';}catch(_){const ta=$('#manifesto-input');ta.select();document.execCommand('copy');$('#copy-manifesto').textContent='TEXTO SELECIONADO';}});
       $('#print-manifesto').addEventListener('click',()=>window.print());
-      output.scrollIntoView({behavior:'smooth',block:'nearest'});
+      output.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'nearest'});
     });
   }
-  $('#start-button').addEventListener('click',()=>{document.getElementById('missao').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});});
+  let cancelInstructionFocus = () => {};
+  $('#start-button').addEventListener('click', () => {
+    cancelInstructionFocus();
+    const card = $('.mission-command-card');
+    const target = card || document.getElementById('missao');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target.scrollIntoView({behavior: reducedMotion ? 'instant' : 'smooth', block: 'center'});
+    if (!card) return;
+    let frame;
+    let lastTop = null;
+    let stableFrames = 0;
+    const started = performance.now();
+    cancelInstructionFocus = () => cancelAnimationFrame(frame);
+    // Aguarda a chegada da rolagem para o destaque não acontecer fora da tela.
+    const onArrival = () => {
+      if (!card.isConnected) return;
+      const top = card.getBoundingClientRect().top;
+      stableFrames = lastTop !== null && Math.abs(top - lastTop) < 0.5 ? stableFrames + 1 : 0;
+      lastTop = top;
+      if (reducedMotion || stableFrames >= 8 || performance.now() - started > 2400) {
+        card.setAttribute('tabindex', '-1');
+        card.focus({preventScroll: true});
+        card.classList.remove('instruction-focus');
+        void card.offsetWidth;
+        card.classList.add('instruction-focus');
+        card.addEventListener('animationend', () => card.classList.remove('instruction-focus'), {once: true});
+        return;
+      }
+      frame = requestAnimationFrame(onArrival);
+    };
+    frame = requestAnimationFrame(onArrival);
+  });
   $('#reset-button').addEventListener('click',()=>{if(!confirm('Reiniciar todas as fases desta experiência neste navegador?'))return;current=0;unlocked=false;save();render();document.getElementById('missao').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});});
   render();
 })();
