@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 200" role="img" aria-label="Megafone ilustrado com tinta preta">
- <defs><filter id="r"><feTurbulence baseFrequency="0.05" numOctaves="3" seed="2" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="3"/></filter></defs>
- <g fill="#221e1b" stroke="#eee0c2" stroke-width="8" stroke-linejoin="round" filter="url(#r)">
-  <path d="M34 87 L173 29 L173 151 L34 109Z"/><path d="M168 26q63-2 63 64t-63 64Z"/><path d="M75 112 102 184 132 170 111 106Z"/>
- </g><path d="M168 27v127" stroke="#eee0c2" stroke-width="7"/><path d="M247 33l18-14M248 80l22-2M241 129l25 10" stroke="#84262e" stroke-width="7" stroke-linecap="round"/>
-</svg>

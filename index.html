@@ -1,75 +1,76 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#2a211c">
-  <meta name="description" content="A Parede Fala: descubra as pistas escondidas na parede, responda às missões e explore a arte e a crítica ao ufanismo no Brasil.">
-  <title>A Parede Fala — Modernismo Hoje</title>
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <meta name="theme-color" content="#211c19">
+  <meta name="description" content="O Brasil em três canções: Raul Seixas, Legião Urbana e Cazuza. Ouça, reflita e responda a seis perguntas sobre o país.">
+  <meta property="og:title" content="O Brasil em Três Canções — A Parede Fala">
+  <meta property="og:description" content="Três músicas, seis perguntas e um Brasil cheio de vozes.">
+  <title>O Brasil em Três Canções — A Parede Fala</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="refine.css">
   <script src="app.js" defer></script>
 </head>
 <body>
-  <a class="skip" href="#missao">Ir direto à investigação</a>
-  <header class="masthead">
-    <a class="brand" href="#inicio" aria-label="A Parede Fala, voltar ao começo"><span class="brand-mark">AP<span class="brand-dot">.</span></span><span class="brand-title">A PAREDE<br>FALA</span></a>
-    <div class="header-note"><span class="live-dot"></span> EXPERIÊNCIA FÍSICA + DIGITAL <span class="header-year">/ MODERNISMO HOJE</span></div>
-    <nav class="header-links" aria-label="Navegação principal"><a href="#como-funciona">COMO FUNCIONA</a><a class="header-cta" href="#missao">INVESTIGAR ↗</a></nav>
+  <a class="skip-link" href="#experiencia">Pular para as perguntas</a>
+  <div class="top-ticker" aria-hidden="true"><span>ARQUIVO MUSICAL BRASILEIRO</span><span>✳</span><span>ARTE &amp; CRÍTICA</span><span>✳</span><span>TRÊS VOZES, UM PAÍS</span></div>
+  <header class="site-header">
+    <a class="brand" href="#inicio" aria-label="A Parede Fala, voltar ao início"><span class="brand-stamp">AP<span class="brand-dot">.</span></span><span class="brand-name">A PAREDE<br>FALA.</span></a>
+    <nav class="header-nav" aria-label="Navegação principal"><a href="#sobre">O PROJETO</a><a href="#repertorio">AS MÚSICAS</a><a class="header-start" href="#experiencia">PARTICIPAR <span aria-hidden="true">↗</span></a></nav>
   </header>
-  <main>
-    <section class="hero canvas" id="inicio" aria-labelledby="hero-title">
+
+  <main id="inicio">
+    <section class="hero" aria-labelledby="hero-heading">
       <div class="hero-copy">
-        <div class="serial">EXPOSIÇÃO INTERATIVA <span aria-hidden="true">✳</span> ARTE, CRÍTICA E IDENTIDADE</div>
-        <div class="label-red"><span>MODERNISMO</span><span>HOJE.</span></div>
-        <h1 id="hero-title">O BRASIL<br>EM <span class="headline-ink">DISPUTA<span class="asterisk">*</span></span></h1>
-        <p class="hand-text">Um país. Muitas vozes.</p>
-        <p class="hero-description">Há respostas que <strong>não estão nesta tela.</strong> Explore a parede real, descubra palavras escondidas e abra uma história de cada vez.</p>
-        <div class="cta-row"><button class="button button--red" id="start-button" type="button">COMEÇAR A INVESTIGAÇÃO <span aria-hidden="true">↗</span></button><span class="cta-meta">SIGA AS PISTAS<br>DESCUBRA O BRASIL</span></div>
+        <div class="eyebrow"><span class="tiny-star">✳</span> EXPOSIÇÃO MUSICAL &amp; INTERATIVA <span class="eyebrow-number">BRASIL / 2026</span></div>
+        <p class="hero-kicker">UM PAÍS. TRÊS VOZES.</p>
+        <h1 id="hero-heading"><span class="line-one">O BRASIL</span><span class="line-two">EM <em>TRÊS</em></span><span class="line-three">CANÇÕES<span class="headline-period">.</span></span></h1>
+        <div class="hero-summary"><span class="hand-drawn-star" aria-hidden="true">✳</span><p>O que a música revela sobre um país que ama seus símbolos, mas nem sempre escuta suas próprias contradições?</p></div>
+        <div class="hero-actions"><button id="begin-button" class="button cut-button" type="button">COMEÇAR A EXPERIÊNCIA <span aria-hidden="true">↗</span></button><span class="hero-count">03 MÚSICAS <b>·</b> 06 PERGUNTAS</span></div>
       </div>
-      <div class="hero-art" aria-label="Colagem de referências sobre a arte brasileira: cédula Zero Cruzeiro, bandeira reinterpretada, rádio e poesia">
-        <div class="art-paper art-paper--back" aria-hidden="true"></div>
-        <div class="art-headline" aria-hidden="true">EM TEMPOS DE OPINIÕES<br><strong>QUEM ESCUTA QUEM?</strong></div>
-        <figure class="art-photo"><img src="assets/cildo-zero-cruzeiro.webp" width="1209" height="559" alt="Cédula da obra Zero Cruzeiro, de Cildo Meireles"><figcaption class="art-photo-label">01 / CILDO MEIRELES · ZERO CRUZEIRO</figcaption></figure>
-        <figure class="art-mini-photo"><img src="assets/cildo-zero-cruzeiro-verso.webp" width="1207" height="566" alt="Outra face da obra Zero Cruzeiro"><figcaption>O VALOR DOS SÍMBOLOS</figcaption></figure>
-        <figure class="art-flag-photo"><img src="assets/cildo-bandeira.webp" width="989" height="1521" alt="Reinterpretação crítica da bandeira brasileira, obra de Cildo Meireles"><figcaption>02 / QUEM DEFINE A PÁTRIA?</figcaption></figure>
-        <div class="art-record" aria-hidden="true"><div class="record-hole"></div></div>
-        <div class="art-megaphone"><img src="assets/megafone-recorte.svg" alt="" aria-hidden="true"></div>
-        <div class="art-paper-caption" aria-hidden="true">POESIA <span>+</span> MÚSICA <span>+</span> DEBATE</div>
-        <span class="art-staple art-staple--top" aria-hidden="true"></span><span class="art-staple art-staple--bottom" aria-hidden="true"></span>
+      <div class="hero-collage" aria-label="Colagem com imagens dos artistas Raul Seixas, Legião Urbana e Cazuza">
+        <div class="hero-paper-clipping clipping-back" aria-hidden="true">NÃO SE CALA<br>O QUE INCOMODA.</div>
+        <figure class="hero-photo hero-photo-raul"><img src="https://lastfm.freetls.fastly.net/i/u/ar0/fa813ffde42679d4e07db1c37093287d.jpg" onerror="this.onerror=null;this.src='assets/fallback-raul.svg'" alt="Retrato de Raul Seixas" loading="eager" decoding="async"><figcaption><b>RAUL SEIXAS</b><span>ALUGA-SE</span></figcaption></figure>
+        <figure class="hero-photo hero-photo-legiao"><img src="https://rawmusicstore.com/product/legiao-urbana-que-pais-e-este-1978-1987/2401-208-3.jpg" onerror="this.onerror=null;this.src='assets/fallback-legiao.svg'" alt="Capa do álbum Que País É Este, da Legião Urbana" loading="eager" decoding="async"><figcaption><b>LEGIÃO URBANA</b><span>QUE PAÍS É ESTE</span></figcaption></figure>
+        <figure class="hero-photo hero-photo-cazuza"><img src="https://p2.trrsf.com/image/fget/cf/1200/900/middle/images.terra.com/2025/06/27/1858155718-cazuza-1988-foto-reproducao-youtube.jpg" onerror="this.onerror=null;this.src='assets/fallback-cazuza.svg'" alt="Cazuza cantando ao microfone em apresentação de 1988" loading="eager" decoding="async"><figcaption><b>CAZUZA</b><span>BRASIL</span></figcaption></figure>
+        <span class="collage-ring" aria-hidden="true"></span><span class="collage-scribble" aria-hidden="true">escute antes<br>de julgar ↗</span><span class="collage-needle" aria-hidden="true">♫</span>
       </div>
-      <div class="hero-footnote"><span>UM MURAL NÃO CONTA A HISTÓRIA INTEIRA.</span><span>DESCUBRA O QUE ESTÁ POR TRÁS.</span></div>
+      <p class="hero-footer-note">ARQUIVO ABERTO <span class="hero-footer-dash">////</span> UMA EXPERIÊNCIA SOBRE POLARIZAÇÃO &amp; UFANISMO EXACERBADO</p>
     </section>
 
-    <section class="briefing" id="como-funciona" aria-labelledby="briefing-title">
-      <div class="briefing-heading"><span class="eyebrow">INSTRUÇÕES PARA A EXPERIÊNCIA</span><h2 id="briefing-title">COMO<br><em>FUNCIONA?</em></h2><div class="briefing-sticker" aria-hidden="true">NÃO É SÓ<br>OLHAR!</div></div>
-      <div class="briefing-content">
-        <p class="briefing-lead"><strong>O site faz a pergunta. A parede esconde a resposta.</strong> Para avançar, você vai precisar interagir com os elementos físicos da exposição.</p>
-        <div class="briefing-steps">
-          <div><span class="step-num">01</span><h3>OLHE AO REDOR.</h3><p>Leia a missão do site e procure a peça indicada na parede.</p></div>
-          <div><span class="step-num">02</span><h3>MEXA NA PAREDE.</h3><p>Puxe um cordão, abra um jornal, gire a rádio ou vire um recorte.</p></div>
-          <div><span class="step-num">03</span><h3>REVELE A RESPOSTA.</h3><p>Digite a palavra encontrada e desbloqueie a próxima etapa.</p></div>
-        </div>
-        <div class="briefing-alert"><span aria-hidden="true">↘</span> <strong>IMPORTANTE:</strong> as palavras estão na parede de verdade, não nas imagens do site.</div>
-      </div>
+    <section class="intro-strip" id="sobre" aria-label="Sobre a experiência">
+      <div class="intro-column intro-title"><span class="section-meta">01 / CONCEITO</span><h2>AMAR NÃO É<br><em>IGNORAR.</em></h2></div>
+      <div class="intro-column intro-content"><p>O rock brasileiro transformou indignação em música. Em vez de elogiar um Brasil perfeito, esses artistas apontaram contradições, desigualdades e abusos de poder.</p><p class="intro-emphasis">Questionar o país também pode ser uma forma de se importar com ele.</p></div>
+      <div class="intro-column intro-sticker" aria-hidden="true"><span>O BRASIL<br>NÃO CABE<br>NUM SLOGAN.</span><span class="scribble-underline"></span></div>
     </section>
 
-    <section class="mission-zone" id="missao" aria-labelledby="mission-heading">
-      <div class="investigation-heading"><div class="mission-topline"><span>PAINEL DE INVESTIGAÇÃO</span><span id="status-label" class="mission-status">PISTA ATUAL</span></div><h2 id="mission-heading">DESVENDE<br><span>A PAREDE.</span></h2><p>Uma pergunta por vez. A próxima só aparece quando você encontra a palavra certa.</p></div>
-      <div class="mission-paper" id="mission-container" aria-live="polite" aria-atomic="true"><noscript>Ative o JavaScript no navegador para participar da experiência.</noscript></div>
-      <div class="mission-endline"><span>ARTE • INVESTIGAÇÃO • BRASIL</span><button type="button" class="text-button" id="reset-button">REINICIAR EXPERIÊNCIA ↺</button></div>
+    <section id="repertorio" class="repertorio" aria-labelledby="repertorio-title">
+      <div class="section-heading"><div><p class="section-meta">02 / REPERTÓRIO</p><h2 id="repertorio-title">AS VOZES DO<br><em>INCÔMODO.</em></h2></div><p>Três canções que provocam uma mesma pergunta: que Brasil estamos escolhendo enxergar?</p></div>
+      <div class="record-grid">
+        <article class="record-card" data-record="raul">
+          <div class="record-photo-shell"><img src="https://lastfm.freetls.fastly.net/i/u/ar0/fa813ffde42679d4e07db1c37093287d.jpg" onerror="this.onerror=null;this.src='assets/fallback-raul.svg'" alt="Foto de Raul Seixas, rosto e jaqueta escura" loading="lazy" decoding="async"><span class="record-label">FAIXA A</span><span class="record-sticker">1980</span></div>
+          <div class="record-body"><span class="record-artist">RAUL SEIXAS</span><h3>Aluga-se</h3><p>A ironia de um país colocado à disposição. Uma crítica à submissão econômica e à perda de autonomia.</p><a href="https://youtu.be/d3iI-ktX2WI?is=1yUYdp_tKhb2sOEx" target="_blank" rel="noopener noreferrer" class="listen-link">OUVIR NO YOUTUBE <span aria-hidden="true">↗</span></a></div>
+        </article>
+        <article class="record-card record-legiao" data-record="legiao">
+          <div class="record-photo-shell"><img src="https://rawmusicstore.com/product/legiao-urbana-que-pais-e-este-1978-1987/2401-208-3.jpg" onerror="this.onerror=null;this.src='assets/fallback-legiao.svg'" alt="Capa do disco Que País É Este, com os integrantes da Legião Urbana" loading="lazy" decoding="async"><span class="record-label">FAIXA B</span><span class="record-sticker">1987</span></div>
+          <div class="record-body"><span class="record-artist">LEGIÃO URBANA</span><h3>Que País É Este</h3><p>Uma pergunta direta diante da corrupção, da desigualdade e do desencanto político.</p><a href="https://youtu.be/vA-3BYOW2wo?is=EOaK3CR3gpI-I2Rr" target="_blank" rel="noopener noreferrer" class="listen-link">OUVIR NO YOUTUBE <span aria-hidden="true">↗</span></a></div>
+        </article>
+        <article class="record-card record-cazuza" data-record="cazuza">
+          <div class="record-photo-shell"><img src="https://p2.trrsf.com/image/fget/cf/1200/900/middle/images.terra.com/2025/06/27/1858155718-cazuza-1988-foto-reproducao-youtube.jpg" onerror="this.onerror=null;this.src='assets/fallback-cazuza.svg'" alt="Cazuza cantando ao microfone com faixa na cabeça" loading="lazy" decoding="async"><span class="record-label">FAIXA C</span><span class="record-sticker">1988</span></div>
+          <div class="record-body"><span class="record-artist">CAZUZA</span><h3>Brasil</h3><p>Um retrato inconformado de problemas políticos e sociais, longe do patriotismo sem questionamentos.</p><a href="https://youtu.be/kCUZr_K8et8?is=OaU8g8vS9VH5PDBc" target="_blank" rel="noopener noreferrer" class="listen-link">OUVIR NO YOUTUBE <span aria-hidden="true">↗</span></a></div>
+        </article>
+      </div>
+      <p class="record-disclaimer">* Canções de 1980, 1987 e 1988. Não pertencem ao Modernismo de 1922, mas dialogam com sua liberdade crítica e de linguagem.</p>
     </section>
 
-    <section class="context-section" id="contexto" aria-labelledby="context-title">
-      <div class="context-kicker">O DEBATE CONTINUA</div>
-      <h2 id="context-title">NACIONALISMO<br><span>OU UFANISMO?</span></h2>
-      <div class="context-grid">
-        <div class="newsprint-block"><div class="fake-newspaper-head"><span>EDIÇÃO EXTRA</span><span>ARTE E SOCIEDADE</span></div><h3>O que significa amar um país?</h3><p>O Modernismo brasileiro buscou novas maneiras de representar o Brasil. Suas correntes tinham visões diferentes sobre identidade nacional, cultura e pertencimento.</p><p>O <strong>ufanismo exacerbado</strong> transforma a exaltação nacional em uma visão que pode impedir críticas e tratar as diferenças como ameaças. Debater o país é também reconhecer suas contradições.</p><span class="newspaper-end">LEIA. QUESTIONE. CONVERSE.</span></div>
-        <div class="context-collage"><div class="context-note"><span class="note-clip" aria-hidden="true"></span><span class="note-corner">NOTA DA EXPOSIÇÃO</span><blockquote>“A crítica também pode ser uma forma de cuidado com o país.”</blockquote><p>Frase autoral deste trabalho escolar.</p></div><figure class="context-pic"><img src="assets/cildo-bandeira.webp" alt="Arte de Cildo Meireles que questiona os símbolos nacionais" loading="lazy"><figcaption>CILDO MEIRELES / ARTE E QUESTIONAMENTO</figcaption></figure></div>
-      </div>
+    <section id="experiencia" class="quiz-section" aria-labelledby="quiz-title">
+      <div class="quiz-heading"><div><span class="section-meta">03 / PARTICIPE</span><h2 id="quiz-title">AGORA,<br><em>É COM VOCÊ.</em></h2></div><div class="quiz-description"><span class="quiz-tape">COMO FUNCIONA</span><p><strong>Ouça uma música. Responda duas perguntas fáceis.</strong> Depois, continue para a próxima canção. Não há pistas escondidas nem nada para mexer na parede.</p></div></div>
+      <div id="quiz-app" class="quiz-app" aria-live="polite"><div class="initial-quiz"><p class="mini-prelude">PRONTO PARA COMEÇAR?</p><h3>Três músicas.<br>Seis perguntas.<br><em>Seu olhar.</em></h3><p>A experiência dura poucos minutos e funciona inteiramente pelo celular.</p><button class="button button-light" id="start-quiz" type="button">INICIAR PERGUNTAS <span aria-hidden="true">↗</span></button></div></div>
     </section>
-    <footer class="footer"><div class="footer-logo">A PAREDE FALA<span>.</span></div><div class="footer-theme"><strong>MODERNISMO HOJE</strong><p>Polarização e ufanismo exacerbado.</p><a href="#como-funciona">Rever as instruções ↗</a></div><div class="footer-credit"><span class="credit-label">Desenvolvedor do website</span><strong class="credit-name">Murilo Gabriel</strong></div></footer>
+
+    <section class="closing-band"><div class="closing-paper"><span>NO FIM, FICA A PERGUNTA</span><strong>CRITICAR O PAÍS É<br><em>DEIXAR DE AMÁ-LO?</em></strong></div><div class="closing-stamp" aria-hidden="true">PENSE<br>OUTRA<br>VEZ.</div></section>
   </main>
+  <footer class="footer"><div class="footer-logo">A PAREDE <span>FALA.</span></div><div class="footer-center">ARTE • MÚSICA • CRÍTICA <span>© 2026</span><a href="FONTES.md" target="_blank" rel="noopener">CRÉDITOS DAS IMAGENS ↗</a></div><div class="footer-author"><small>DESENVOLVIMENTO DO WEBSITE</small><strong>Murilo Gabriel</strong><span>Desenvolvedor do website</span></div></footer>
 </body>
 </html>
