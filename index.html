@@ -15,6 +15,26 @@
 <body>
   <a class="skip-link" href="#experiencia">Ir direto para a experiência</a>
 
+
+  <div id="opening-screen" class="intro-overlay" aria-label="Animação de abertura do projeto">
+    <div class="intro-veil" aria-hidden="true"></div>
+    <div class="intro-brand" aria-hidden="true">
+      <img src="assets/logo.svg" alt="" width="168" height="168">
+      <span>A PAREDE FALA</span>
+      <small>OLHE MAIS DE PERTO</small>
+    </div>
+    <div class="intro-magnifier" aria-hidden="true">
+      <svg viewBox="0 0 132 132" xmlns="http://www.w3.org/2000/svg" focusable="false">
+        <circle cx="50" cy="48" r="36" fill="rgba(255,255,255,.12)" stroke="#f8e25c" stroke-width="12"/>
+        <circle cx="50" cy="48" r="27" fill="rgba(255,255,255,.06)" stroke="#fffbeb" stroke-width="3"/>
+        <path d="M77 78 118 119" stroke="#fffbeb" stroke-width="19" stroke-linecap="round"/>
+        <path d="m85 86 31 31" stroke="#5540a1" stroke-width="12" stroke-linecap="round"/>
+        <path d="M29 43a23 23 0 0 1 22-22" fill="none" stroke="#fff" stroke-width="5" opacity=".85" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <button id="skip-opening" class="intro-skip" type="button">PULAR ABERTURA</button>
+  </div>
+
   <div class="ribbon" aria-hidden="true">
     <span>EXPOSIÇÃO INTERATIVA</span><span class="ribbon-dot" aria-hidden="true"></span>
     <span>ARTE + LITERATURA + SOCIEDADE</span><span class="ribbon-dot" aria-hidden="true"></span>
@@ -32,9 +52,10 @@
 
   <main>
     <section class="hero" aria-labelledby="hero-title">
+      <div class="side-ink side-ink-hero" aria-hidden="true"><span class="ink-seal">?</span><span class="ink-word">OLHE</span></div>
       <div class="hero-content">
         <p class="overline"><span class="overline-dot" aria-hidden="true"></span> UMA EXPERIÊNCIA PARA QUEM OLHA ALÉM</p>
-        <h1 id="hero-title"><span>UMA</span><span class="cut-yellow">PAREDE.</span><span>MIL <i>VOZES.</i></span></h1>
+        <h1 id="hero-title"><span>UMA</span><span class="cut-yellow" id="hero-cut-title">PAREDE.</span><span>MIL <i>VOZES.</i></span></h1>
         <p class="hero-description">Há perguntas espalhadas entre recortes, livros, músicas e notícias. Para responder a elas, você precisa <strong>observar o mural à sua frente.</strong></p>
         <div class="hero-actions">
           <button id="begin-button" type="button" class="button button-dark">COMEÇAR A INVESTIGAÇÃO <span aria-hidden="true">↗</span></button>
@@ -59,6 +80,7 @@
     </section>
 
     <section class="instructions" id="como-funciona" aria-labelledby="instructions-title">
+      <div class="side-ink side-ink-notes" aria-hidden="true"><span class="ink-seal">✎</span><span class="ink-word">LEIA</span></div>
       <div class="section-topline"><span>01 / O PERCURSO</span><span>LEIA · INVESTIGUE · RESPONDA</span></div>
       <div class="instructions-heading">
         <h2 id="instructions-title">A RESPOSTA<br><em>NÃO ESTÁ AQUI.</em></h2>
@@ -72,6 +94,7 @@
     </section>
 
     <section class="archive-section" id="arquivo" aria-labelledby="archive-title">
+      <div class="side-ink side-ink-archive" aria-hidden="true"><span class="ink-seal">◉</span><span class="ink-word">MEMÓRIA</span></div>
       <div class="section-topline"><span>ARQUIVO VISUAL</span><span>VOZES, OLHARES E MEMÓRIAS</span></div>
       <div class="archive-heading">
         <div><p class="archive-label">IMAGENS DO PASSADO, QUESTÕES DO PRESENTE</p><h2 id="archive-title">A HISTÓRIA<br><em>TAMBÉM TEM ROSTO.</em></h2></div>
@@ -90,6 +113,7 @@
       <p class="archive-caption">Fotografias históricas do Wikimedia Commons. Fontes e créditos no rodapé.</p>
     </section>
     <section class="clue-section" id="pistas" aria-labelledby="clues-title">
+      <div class="side-ink side-ink-clues" aria-hidden="true"><span class="ink-seal">♫</span><span class="ink-word">VOZES</span></div>
       <div class="section-topline"><span>02 / MAPA DE INVESTIGAÇÃO</span><span>SEM SPOILERS</span></div>
       <div class="clue-heading"><h2 id="clues-title">QUATRO JEITOS<br>DE <em>LER.</em></h2><p>Nem tudo está escrito como notícia. Use os olhos e conecte as linguagens do cartaz.</p></div>
       <div class="clue-grid">
@@ -101,6 +125,7 @@
     </section>
 
     <section class="quiz-section" id="experiencia" aria-labelledby="quiz-title">
+      <div class="side-ink side-ink-quiz" aria-hidden="true"><span class="ink-seal">?</span><span class="ink-word">DESCUBRA</span></div>
       <div class="section-topline"><span>03 / O DESAFIO</span><span>AGORA, É COM VOCÊ</span></div>
       <div class="quiz-header">
         <div><p class="quiz-kicker">A PAREDE PERGUNTA</p><h2 id="quiz-title">VOCÊ <em>ENCONTRA?</em></h2></div>

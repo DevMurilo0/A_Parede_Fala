@@ -171,6 +171,7 @@
         state.index += 1;
         save();
         render();
+        if (state.index < questions.length) animateQuestion(false);
         document.querySelector('.quiz-app .question-title, .quiz-app .result-title')?.focus();
         return;
       }
@@ -222,6 +223,109 @@
   begin.addEventListener('click', () => {
     if (!state.started) start();
     scrollToQuiz();
+    if (!reduceMotion.matches) window.setTimeout(() => animateQuestion(true), 620);
   });
   render();
+
+  // Ajusta o letreiro sem ocultar nenhuma letra dentro do papel recortado.
+  function fitHeroTitle() {
+    const headline = document.getElementById('hero-title');
+    const cutout = document.getElementById('hero-cut-title');
+    if (!headline || !cutout) return;
+    cutout.style.fontSize = '1em';
+    const available = Math.max(1, headline.clientWidth - 13);
+    const actual = cutout.getBoundingClientRect().width;
+    if (actual > available) {
+      const inherited = Number.parseFloat(window.getComputedStyle(headline).fontSize);
+      if (Number.isFinite(inherited)) {
+        cutout.style.fontSize = (inherited * available / actual * 0.976).toFixed(2) + 'px';
+      }
+    }
+  }
+
+  function playOpening() {
+    const opening = document.getElementById('opening-screen');
+    const skip = document.getElementById('skip-opening');
+    if (!opening || !skip || reduceMotion.matches || window.location.hash === '#experiencia') {
+      opening?.remove();
+      return;
+    }
+    const button = document.getElementById('begin-button');
+    if (!button) { opening.remove(); return; }
+    const rect = button.getBoundingClientRect();
+    const focusX = rect.left + rect.width / 2;
+    const focusY = rect.top + rect.height / 2;
+    const offsetX = focusX - window.innerWidth / 2;
+    const offsetY = focusY - window.innerHeight / 2;
+    opening.style.setProperty('--drop-x', offsetX + 'px');
+    opening.style.setProperty('--drop-y', offsetY + 'px');
+
+    let closed = false;
+    let finishTimer;
+    const complete = () => {
+      if (closed) return;
+      closed = true;
+      window.clearTimeout(finishTimer);
+      opening.classList.remove('is-running');
+      opening.remove();
+      if (!reduceMotion.matches && rect.top < window.innerHeight && rect.bottom > 0) {
+        button.classList.remove('is-landing');
+        void button.offsetWidth;
+        button.classList.add('is-landing');
+        button.addEventListener('animationend', () => button.classList.remove('is-landing'), { once: true });
+      }
+    };
+    skip.addEventListener('click', complete);
+    window.requestAnimationFrame(() => opening.classList.add('is-running'));
+    finishTimer = window.setTimeout(complete, 2560);
+  }
+
+  function animateQuestion(burst) {
+    if (reduceMotion.matches) return;
+    app.classList.remove('is-question-revealing');
+    void app.offsetWidth;
+    app.classList.add('is-question-revealing');
+    if (!burst) {
+      window.setTimeout(() => app.classList.remove('is-question-revealing'), 900);
+      return;
+    }
+    app.querySelector('.quiz-burst')?.remove();
+    const effect = document.createElement('div');
+    effect.className = 'quiz-burst';
+    effect.setAttribute('aria-hidden', 'true');
+    const rings = document.createElement('span');
+    rings.className = 'quiz-burst-ring';
+    const second = document.createElement('span');
+    second.className = 'quiz-burst-ring second';
+    const label = document.createElement('span');
+    label.className = 'quiz-burst-core';
+    label.textContent = 'PISTA ' + String(state.index + 1).padStart(2,'0') + '!';
+    effect.append(rings, second, label);
+    const colors = ['#f6df53', '#5141a6', '#29895a', '#ef9daa', '#4da7d8'];
+    for (let i = 0; i < 20; i++) {
+      const a = (Math.PI * 2 * i) / 20;
+      const range = 110 + (i % 5) * 30;
+      const scrap = document.createElement('span');
+      scrap.className = 'quiz-burst-piece';
+      scrap.style.setProperty('--dx', (Math.cos(a) * range).toFixed(1) + 'px');
+      scrap.style.setProperty('--dy', (Math.sin(a) * range).toFixed(1) + 'px');
+      scrap.style.setProperty('--spin', (i % 2 === 0 ? 220 : -260) + 'deg');
+      scrap.style.setProperty('--piece-delay', ((i % 4) * 24) + 'ms');
+      scrap.style.setProperty('--piece-w', (10 + i % 4 * 5) + 'px');
+      scrap.style.setProperty('--piece-h', (14 + i % 3 * 7) + 'px');
+      scrap.style.setProperty('--piece-color', colors[i % colors.length]);
+      effect.appendChild(scrap);
+    }
+    app.appendChild(effect);
+    window.setTimeout(() => {
+      effect.remove();
+      app.classList.remove('is-question-revealing');
+    }, 1250);
+  }
+
+  // O selo da abertura não é uma etapa do questionário.
+  fitHeroTitle();
+  window.addEventListener('resize', fitHeroTitle, { passive: true });
+  if (document.fonts?.ready) document.fonts.ready.then(fitHeroTitle);
+  playOpening();
 })();
