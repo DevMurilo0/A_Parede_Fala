@@ -322,12 +322,17 @@
     let raf = null;
     let initialTime = null;
     let safetyTimer = null;
+    // Barras de endereço de navegadores móveis mudam a altura da tela.
+    // Isso não deve interromper a animação no meio.
+    function onViewportResize() {
+      if (Math.abs(window.innerWidth - width) > 18) close();
+    }
     function close() {
       if (stopped) return;
       stopped = true;
       if (raf !== null && window.cancelAnimationFrame) window.cancelAnimationFrame(raf);
       if (safetyTimer !== null) window.clearTimeout(safetyTimer);
-      window.removeEventListener('resize', close);
+      window.removeEventListener('resize', onViewportResize);
       opening.remove();
       button.classList.add('is-landing');
       button.addEventListener('animationend', () => button.classList.remove('is-landing'), { once: true });
@@ -362,7 +367,7 @@
     }
 
     skip.addEventListener('click', close);
-    window.addEventListener('resize', close, { passive: true });
+    window.addEventListener('resize', onViewportResize, { passive: true });
     opening.classList.add('is-running');
     raf = window.requestAnimationFrame(draw);
     safetyTimer = window.setTimeout(close, total + 1500);
