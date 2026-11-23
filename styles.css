@@ -573,3 +573,48 @@ body{overflow-x:clip}
   .sound-toggle{width:40px;min-width:40px;min-height:40px;margin-right:10px}
 }
 @media(prefers-reduced-motion:reduce){.sound-toggle{transition:none}}
+
+/* A lupa revela o botão e deixa uma indicação de onde apertar. */
+.hero-cta-frame{position:relative;display:inline-flex;flex-direction:column;isolation:isolate;max-width:100%}
+.hero-cta-frame>.button{position:relative;z-index:1}
+.hero-cta-frame.is-inviting>.button{
+  animation:hero-cta-pulse 1.2s ease-in-out infinite;
+  background:var(--purple);border-color:var(--ink);color:#fff;
+}
+@keyframes hero-cta-pulse{
+  0%,100%{filter:brightness(1);box-shadow:5px 5px 0 var(--yellow),0 0 0 0 rgba(246,223,83,.62);transform:scale(1)}
+  50%{filter:brightness(1.24);box-shadow:6px 7px 0 var(--yellow),0 0 0 12px rgba(246,223,83,0);transform:scale(1.035)}
+}
+.hero-cta-hint{
+  position:absolute;z-index:8;left:50%;bottom:calc(100% + 14px);
+  width:max-content;max-width:min(320px,calc(100vw - 34px));
+  padding:12px 15px 13px;background:var(--yellow);border:3px solid var(--ink);
+  color:var(--ink);box-shadow:5px 6px 0 var(--purple);text-align:center;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transform:translate(-50%,12px) rotate(-4deg);
+  transition:opacity .24s ease,transform .36s cubic-bezier(.2,.8,.3,1),visibility .24s;
+}
+.hero-cta-frame.is-inviting .hero-cta-hint{
+  opacity:1;visibility:visible;transform:translate(-50%,0) rotate(-3deg)
+}
+.hero-cta-hint strong{display:block;font-weight:1000;font-size:clamp(18px,2vw,25px);letter-spacing:-.04em;line-height:1}
+.hero-cta-hint>span:not(.hero-cta-arrow){display:block;font-size:10px;font-weight:1000;letter-spacing:.07em;margin-top:6px}
+.hero-cta-hint small{display:block;border-top:1px solid rgba(23,27,47,.3);margin-top:9px;padding-top:8px;font-size:9px;font-weight:900;line-height:1.4;letter-spacing:.015em}
+.hero-cta-hint .hero-cta-arrow{
+  position:absolute;right:17px;bottom:-39px;font-size:32px;font-weight:900;
+  color:var(--yellow);text-shadow:2px 2px 0 var(--ink);transform:rotate(28deg);
+  animation:hero-cta-point 1.1s ease-in-out infinite
+}
+@keyframes hero-cta-point{
+  0%,100%{translate:0 0}
+  50%{translate:0 6px}
+}
+@media(max-width:800px){
+  .hero-cta-frame{width:100%;max-width:100%}
+  .hero-cta-frame>.button{width:100%}
+  .hero-cta-hint{padding:10px 12px 11px}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-cta-frame.is-inviting>.button,.hero-cta-hint .hero-cta-arrow{animation:none!important}
+  .hero-cta-hint{transition:none!important}
+}

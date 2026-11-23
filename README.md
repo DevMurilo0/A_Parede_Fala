@@ -76,3 +76,8 @@ Os efeitos e a trilha foram amplificados significativamente. Um compressor de di
 ## Sons para todas as interações
 
 A trilha instrumental original agora tem uma melodia mais presente, com harmonia reforçada e o mesmo compressor de áudio. O site tenta iniciar o áudio ao carregar e solicita a liberação no primeiro toque, inclusive durante a animação da lupa. Os cliques têm sons distintos para botões, navegação, seleção de alternativas, reinício, mudança de pergunta e cartões de conteúdo, além de sons para seções, respostas, resultado e tique do relógio. O áudio continua ligado por padrão e respeita a opção de silenciar. Navegadores que bloqueiam autoplay precisam de uma interação real antes da reprodução.
+
+
+## Destaque na chamada da abertura
+
+Ao terminar a entrada da lupa, o botão principal da investigação recebe uma pulsação roxa com contorno amarelo e um recorte editorial convidando a pessoa a apertá-lo. O destaque também é oferecido quando a abertura é pulada e respeita a preferência por animações reduzidas. O aviso desaparece ao iniciar o quiz e lembra como aumentar o volume no celular. Os navegadores não têm permissão para consultar ou alterar o volume físico do telefone; a reprodução segue com o áudio do site já amplificado.

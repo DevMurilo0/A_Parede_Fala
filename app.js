@@ -153,6 +153,7 @@
   }
 
   function start() {
+    setBeginInvitation(false);
     state = empty();
     state.started = true;
     state.startedAt = Date.now();
@@ -324,6 +325,7 @@
   }
 
   begin.addEventListener('click', () => {
+    setBeginInvitation(false);
     if (!state.started) start();
     scrollToQuiz(() => animateQuestion(true));
   });
@@ -345,6 +347,15 @@
     }
   }
 
+  // O aviso só aparece quando a lupa termina de abrir a página.
+  // Ele desaparece quando o visitante inicia a investigação.
+  function setBeginInvitation(visible) {
+    const frame = document.getElementById('hero-cta-frame');
+    const hint = document.getElementById('hero-cta-hint');
+    frame?.classList.toggle('is-inviting', visible);
+    hint?.setAttribute('aria-hidden', String(!visible));
+  }
+
   // A lupa percorre apenas uma curva Bézier, calculada quadro a quadro.
   // Não há mudanças de trajetória, chacoalhadas ou saltos entre keyframes.
   function playOpening() {
@@ -353,11 +364,12 @@
     const button = document.getElementById('begin-button');
     if (!opening || !skip || !button || reduceMotion.matches || window.location.hash === '#experiencia') {
       opening?.remove();
+      if (window.location.hash !== '#experiencia') setBeginInvitation(true);
       return;
     }
 
     const lens = opening.querySelector('.intro-magnifier');
-    if (!lens) { opening.remove(); return; }
+    if (!lens) { opening.remove(); setBeginInvitation(true); return; }
     const hold = 110;
     const flight = 1240;
     const total = hold + flight;
@@ -406,8 +418,8 @@
       if (safetyTimer !== null) window.clearTimeout(safetyTimer);
       window.removeEventListener('resize', onViewportResize);
       opening.remove();
-      button.classList.add('is-landing');
-      button.addEventListener('animationend', () => button.classList.remove('is-landing'), { once: true });
+      setBeginInvitation(true);
+      window.WallAudio?.play('reveal');
     }
 
     function draw(now) {
