@@ -55,11 +55,11 @@
     },
     {
       section: 'NOTÍCIAS', area: 'Na parte inferior esquerda da faixa roxa',
-      question: 'Qual estado aparece abreviado na notícia sobre ameaças contra indígenas?',
-      choices: ['São Paulo (SP)', 'Bahia (BA)', 'Mato Grosso do Sul (MS)'],
-      correct: 2,
-      hint: 'Olhe a manchete sobre a força-tarefa e leia a sigla no final.',
-      explanation: 'A notícia cita ameaças a indígenas em MS, sigla de Mato Grosso do Sul.'
+      question: 'Segundo a manchete, qual medida o governo federal anunciou diante das ameaças contra indígenas?',
+      choices: ['Criar uma força tarefa para receber denúncias e apurar ameaças', 'Suspender todas as eleições municipais', 'Encerrar investigações já em andamento'],
+      correct: 0,
+      hint: 'Procure a notícia sobre ameaças contra indígenas e identifique a ação anunciada.',
+      explanation: 'A manchete informa a criação de uma força tarefa para receber denúncias e apurar ameaças.'
     },
     {
       section: 'MÚSICA', area: 'Na faixa verde, próximo ao retrato central',
