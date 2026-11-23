@@ -353,8 +353,8 @@
 
     const lens = opening.querySelector('.intro-magnifier');
     if (!lens) { opening.remove(); return; }
-    const hold = 1750;
-    const flight = 6900;
+    const hold = 500;
+    const flight = 2250;
     const total = hold + flight;
     const width = window.innerWidth;
     const height = window.innerHeight;

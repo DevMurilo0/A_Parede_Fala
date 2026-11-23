@@ -293,7 +293,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,.answer:focus-within{ou
 }
 .intro-brand>span{font-size:clamp(24px,4vw,43px);font-weight:1000;letter-spacing:-.06em}
 .intro-brand small{font-size:10px;font-weight:900;letter-spacing:.23em;color:var(--yellow)}
-.intro-overlay.is-running .intro-brand{animation:logo-soft-intro 3.2s cubic-bezier(.35,0,.25,1) both}
+.intro-overlay.is-running .intro-brand{animation:logo-soft-intro 1.65s cubic-bezier(.35,0,.25,1) both}
 @keyframes logo-soft-intro{
   0%{opacity:0;transform:translate(-50%,calc(-50% + 28px)) scale(.93)}
   28%{opacity:1;transform:translate(-50%,-50%) scale(1)}
@@ -315,10 +315,10 @@ button:focus-visible,a:focus-visible,input:focus-visible,.answer:focus-within{ou
   font-size:11px;font-weight:900;letter-spacing:.09em;cursor:pointer;
   opacity:0;transition:background .3s ease
 }
-.intro-overlay.is-running .intro-skip{animation:skip-soft-show .8s .6s ease both}
+.intro-overlay.is-running .intro-skip{animation:skip-soft-show .4s .22s ease both}
 .intro-skip:hover{background:rgba(255,255,255,.2)}
 @keyframes skip-soft-show{to{opacity:1}}
-.hero .button.is-landing{animation:button-arrival-glow 1.4s ease both}
+.hero .button.is-landing{animation:button-arrival-glow .65s ease both}
 @keyframes button-arrival-glow{
   0%,100%{filter:brightness(1)}
   40%{filter:brightness(1.25)}
