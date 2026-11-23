@@ -10,6 +10,7 @@
   <title>A Parede Fala — Investigue o mural</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
+  <script src="audio.js" defer></script>
   <script src="app.js" defer></script>
 </head>
 <body>
@@ -43,6 +44,14 @@
 
   <header class="site-header" id="inicio">
     <a class="brand" href="#inicio" aria-label="A Parede Fala, início"><img class="brand-symbol" src="assets/logo.svg" alt="" width="60" height="60"><span class="brand-text">A PAREDE<br>FALA</span></a>
+    <button id="sound-toggle" class="sound-toggle" type="button" aria-pressed="true" aria-label="Desligar o som" title="Ligar ou desligar o som">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+        <path d="M3 9v6h4l5 4V5L7 9H3Z" fill="currentColor"></path>
+        <path class="sound-waves" d="M16 9a4 4 0 0 1 0 6M19 6a8 8 0 0 1 0 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"></path>
+        <path class="sound-slash" d="M4 20 21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"></path>
+      </svg>
+      <span data-sound-label>SOM LIGADO</span>
+    </button>
     <nav aria-label="Navegação">
       <a href="#como-funciona">COMO FUNCIONA</a>
       <a href="#pistas">ONDE OLHAR</a>

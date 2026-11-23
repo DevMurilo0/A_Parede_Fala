@@ -144,6 +144,7 @@
   function finish() {
     if (state.finishedAt || !state.startedAt) return;
     state.finishedAt = Date.now();
+    window.WallAudio?.play('finish');
     const best = getBest();
     if (best === null || elapsedMs() < best) {
       try { localStorage.setItem(RECORD_KEY, String(elapsedMs())); } catch (_) { /* armazenamento opcional */ }
@@ -155,6 +156,7 @@
     state = empty();
     state.started = true;
     state.startedAt = Date.now();
+    window.WallAudio?.play('start');
     save();
     render();
   }
@@ -275,10 +277,12 @@
         save();
         feedback.className = 'feedback warning';
         feedback.textContent = 'Ainda não! ' + q.hint + ' Você pode tentar outra vez.';
+        window.WallAudio?.play('error');
         return;
       }
       state.solved[state.index] = value;
       if (state.index === questions.length - 1) finish();
+      else window.WallAudio?.play('success');
       save();
       render();
       document.querySelector('.quiz-app .question-title')?.focus();
@@ -353,8 +357,8 @@
 
     const lens = opening.querySelector('.intro-magnifier');
     if (!lens) { opening.remove(); return; }
-    const hold = 500;
-    const flight = 2250;
+    const hold = 110;
+    const flight = 1240;
     const total = hold + flight;
     const width = window.innerWidth;
     const height = window.innerHeight;

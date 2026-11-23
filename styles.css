@@ -293,7 +293,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,.answer:focus-within{ou
 }
 .intro-brand>span{font-size:clamp(24px,4vw,43px);font-weight:1000;letter-spacing:-.06em}
 .intro-brand small{font-size:10px;font-weight:900;letter-spacing:.23em;color:var(--yellow)}
-.intro-overlay.is-running .intro-brand{animation:logo-soft-intro 1.65s cubic-bezier(.35,0,.25,1) both}
+.intro-overlay.is-running .intro-brand{animation:logo-soft-intro 1.05s cubic-bezier(.35,0,.25,1) both}
 @keyframes logo-soft-intro{
   0%{opacity:0;transform:translate(-50%,calc(-50% + 28px)) scale(.93)}
   28%{opacity:1;transform:translate(-50%,-50%) scale(1)}
@@ -315,7 +315,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,.answer:focus-within{ou
   font-size:11px;font-weight:900;letter-spacing:.09em;cursor:pointer;
   opacity:0;transition:background .3s ease
 }
-.intro-overlay.is-running .intro-skip{animation:skip-soft-show .4s .22s ease both}
+.intro-overlay.is-running .intro-skip{animation:skip-soft-show .28s .09s ease both}
 .intro-skip:hover{background:rgba(255,255,255,.2)}
 @keyframes skip-soft-show{to{opacity:1}}
 .hero .button.is-landing{animation:button-arrival-glow .65s ease both}
@@ -550,3 +550,26 @@ body{overflow-x:clip}
  .result-times span{font-size:9px}
  .result-times strong{font-size:clamp(22px,7vw,34px)}
 }
+
+/* Controle de som editorial com espaço para celular */
+.sound-toggle{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;flex:none;
+  min-height:44px;padding:9px 12px;margin-left:auto;margin-right:clamp(10px,1.6vw,26px);
+  color:var(--ink);background:var(--yellow);border:2px solid var(--ink);
+  box-shadow:3px 3px 0 var(--ink);font-size:10px;font-weight:1000;
+  letter-spacing:.045em;white-space:nowrap;transition:background .18s ease,transform .18s ease;
+}
+.sound-toggle svg{flex:none}
+.sound-toggle:hover{transform:translateY(-2px)}
+.sound-toggle[aria-pressed="false"]{background:#e4decf;color:#585663}
+.sound-toggle .sound-slash{display:none}
+.sound-toggle[aria-pressed="false"] .sound-waves{display:none}
+.sound-toggle[aria-pressed="false"] .sound-slash{display:block}
+@media(max-width:760px){
+  .sound-toggle{min-width:44px;min-height:44px;width:44px;padding:9px;margin-right:12px}
+  .sound-toggle [data-sound-label]{display:none}
+}
+@media(max-width:380px){
+  .sound-toggle{width:40px;min-width:40px;min-height:40px;margin-right:10px}
+}
+@media(prefers-reduced-motion:reduce){.sound-toggle{transition:none}}

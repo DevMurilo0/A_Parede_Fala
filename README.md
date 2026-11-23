@@ -61,3 +61,8 @@ A animação inicial agora leva aproximadamente 8,65 segundos. O símbolo aparec
 ## Cronômetro e recorde pessoal
 
 O contador é iniciado ao clicar em qualquer botão que inicia a investigação ou quando a seção de perguntas entra na área visível da página. O tempo é salvo com o progresso no navegador e continua contando ao atualizar ou sair da aba. Quando a nona resposta é acertada, o tempo é encerrado e comparado ao menor tempo anterior do mesmo navegador. A tela final mostra o tempo da rodada, o melhor recorde e incentiva o participante a tentar novamente. Reiniciar inicia uma nova contagem sem apagar o recorde. Os dados são armazenados apenas no dispositivo, sem ranking global ou cadastro.
+
+
+## Sons e trilha
+
+A abertura dura aproximadamente 1,35 segundo. O arquivo `audio.js` gera música instrumental original discreta e efeitos para botões, início, acertos, erros, conclusão e tique do relógio durante o cronômetro. O som começa configurado como ligado e pode ser silenciado pelo controle no cabeçalho. O ajuste fica salvo no navegador. Se o dispositivo bloquear áudio antes do primeiro gesto, a reprodução começa após o primeiro toque ou clique permitido. Não há serviços externos nem arquivos musicais de terceiros.
