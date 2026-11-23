@@ -39,3 +39,10 @@ O website foi propositalmente desenhado sem fotografias externas para que as res
 O visual agora incorpora fotografias históricas de artistas modernistas, com fontes abertas do Wikimedia Commons e crédito em `FONTES.md`. A marca anterior com letras foi substituída por um símbolo vetorial sem letras. Todos os símbolos decorativos pedidos para remover foram retirados.
 
 As duas imagens que revelam diretamente respostas do questionário só são exibidas depois da conclusão das nove perguntas. Os títulos e textos de interface não usam hífens.
+
+
+## Ajustes de transição e enquadramento
+
+A lupa animada entra da parte superior da tela, faz um movimento de ampliação e desce sobre o botão da página inicial. Em telas de desktop menores, a seção inicial reduz sua altura e os espaços para exibir o botão sem exigir rolagem adicional.
+
+Ao começar o desafio, o cabeçalho da seção é recolhido e o navegador rola diretamente até o cartão da pergunta. O efeito de explosão fica fixo na área visível e é acionado ao terminar a rolagem, com um tempo limite de segurança para navegadores que não disparam o evento de finalização. As preferências de movimento reduzido seguem respeitadas.

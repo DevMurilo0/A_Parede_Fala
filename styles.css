@@ -312,13 +312,38 @@ button:focus-visible,a:focus-visible,input:focus-visible,.answer:focus-within{ou
 .intro-magnifier svg{width:100%;height:100%;display:block;overflow:visible}
 .intro-overlay.is-running .intro-magnifier{animation:intro-lens 1.9s .49s cubic-bezier(.22,.65,.34,1) both}
 @keyframes intro-lens{
-  0%{opacity:0;transform:translate(-50%,-50%) scale(.35) rotate(-140deg)}
-  15%{opacity:1;transform:translate(-50%,-50%) scale(1.1) rotate(-24deg)}
-  42%{opacity:1;transform:translate(-50%,-50%) scale(1.32) rotate(20deg)}
-  70%{opacity:1;transform:translate(calc(-50% + var(--drop-x)),calc(-50% + var(--drop-y) - 85px)) scale(.75) rotate(-20deg)}
-  87%{opacity:1;transform:translate(calc(-50% + var(--drop-x)),calc(-50% + var(--drop-y) + 10px)) scale(.57) rotate(13deg)}
-  96%{opacity:1;transform:translate(calc(-50% + var(--drop-x)),calc(-50% + var(--drop-y) - 9px)) scale(.61) rotate(-6deg)}
-  100%{opacity:0;transform:translate(calc(-50% + var(--drop-x)),calc(-50% + var(--drop-y))) scale(.58) rotate(0)}
+  0%{
+    opacity:1;
+    transform:translate(calc(-50% + 18vw),calc(-50% - 102vh)) scale(.89) rotate(-88deg)
+  }
+  17%{
+    opacity:1;
+    transform:translate(calc(-50% + 11vw),calc(-50% - 47vh)) scale(1.08) rotate(-52deg)
+  }
+  34%{
+    opacity:1;
+    transform:translate(calc(-50% - 5vw),calc(-50% - 12vh)) scale(1.26) rotate(-14deg)
+  }
+  49%{
+    opacity:1;
+    transform:translate(-50%,-50%) scale(1.48) rotate(12deg)
+  }
+  70%{
+    opacity:1;
+    transform:translate(calc(-50% + var(--drop-x)),calc(-50% + var(--drop-y) - 95px)) scale(.84) rotate(-28deg)
+  }
+  85%{
+    opacity:1;
+    transform:translate(calc(-50% + var(--drop-x)),calc(-50% + var(--drop-y) + 13px)) scale(.59) rotate(15deg)
+  }
+  94%{
+    opacity:1;
+    transform:translate(calc(-50% + var(--drop-x)),calc(-50% + var(--drop-y) - 12px)) scale(.62) rotate(-9deg)
+  }
+  100%{
+    opacity:0;
+    transform:translate(calc(-50% + var(--drop-x)),calc(-50% + var(--drop-y))) scale(.58) rotate(0deg)
+  }
 }
 .intro-skip{
  position:absolute;z-index:5;bottom:max(20px,env(safe-area-inset-bottom));right:clamp(16px,4vw,60px);
@@ -422,4 +447,77 @@ button:focus-visible,a:focus-visible,input:focus-visible,.answer:focus-within{ou
 @media(prefers-reduced-motion:reduce){
  .intro-overlay,.intro-overlay.is-running{display:none!important;pointer-events:none!important}
  .quiz-app.is-question-revealing .question-area,.quiz-burst,.hero .button.is-landing{animation:none!important;transform:none!important}
+}
+
+
+/* Hero ajustado para deixar a chamada principal visível em janelas baixas */
+@media (min-width:801px){
+  .hero{
+    min-height:clamp(430px,calc(100svh - 105px),720px);
+    height:auto;
+  }
+  .hero-content{
+    display:flex;flex-direction:column;justify-content:center;
+    padding:clamp(17px,3.2vh,49px) clamp(18px,2.2vw,39px)
+            clamp(16px,3vh,40px) clamp(26px,4vw,82px);
+  }
+  .hero-art{min-height:0}
+  .hero h1{
+    font-size:clamp(49px,min(7.8vw,10.2vh),99px);
+    line-height:.9;
+    margin:clamp(15px,2.4vh,29px) 0 clamp(13px,2.3vh,26px);
+  }
+  .hero-description{
+    font-size:clamp(15px,1.45vw,19px);
+    line-height:1.42;
+  }
+  .hero-actions{margin:clamp(12px,2.1vh,23px) 0 0;gap:18px}
+  .hero-small{margin-top:clamp(10px,1.7vh,18px);line-height:1.4}
+  .hero .button{min-height:53px;padding:12px 17px}
+  .hero .overline{font-size:10px}
+}
+@media (min-width:801px) and (max-height:710px){
+  .hero-content{justify-content:flex-start;padding-top:clamp(18px,4vh,35px)}
+  .hero h1{font-size:clamp(46px,min(7.4vw,10vh),78px)}
+  .hero h1 .cut-yellow{padding-bottom:.14em}
+  .hero-description{font-size:15px;max-width:465px}
+  .hero-small{font-size:9px}
+}
+@media (max-width:800px){
+  .hero-content{padding-top:clamp(24px,5vh,45px);padding-bottom:clamp(24px,4vh,45px)}
+  .hero h1{margin-top:clamp(18px,3vh,30px);margin-bottom:clamp(14px,2vh,25px)}
+  .hero-actions{margin-top:clamp(14px,2vh,20px)}
+  .hero-small{margin-top:12px}
+}
+@media (max-width:560px){
+  .hero h1{font-size:clamp(47px,11.7vw,67px)}
+  .hero-content{padding-top:24px;padding-bottom:36px}
+  .hero-description{font-size:16px;line-height:1.42}
+  .hero-art{min-height:350px}
+}
+
+/* Depois de iniciar, o cabeçalho do desafio cede espaço para a pergunta */
+.quiz-app{scroll-margin-top:14px}
+.quiz-section .quiz-header{
+  max-height:500px;overflow:hidden;
+  transition:max-height .42s ease,margin .42s ease,opacity .28s ease,transform .42s ease;
+}
+.quiz-section.is-playing{padding-top:clamp(20px,3vw,38px)}
+.quiz-section.is-playing .quiz-header{
+  max-height:0;
+  margin-top:0;margin-bottom:0;
+  opacity:0;transform:translateY(-35px);
+  pointer-events:none;
+}
+.quiz-section.is-playing .section-topline{padding-top:10px;margin-bottom:18px}
+.quiz-section.is-playing .quiz-app{scroll-margin-top:14px}
+
+/* O estouro visual acompanha o viewport durante a rolagem e nunca fica abaixo da dobra */
+.quiz-burst{
+  position:fixed;inset:0;z-index:1200;overflow:hidden;
+  pointer-events:none;isolation:isolate
+}
+.quiz-burst-core,.quiz-burst-ring,.quiz-burst-piece{top:50%}
+@media(prefers-reduced-motion:reduce){
+  .quiz-section .quiz-header{transition:none!important}
 }

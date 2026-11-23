@@ -121,10 +121,39 @@
   }
 
   function scrollToQuiz() {
-    document.getElementById('experiencia').scrollIntoView({
+    // Desce até a caixa da pergunta e não apenas ao início da seção roxa.
+    app.scrollIntoView({
       behavior: reduceMotion.matches ? 'auto' : 'smooth',
       block: 'start'
     });
+  }
+
+  let revealTimer = null;
+  function revealQuestionAfterScroll() {
+    if (reduceMotion.matches) return;
+    if (revealTimer !== null) {
+      window.clearTimeout(revealTimer);
+      revealTimer = null;
+    }
+    let revealed = false;
+    function reveal() {
+      if (revealed) return;
+      revealed = true;
+      if (revealTimer !== null) {
+        window.clearTimeout(revealTimer);
+        revealTimer = null;
+      }
+      if (window.removeEventListener) window.removeEventListener('scrollend', reveal);
+      // Ajusta a posição caso o scroll suave seja interrompido cedo.
+      const rect = app.getBoundingClientRect();
+      if (rect.top > window.innerHeight * .5 || rect.bottom < 0) {
+        app.scrollIntoView({ behavior: 'auto', block: 'start' });
+      }
+      animateQuestion(true);
+    }
+    if (window.addEventListener) window.addEventListener('scrollend', reveal, { once: true });
+    // Fallback para navegadores sem scrollend ou rolagem interrompida.
+    revealTimer = window.setTimeout(reveal, 1100);
   }
 
   function renderStart() {
@@ -134,7 +163,11 @@
       <p>Antes de começar, fique diante do mural. Você vai encontrar cada resposta nele.</p>
       <button type="button" class="button button-light" id="start-quiz">INICIAR PERGUNTAS <span aria-hidden="true">↗</span></button>
     </div>`;
-    document.getElementById('start-quiz').addEventListener('click', start);
+    document.getElementById('start-quiz').addEventListener('click', () => {
+      start();
+      scrollToQuiz();
+      revealQuestionAfterScroll();
+    });
   }
 
   function renderQuestion() {
@@ -215,6 +248,7 @@
   }
 
   function render() {
+    document.getElementById('experiencia')?.classList.toggle('is-playing', state.started);
     if (!state.started) renderStart();
     else if (state.index >= questions.length) renderResult();
     else renderQuestion();
@@ -223,7 +257,7 @@
   begin.addEventListener('click', () => {
     if (!state.started) start();
     scrollToQuiz();
-    if (!reduceMotion.matches) window.setTimeout(() => animateQuestion(true), 620);
+    revealQuestionAfterScroll();
   });
   render();
 
