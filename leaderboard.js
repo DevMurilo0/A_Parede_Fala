@@ -3,7 +3,7 @@
   'use strict';
   const PROFILE_KEY = 'wall-ranking-profile-v1';
   const RUN_KEY = 'wall-ranking-run-v1';
-  const API = '/api/ranking';
+  const API = 'https://jwkydvtvjwcrdqfmvrrk.supabase.co/functions/v1/wall-ranking';
   let identity = '';
   let nickname = '';
   let run = null;
