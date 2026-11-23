@@ -273,43 +273,95 @@
     }
   }
 
+  // A lupa percorre apenas uma curva Bézier, calculada quadro a quadro.
+  // Não há mudanças de trajetória, chacoalhadas ou saltos entre keyframes.
   function playOpening() {
     const opening = document.getElementById('opening-screen');
     const skip = document.getElementById('skip-opening');
-    if (!opening || !skip || reduceMotion.matches || window.location.hash === '#experiencia') {
+    const button = document.getElementById('begin-button');
+    if (!opening || !skip || !button || reduceMotion.matches || window.location.hash === '#experiencia') {
       opening?.remove();
       return;
     }
-    const button = document.getElementById('begin-button');
-    if (!button) { opening.remove(); return; }
-    const rect = button.getBoundingClientRect();
-    const focusX = rect.left + rect.width / 2;
-    const focusY = rect.top + rect.height / 2;
-    const offsetX = focusX - window.innerWidth / 2;
-    const offsetY = focusY - window.innerHeight / 2;
-    opening.style.setProperty('--drop-x', offsetX + 'px');
-    opening.style.setProperty('--drop-y', offsetY + 'px');
-    opening.style.setProperty('--glide-x', (offsetX * .63) + 'px');
-    opening.style.setProperty('--glide-y', (offsetY * .63) + 'px');
 
-    let closed = false;
-    let finishTimer;
-    const complete = () => {
-      if (closed) return;
-      closed = true;
-      window.clearTimeout(finishTimer);
-      opening.classList.remove('is-running');
-      opening.remove();
-      if (!reduceMotion.matches && rect.top < window.innerHeight && rect.bottom > 0) {
-        button.classList.remove('is-landing');
-        void button.offsetWidth;
-        button.classList.add('is-landing');
-        button.addEventListener('animationend', () => button.classList.remove('is-landing'), { once: true });
-      }
+    const lens = opening.querySelector('.intro-magnifier');
+    if (!lens) { opening.remove(); return; }
+    const hold = 1750;
+    const flight = 6900;
+    const total = hold + flight;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    // Em telefones baixos, garante que o botão esteja acessível na última cena.
+    let buttonRect = button.getBoundingClientRect();
+    if (width <= 600 && (buttonRect.bottom > height - 16 || buttonRect.top < 0)) {
+      button.scrollIntoView({ behavior: 'auto', block: 'center' });
+      buttonRect = button.getBoundingClientRect();
+    }
+
+    const lensSize = Math.max(74, lens.getBoundingClientRect().width || 100);
+    const endX = buttonRect.left + buttonRect.width / 2;
+    const endY = buttonRect.top + buttonRect.height / 2;
+    const path = [
+      { x: width * .63, y: -lensSize * 1.25 },
+      { x: width * .72, y: height * .24 },
+      { x: endX + Math.min(width * .16, 150), y: endY - Math.min(height * .22, 140) },
+      { x: endX, y: endY }
+    ];
+    const ease = t => t * t * t * (t * (t * 6 - 15) + 10);
+    const cubic = (a, b, c, d, t) => {
+      const inv = 1 - t;
+      return inv * inv * inv * a + 3 * inv * inv * t * b
+        + 3 * inv * t * t * c + t * t * t * d;
     };
-    skip.addEventListener('click', complete);
-    window.requestAnimationFrame(() => opening.classList.add('is-running'));
-    finishTimer = window.setTimeout(complete, 4220);
+
+    let stopped = false;
+    let raf = null;
+    let initialTime = null;
+    let safetyTimer = null;
+    function close() {
+      if (stopped) return;
+      stopped = true;
+      if (raf !== null && window.cancelAnimationFrame) window.cancelAnimationFrame(raf);
+      if (safetyTimer !== null) window.clearTimeout(safetyTimer);
+      window.removeEventListener('resize', close);
+      opening.remove();
+      button.classList.add('is-landing');
+      button.addEventListener('animationend', () => button.classList.remove('is-landing'), { once: true });
+    }
+
+    function draw(now) {
+      if (stopped) return;
+      if (initialTime === null) initialTime = now;
+      const elapsed = Math.max(0, now - initialTime);
+      const raw = Math.min(1, Math.max(0, (elapsed - hold) / flight));
+      const t = ease(raw);
+      if (elapsed >= hold) {
+        const x = cubic(path[0].x, path[1].x, path[2].x, path[3].x, t);
+        const y = cubic(path[0].y, path[1].y, path[2].y, path[3].y, t);
+        // O centro da lente, e não a ponta do cabo, pousa no botão.
+        const scale = .94 - .28 * t;
+        const shiftX = lensSize * (.5 - .38 * scale);
+        const shiftY = lensSize * (.5 - .36 * scale);
+        lens.style.transform = 'translate3d(' + (x - shiftX).toFixed(2)
+          + 'px,' + (y - shiftY).toFixed(2) + 'px,0) scale(' + scale.toFixed(4) + ')';
+        lens.style.opacity = String(Math.min(1, elapsed / 900));
+        // A página abre pelo círculo da lupa somente no fim do trajeto.
+        const open = ease(Math.min(1, Math.max(0, (raw - .72) / .28)));
+        const radius = Math.hypot(width, height) * 1.45 * open;
+        opening.style.setProperty('--reveal-x', x.toFixed(2) + 'px');
+        opening.style.setProperty('--reveal-y', y.toFixed(2) + 'px');
+        opening.style.setProperty('--reveal-radius', radius.toFixed(2) + 'px');
+      }
+      if (elapsed < total) raf = window.requestAnimationFrame(draw);
+      else close();
+    }
+
+    skip.addEventListener('click', close);
+    window.addEventListener('resize', close, { passive: true });
+    opening.classList.add('is-running');
+    raf = window.requestAnimationFrame(draw);
+    safetyTimer = window.setTimeout(close, total + 1500);
   }
 
   function animateQuestion(burst) {
