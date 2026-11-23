@@ -1,42 +1,223 @@
-/* O Brasil em Três Canções — seis perguntas, sem interações físicas. */
+/* A Parede Fala — investigação do mural físico, edição 2026.
+   As respostas são verificadas localmente. Nenhuma pista depende de QR code,
+   link externo ou conhecimento que não esteja legível no cartaz. */
 (() => {
   'use strict';
-  const songs = [
-    {artist:'RAUL SEIXAS', title:'Aluga-se', year:'1980', fallback:'assets/fallback-raul.svg', image:'https://lastfm.freetls.fastly.net/i/u/ar0/fa813ffde42679d4e07db1c37093287d.jpg', link:'https://youtu.be/d3iI-ktX2WI?is=1yUYdp_tKhb2sOEx', insight:'A ironia questiona o que acontece quando as riquezas nacionais viram mercadoria.'},
-    {artist:'LEGIÃO URBANA', title:'Que País É Este', year:'1987', fallback:'assets/fallback-legiao.svg', image:'https://rawmusicstore.com/product/legiao-urbana-que-pais-e-este-1978-1987/2401-208-3.jpg', link:'https://youtu.be/vA-3BYOW2wo?is=EOaK3CR3gpI-I2Rr', insight:'O protesto denuncia a corrupção e o desencanto com as instituições.'},
-    {artist:'CAZUZA', title:'Brasil', year:'1988', fallback:'assets/fallback-cazuza.svg', image:'https://p2.trrsf.com/image/fget/cf/1200/900/middle/images.terra.com/2025/06/27/1858155718-cazuza-1988-foto-reproducao-youtube.jpg', link:'https://youtu.be/kCUZr_K8et8?is=OaU8g8vS9VH5PDBc', insight:'A voz inquieta mostra que é possível criticar o país sem deixar de se importar com ele.'}
-  ];
-  // O gabarito é armazenado no próprio JS. Não há qualquer etapa ligada à parede física.
+
   const questions = [
-    {song:0, text:'Na música “Aluga-se”, o que Raul Seixas sugere fazer com o Brasil?', choices:['Alugar o país','Mudar a capital','Fechar todas as praias'], correct:0, explanation:'A sugestão de alugar o Brasil é uma ironia usada para fazer crítica social.'},
-    {song:0, text:'A proposta apresentada na música é principalmente...', choices:['Uma propaganda de turismo','Uma crítica feita com ironia','Um convite para comprar imóveis'], correct:1, explanation:'Raul usa humor e exagero para questionar a entrega de riquezas e a dependência econômica.'},
-    {song:1, text:'Que problema aparece como crítica central em “Que País É Este”?', choices:['A falta de feriados','A corrupção','O excesso de shows'], correct:1, explanation:'A canção questiona a corrupção e outras contradições da vida política e social.'},
-    {song:1, text:'A pergunta do título expressa principalmente qual sentimento?', choices:['Indignação','Orgulho sem críticas','Curiosidade geográfica'], correct:0, explanation:'É uma pergunta de protesto, não uma dúvida sobre a localização do país.'},
-    {song:2, text:'Na música “Brasil”, Cazuza apresenta um olhar...', choices:['Que só elogia o país','Crítico sobre a realidade brasileira','Voltado apenas às paisagens naturais'], correct:1, explanation:'O cantor usa a música para apontar problemas da vida pública e da sociedade.'},
-    {song:2, text:'Qual tema combina mais com a mensagem de “Brasil”?', choices:['Desigualdades e problemas políticos','Receitas culinárias','Uma viagem pelo espaço'], correct:0, explanation:'A música coloca em evidência contradições políticas e sociais do Brasil.'}
+    {
+      section: 'IDENTIDADE DO MURAL', area: 'No alto, na faixa amarela',
+      question: 'Qual pergunta forma o título principal do mural?',
+      choices: ['E se o modernismo fosse hoje?', 'Onde nasceu o modernismo?', 'Por que a arte precisa de regras?'],
+      correct: 0,
+      hint: 'Volte ao alto do cartaz e leia as palavras montadas como recortes.',
+      explanation: 'O título convida a imaginar o modernismo diante das questões do presente.'
+    },
+    {
+      section: 'IDENTIDADE DO MURAL', area: 'Na lateral direita, sobre o fundo roxo',
+      question: 'Qual escritor aparece identificado junto ao grande retrato?',
+      choices: ['Mário de Andrade', 'Lima Barreto', 'Manuel Bandeira'],
+      correct: 1,
+      hint: 'Procure o retrato em preto e branco com letras recortadas logo abaixo.',
+      explanation: 'O escritor é uma das referências centrais da montagem.'
+    },
+    {
+      section: 'LITERATURA', area: 'No canto superior direito',
+      question: 'Qual livro aparece em destaque na parte de cima do mural?',
+      choices: ['Macunaíma', 'O Cortiço', 'Triste fim de Policarpo Quaresma'],
+      correct: 2,
+      hint: 'Procure a capa clara de um romance, na área amarela.',
+      explanation: 'A obra e a imagem do escritor fazem parte das referências literárias da exposição.'
+    },
+    {
+      section: 'NOTÍCIAS', area: 'Na região superior do painel roxo',
+      question: 'Segundo a manchete sobre um incêndio, qual universidade perdeu pesquisas científicas?',
+      choices: ['Universidade Federal de Pernambuco', 'Universidade de São Paulo', 'Universidade Federal do Rio de Janeiro'],
+      correct: 0,
+      hint: 'Leia a notícia sobre o incêndio. O nome da instituição está na manchete.',
+      explanation: 'A manchete destaca a perda de pesquisas científicas na Universidade Federal de Pernambuco.'
+    },
+    {
+      section: 'NOTÍCIAS', area: 'No centro do painel roxo',
+      question: 'Quantos casos de violência política o governo diz acompanhar em uma das notícias?',
+      choices: ['20', '45', '80'],
+      correct: 1,
+      hint: 'Encontre a manchete sobre violência política nas eleições e procure o número.',
+      explanation: 'O recorte informa que o governo acompanha 45 casos de violência política.'
+    },
+    {
+      section: 'NOTÍCIAS', area: 'Na metade esquerda, sobre o fundo roxo',
+      question: 'Qual cidade aparece na notícia sobre dois casos de agressão no domingo de eleições?',
+      choices: ['Brasília', 'Rio Verde', 'Recife'],
+      correct: 1,
+      hint: 'Procure a manchete que fala em dois casos de agressão.',
+      explanation: 'A cidade mencionada nessa manchete é Rio Verde.'
+    },
+    {
+      section: 'NOTÍCIAS', area: 'Na parte inferior esquerda da faixa roxa',
+      question: 'Qual estado aparece abreviado na notícia sobre ameaças contra indígenas?',
+      choices: ['São Paulo (SP)', 'Bahia (BA)', 'Mato Grosso do Sul (MS)'],
+      correct: 2,
+      hint: 'Olhe a manchete sobre a força-tarefa e leia a sigla no final.',
+      explanation: 'A notícia cita ameaças a indígenas em MS, sigla de Mato Grosso do Sul.'
+    },
+    {
+      section: 'MÚSICA', area: 'Na faixa verde, próximo ao retrato central',
+      question: 'Qual banda aparece identificada no cartão musical de “Que País É Este”?',
+      choices: ['Titãs', 'Legião Urbana', 'Os Paralamas do Sucesso'],
+      correct: 1,
+      hint: 'Procure o cartão cinza com o título da música e leia a linha do artista.',
+      explanation: 'O cartão musical identifica a banda Legião Urbana.'
+    },
+    {
+      section: 'PROVOCAÇÃO FINAL', area: 'Na faixa azul e amarela, na base do mural',
+      question: 'Na frase “O Brasil não tem povo, tem ...”, qual é a última palavra?',
+      choices: ['público', 'governo', 'história'],
+      correct: 0,
+      hint: 'Olhe para a frase grande que está na parte mais baixa da montagem.',
+      explanation: 'O mural apresenta a frase de Lima Barreto como provocação para pensar a sociedade.'
+    }
   ];
-  const $ = (selector) => document.querySelector(selector);
-  const app = $('#quiz-app');
-  const progressKey = 'parede-fala-musicas-v1';
+
+  const STORAGE_KEY = 'a-parede-fala-mural-2026-v2';
+  const app = document.getElementById('quiz-app');
+  const begin = document.getElementById('begin-button');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const empty = () => ({
+    started: false, index: 0,
+    solved: Array(questions.length).fill(null),
+    errors: Array(questions.length).fill(0)
+  });
+
   function load() {
-    try { const saved=JSON.parse(localStorage.getItem(progressKey)); if(saved && Number.isInteger(saved.i) && saved.i>=0 && saved.i<=questions.length && Array.isArray(saved.picks) && saved.picks.length===questions.length) return saved; }catch(_){}
-    return {i:0,picks:Array(questions.length).fill(null),started:false};
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      if (saved && typeof saved.started === 'boolean'
+        && Number.isInteger(saved.index) && saved.index >= 0 && saved.index <= questions.length
+        && Array.isArray(saved.solved) && saved.solved.length === questions.length
+        && saved.solved.every((value, i) => value === null || value === questions[i].correct)
+        && Array.isArray(saved.errors) && saved.errors.length === questions.length
+        && saved.errors.every(value => Number.isInteger(value) && value >= 0)) return saved;
+    } catch (_) { /* localStorage pode estar desativado */ }
+    return empty();
   }
-  let state=load();
-  // A experiência fica no estado de apresentação até o usuário clicar em começar.
-  if(!state.started) state={i:0,picks:Array(questions.length).fill(null),started:false};
-  function save(){try{localStorage.setItem(progressKey,JSON.stringify(state));}catch(_){}}
-  function escapeHtml(str){return String(str).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
-  function setStart(){state={i:0,picks:Array(questions.length).fill(null),started:true};save();render();}
-  function render(){
-    if(!state.started){app.innerHTML=`<div class="initial-quiz"><p class="mini-prelude">PRONTO PARA COMEÇAR?</p><h3>Três músicas.<br>Seis perguntas.<br><em>Seu olhar.</em></h3><p>A experiência dura poucos minutos e funciona inteiramente pelo celular.</p><button class="button button-light" id="start-quiz" type="button">INICIAR PERGUNTAS <span aria-hidden="true">↗</span></button></div>`;$('#start-quiz').addEventListener('click',setStart);return;}
-    if(state.i>=questions.length){renderResult();return;}
-    const q=questions[state.i],song=songs[q.song],picked=state.picks[state.i],answered=picked!==null;
-    const photo=`<figure class="quiz-track-art"><img src="${song.image}" onerror="this.onerror=null;this.src='${song.fallback}'" alt="Imagem de ${escapeHtml(song.artist)}" loading="lazy"><figcaption>ARQUIVO SONORO · ${song.year}</figcaption></figure>`;
-    app.innerHTML=`<div class="quiz-topline"><span>O BRASIL EM TRÊS CANÇÕES</span><span>UMA PERGUNTA DE CADA VEZ</span></div><div class="quiz-track">${photo}<div class="quiz-track-copy"><span class="track-subtitle">${escapeHtml(song.artist)} · ${song.year}</span><h3>${escapeHtml(song.title)}</h3><p>${escapeHtml(song.insight)}</p><a class="listen-link" href="${song.link}" target="_blank" rel="noopener noreferrer">OUVIR A MÚSICA NO YOUTUBE ↗</a></div></div><div class="question-container"><div class="question-meta">RESPONDA SOBRE A MÚSICA</div><h4>${escapeHtml(q.text)}</h4><form id="question-form" novalidate><div class="answers" role="radiogroup" aria-label="Alternativas da pergunta">${q.choices.map((option,j)=>`<label class="answer-option ${answered?'is-locked':''} ${answered&&q.correct===j?'is-correct':''} ${answered&&picked===j&&picked!==q.correct?'is-incorrect':''}"><input type="radio" name="alternative" value="${j}" ${picked===j?'checked':''} ${answered?'disabled':''} required><span class="answer-text">${escapeHtml(option)}</span></label>`).join('')}</div><div class="quiz-actions"><div class="feedback ${answered?(picked===q.correct?'positive':'negative'):''}" id="question-feedback" role="status">${answered?`${picked===q.correct?'✓ Isso mesmo!':'✕ Não foi dessa vez.'} ${escapeHtml(q.explanation)}`:''}</div><button class="button" id="answer-button" type="submit">${answered?(state.i===questions.length-1?'VER RESULTADO':'PRÓXIMA PERGUNTA'):'CONFIRMAR RESPOSTA'} <span aria-hidden="true">↗</span></button></div></form></div>`;
-    $('#question-form').addEventListener('submit',(event)=>{event.preventDefault();if(state.picks[state.i]===null){const checked=$('input[name="alternative"]:checked');if(!checked){$('#question-feedback').textContent='Escolha uma das alternativas para continuar.';$('#question-feedback').className='feedback negative';return;}state.picks[state.i]=Number(checked.value);save();render();}else{state.i++;save();render();if(window.matchMedia('(max-width:600px)').matches)$('#quiz-app').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}});
+
+  let state = load();
+  function save() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (_) { /* modo privado */ }
   }
-  function renderResult(){let correct=0;questions.forEach((q,i)=>{if(q.correct===state.picks[i])correct++;});app.innerHTML=`<div class="result-page"><span class="result-seal">FIM DA ESCUTA · COMEÇO DA CONVERSA</span><h3>O BRASIL<br><em>AINDA PERGUNTA.</em></h3><span class="result-score">VOCÊ ACERTOU ${correct} DE 6 PERGUNTAS</span><p>Essas canções mostram que amar o país não precisa significar ignorar seus problemas.</p><button class="button" id="restart-quiz" type="button">OUVIR E RESPONDER NOVAMENTE <span aria-hidden="true">↗</span></button></div>`;$('#restart-quiz').addEventListener('click',setStart);}
-  $('#begin-button').addEventListener('click',()=>{if(!state.started){setStart();}$('#experiencia').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});});
+
+  function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, char => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[char]);
+  }
+
+  function start() {
+    state = empty();
+    state.started = true;
+    save();
+    render();
+  }
+
+  function scrollToQuiz() {
+    document.getElementById('experiencia').scrollIntoView({
+      behavior: reduceMotion.matches ? 'auto' : 'smooth',
+      block: 'start'
+    });
+  }
+
+  function renderStart() {
+    app.innerHTML = `<div class="quiz-intro">
+      <span class="quiz-intro-kicker">PRONTO PARA INVESTIGAR?</span>
+      <h3>NOVE PISTAS.<br>UMA PAREDE.<br><em>O SEU OLHAR.</em></h3>
+      <p>Antes de começar, fique diante do mural. Você vai encontrar cada resposta nele.</p>
+      <button type="button" class="button button-light" id="start-quiz">INICIAR PERGUNTAS <span aria-hidden="true">↗</span></button>
+    </div>`;
+    document.getElementById('start-quiz').addEventListener('click', start);
+  }
+
+  function renderQuestion() {
+    const q = questions[state.index];
+    const solved = state.solved[state.index] !== null;
+    const percent = Math.round((state.index / questions.length) * 100);
+    app.innerHTML = `
+      <div class="quiz-progress-header"><span>PISTA ${String(state.index + 1).padStart(2, '0')} / ${String(questions.length).padStart(2, '0')}</span><span>${escapeHTML(q.section)}</span></div>
+      <div class="progress-track" role="progressbar" aria-label="Progresso do desafio" aria-valuemin="0" aria-valuemax="${questions.length}" aria-valuenow="${state.index}"><span style="width:${percent}%"></span></div>
+      <div class="question-area">
+        <div class="question-eyebrow">INVESTIGAÇÃO ${String(state.index + 1).padStart(2, '0')}</div>
+        <h3 class="question-title" tabindex="-1">${escapeHTML(q.question)}</h3>
+        <div class="location-hint"><span aria-hidden="true">⌖</span> ONDE PROCURAR: <strong>${escapeHTML(q.area)}</strong></div>
+        <form id="question-form" novalidate>
+          <fieldset class="answers"><legend class="visually-hidden">Escolha uma alternativa</legend>
+          ${q.choices.map((choice, number) => `<label class="answer ${solved ? 'locked' : ''} ${solved && q.correct === number ? 'correct' : ''}">
+            <input type="radio" name="answer" value="${number}" ${solved && q.correct === number ? 'checked' : ''} ${solved ? 'disabled' : ''}>
+            <span class="answer-letter">${String.fromCharCode(65 + number)}</span><span class="answer-label">${escapeHTML(choice)}</span>
+            <span class="answer-arrow" aria-hidden="true">${solved && q.correct === number ? '✓' : '↗'}</span>
+          </label>`).join('')}
+          </fieldset>
+          <p id="feedback" class="feedback ${solved ? 'success' : ''}" role="status" aria-live="polite">${solved ? `✓ Você encontrou a pista! ${escapeHTML(q.explanation)}` : ''}</p>
+          <div class="quiz-controls">
+            <button type="button" id="restart-quiz" class="text-button">RECOMEÇAR</button>
+            <button type="submit" class="button button-dark">${solved ? (state.index === questions.length - 1 ? 'VER RESULTADO' : 'PRÓXIMA PISTA') : 'CONFERIR RESPOSTA'} <span aria-hidden="true">↗</span></button>
+          </div>
+        </form>
+      </div>`;
+
+    document.getElementById('restart-quiz').addEventListener('click', start);
+    document.getElementById('question-form').addEventListener('submit', event => {
+      event.preventDefault();
+      if (state.solved[state.index] !== null) {
+        state.index += 1;
+        save();
+        render();
+        document.querySelector('.quiz-app .question-title, .quiz-app .result-title')?.focus();
+        return;
+      }
+      const choice = app.querySelector('input[name="answer"]:checked');
+      const feedback = document.getElementById('feedback');
+      if (!choice) {
+        feedback.className = 'feedback warning';
+        feedback.textContent = 'Escolha uma alternativa antes de conferir.';
+        return;
+      }
+      const value = Number(choice.value);
+      if (value !== q.correct) {
+        state.errors[state.index] += 1;
+        save();
+        feedback.className = 'feedback warning';
+        feedback.textContent = 'Ainda não! ' + q.hint + ' Você pode tentar outra vez.';
+        return;
+      }
+      state.solved[state.index] = value;
+      save();
+      render();
+      document.querySelector('.quiz-app .question-title')?.focus();
+    });
+  }
+
+  function renderResult() {
+    const firstTry = state.errors.filter(count => count === 0).length;
+    app.innerHTML = `<div class="result">
+      <span class="result-kicker">TODAS AS PISTAS ENCONTRADAS ✳</span>
+      <h3 class="result-title" tabindex="-1">VOCÊ LEU<br><em>A PAREDE!</em></h3>
+      <div class="result-score"><strong>09 / 09</strong><span>PISTAS CONCLUÍDAS</span></div>
+      <p>Você encontrou informações na literatura, nas notícias, na música e nas frases do mural. O importante é olhar para além da primeira impressão.</p>
+      <p class="result-detail">Pistas resolvidas na primeira tentativa: <strong>${firstTry} de ${questions.length}</strong>.</p>
+      <button type="button" id="play-again" class="button button-dark">INVESTIGAR DE NOVO <span aria-hidden="true">↗</span></button>
+    </div>`;
+    document.getElementById('play-again').addEventListener('click', start);
+  }
+
+  function render() {
+    if (!state.started) renderStart();
+    else if (state.index >= questions.length) renderResult();
+    else renderQuestion();
+  }
+
+  begin.addEventListener('click', () => {
+    if (!state.started) start();
+    scrollToQuiz();
+  });
   render();
 })();

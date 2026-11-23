@@ -3,74 +3,105 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#211c19">
-  <meta name="description" content="O Brasil em três canções: Raul Seixas, Legião Urbana e Cazuza. Ouça, reflita e responda a seis perguntas sobre o país.">
-  <meta property="og:title" content="O Brasil em Três Canções — A Parede Fala">
-  <meta property="og:description" content="Três músicas, seis perguntas e um Brasil cheio de vozes.">
-  <title>O Brasil em Três Canções — A Parede Fala</title>
+  <meta name="theme-color" content="#f7df54">
+  <meta name="description" content="A Parede Fala: explore o mural E se o modernismo fosse hoje? e encontre as pistas para responder ao desafio interativo.">
+  <meta property="og:title" content="A Parede Fala | Uma investigação no mural">
+  <meta property="og:description" content="Literatura, manchetes, música e crítica social. As respostas estão diante de você, na parede.">
+  <title>A Parede Fala — Investigue o mural</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
   <script src="app.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#experiencia">Pular para as perguntas</a>
-  <div class="top-ticker" aria-hidden="true"><span>ARQUIVO MUSICAL BRASILEIRO</span><span>♪</span><span>ARTE &amp; CRÍTICA</span><span>♪</span><span>TRÊS VOZES, UM PAÍS</span></div>
-  <header class="site-header">
-    <a class="brand" href="#inicio" aria-label="A Parede Fala, voltar ao início"><span class="brand-stamp">AP<span class="brand-dot">.</span></span><span class="brand-name">A PAREDE<br>FALA.</span></a>
-    <nav class="header-nav" aria-label="Navegação principal"><a href="#sobre">O PROJETO</a><a href="#repertorio">AS MÚSICAS</a><a class="header-start" href="#experiencia">PARTICIPAR <span aria-hidden="true">↗</span></a></nav>
+  <a class="skip-link" href="#experiencia">Ir direto para a experiência</a>
+
+  <div class="ribbon" aria-hidden="true">
+    <span>EXPOSIÇÃO INTERATIVA</span><span class="ribbon-mark">✳</span>
+    <span>ARTE + LITERATURA + SOCIEDADE</span><span class="ribbon-mark">✳</span>
+    <span>2026 / EDIÇÃO DO MURAL</span>
+  </div>
+
+  <header class="site-header" id="inicio">
+    <a class="brand" href="#inicio" aria-label="A Parede Fala, início"><span class="brand-icon">AP<span>.</span></span><span class="brand-text">A PAREDE<br>FALA</span></a>
+    <nav aria-label="Navegação">
+      <a href="#como-funciona">COMO FUNCIONA</a>
+      <a href="#pistas">ONDE OLHAR</a>
+      <a href="#experiencia" class="nav-cta">JOGAR <span aria-hidden="true">↗</span></a>
+    </nav>
   </header>
 
-  <main id="inicio">
-    <section class="hero" aria-labelledby="hero-heading">
-      <div class="hero-copy">
-        <div class="eyebrow"><span class="tiny-note">♫</span> EXPOSIÇÃO MUSICAL &amp; INTERATIVA <span class="eyebrow-number">BRASIL / 2026</span></div>
-        <p class="hero-kicker">UM PAÍS. TRÊS VOZES.</p>
-        <h1 id="hero-heading"><span class="line-one">O BRASIL</span><span class="line-two">EM <em>TRÊS</em></span><span class="line-three">CANÇÕES<span class="headline-period">.</span></span></h1>
-        <div class="hero-summary"><span class="hand-drawn-note" aria-hidden="true">♫</span><p>O que a música revela sobre um país que ama seus símbolos, mas nem sempre escuta suas próprias contradições?</p></div>
-        <div class="hero-actions"><button id="begin-button" class="button cut-button" type="button">COMEÇAR A EXPERIÊNCIA <span aria-hidden="true">↗</span></button><span class="hero-count">03 MÚSICAS <b>·</b> 06 PERGUNTAS</span></div>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-content">
+        <p class="overline"><span class="overline-star">✳</span> UMA EXPERIÊNCIA PARA QUEM OLHA ALÉM</p>
+        <h1 id="hero-title"><span>UMA</span><span class="cut-yellow">PAREDE.</span><span>MIL <i>VOZES.</i></span></h1>
+        <p class="hero-description">Há perguntas espalhadas entre recortes, livros, músicas e notícias. Para respondê-las, você precisa <strong>observar o mural à sua frente.</strong></p>
+        <div class="hero-actions">
+          <button id="begin-button" type="button" class="button button-dark">COMEÇAR A INVESTIGAÇÃO <span aria-hidden="true">↗</span></button>
+          <span class="count-label">09 PISTAS <b> / </b> 01 MURAL</span>
+        </div>
+        <p class="hero-small">SEM PESQUISAR NA INTERNET. SEM ADIVINHAR.<br>O MURAL É SUA FONTE.</p>
       </div>
-      <div class="hero-collage" aria-label="Colagem com imagens dos artistas Raul Seixas, Legião Urbana e Cazuza">
-        <div class="hero-paper-clipping clipping-back" aria-hidden="true">NÃO SE CALA<br>O QUE INCOMODA.</div>
-        <figure class="hero-photo hero-photo-raul"><img src="https://lastfm.freetls.fastly.net/i/u/ar0/fa813ffde42679d4e07db1c37093287d.jpg" onerror="this.onerror=null;this.src='assets/fallback-raul.svg'" alt="Retrato de Raul Seixas" loading="eager" decoding="async"><figcaption><b>RAUL SEIXAS</b><span>ALUGA-SE</span></figcaption></figure>
-        <figure class="hero-photo hero-photo-legiao"><img src="https://rawmusicstore.com/product/legiao-urbana-que-pais-e-este-1978-1987/2401-208-3.jpg" onerror="this.onerror=null;this.src='assets/fallback-legiao.svg'" alt="Capa do álbum Que País É Este, da Legião Urbana" loading="eager" decoding="async"><figcaption><b>LEGIÃO URBANA</b><span>QUE PAÍS É ESTE</span></figcaption></figure>
-        <figure class="hero-photo hero-photo-cazuza"><img src="https://p2.trrsf.com/image/fget/cf/1200/900/middle/images.terra.com/2025/06/27/1858155718-cazuza-1988-foto-reproducao-youtube.jpg" onerror="this.onerror=null;this.src='assets/fallback-cazuza.svg'" alt="Cazuza cantando ao microfone em apresentação de 1988" loading="eager" decoding="async"><figcaption><b>CAZUZA</b><span>BRASIL</span></figcaption></figure>
-        <span class="collage-ring" aria-hidden="true"></span><span class="collage-scribble" aria-hidden="true">escute antes<br>de julgar ↗</span><span class="collage-needle" aria-hidden="true">♫</span>
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-sheet art-yellow"></div>
+        <div class="art-sheet art-purple"></div>
+        <div class="art-sheet art-green"></div>
+        <div class="art-paper art-paper-top"><span>OLHE</span><span>DE NOVO!</span></div>
+        <div class="art-note art-note-one">?!</div>
+        <div class="art-note art-note-two">✳</div>
+        <div class="art-frame">
+          <div class="art-line art-line-a">ARTE</div>
+          <div class="art-line art-line-b">NÃO</div>
+          <div class="art-line art-line-c">SE CALA.</div>
+        </div>
+        <div class="art-paper art-paper-bottom">RECORTES DO PRESENTE <span>↗</span></div>
+        <div class="art-label">UMA PAREDE VIVA. UMA LEITURA SUA.</div>
       </div>
-      <p class="hero-footer-note">ARQUIVO ABERTO <span class="hero-footer-dash">////</span> UMA EXPERIÊNCIA SOBRE POLARIZAÇÃO &amp; UFANISMO EXACERBADO</p>
     </section>
 
-    <section class="intro-strip" id="sobre" aria-label="Sobre a experiência">
-      <div class="intro-column intro-title"><span class="section-meta">01 / CONCEITO</span><h2>AMAR NÃO É<br><em>IGNORAR.</em></h2></div>
-      <div class="intro-column intro-content"><p>O rock brasileiro transformou indignação em música. Em vez de elogiar um Brasil perfeito, esses artistas apontaram contradições, desigualdades e abusos de poder.</p><p class="intro-emphasis">Questionar o país também pode ser uma forma de se importar com ele.</p></div>
-      <div class="intro-column intro-sticker" aria-hidden="true"><span>O BRASIL<br>NÃO CABE<br>NUM SLOGAN.</span><span class="scribble-underline"></span></div>
-    </section>
-
-    <section id="repertorio" class="repertorio" aria-labelledby="repertorio-title">
-      <div class="section-heading"><div><p class="section-meta">02 / REPERTÓRIO</p><h2 id="repertorio-title">AS VOZES DO<br><em>INCÔMODO.</em></h2></div><p>Três canções que provocam uma mesma pergunta: que Brasil estamos escolhendo enxergar?</p></div>
-      <div class="record-grid">
-        <article class="record-card" data-record="raul">
-          <div class="record-photo-shell"><img src="https://lastfm.freetls.fastly.net/i/u/ar0/fa813ffde42679d4e07db1c37093287d.jpg" onerror="this.onerror=null;this.src='assets/fallback-raul.svg'" alt="Foto de Raul Seixas, rosto e jaqueta escura" loading="lazy" decoding="async"><span class="record-label">FAIXA A</span><span class="record-sticker">1980</span></div>
-          <div class="record-body"><span class="record-artist">RAUL SEIXAS</span><h3>Aluga-se</h3><p>A ironia de um país colocado à disposição. Uma crítica à submissão econômica e à perda de autonomia.</p><a href="https://youtu.be/d3iI-ktX2WI?is=1yUYdp_tKhb2sOEx" target="_blank" rel="noopener noreferrer" class="listen-link">OUVIR NO YOUTUBE <span aria-hidden="true">↗</span></a></div>
-        </article>
-        <article class="record-card record-legiao" data-record="legiao">
-          <div class="record-photo-shell"><img src="https://rawmusicstore.com/product/legiao-urbana-que-pais-e-este-1978-1987/2401-208-3.jpg" onerror="this.onerror=null;this.src='assets/fallback-legiao.svg'" alt="Capa do disco Que País É Este, com os integrantes da Legião Urbana" loading="lazy" decoding="async"><span class="record-label">FAIXA B</span><span class="record-sticker">1987</span></div>
-          <div class="record-body"><span class="record-artist">LEGIÃO URBANA</span><h3>Que País É Este</h3><p>Uma pergunta direta diante da corrupção, da desigualdade e do desencanto político.</p><a href="https://youtu.be/vA-3BYOW2wo?is=EOaK3CR3gpI-I2Rr" target="_blank" rel="noopener noreferrer" class="listen-link">OUVIR NO YOUTUBE <span aria-hidden="true">↗</span></a></div>
-        </article>
-        <article class="record-card record-cazuza" data-record="cazuza">
-          <div class="record-photo-shell"><img src="https://p2.trrsf.com/image/fget/cf/1200/900/middle/images.terra.com/2025/06/27/1858155718-cazuza-1988-foto-reproducao-youtube.jpg" onerror="this.onerror=null;this.src='assets/fallback-cazuza.svg'" alt="Cazuza cantando ao microfone com faixa na cabeça" loading="lazy" decoding="async"><span class="record-label">FAIXA C</span><span class="record-sticker">1988</span></div>
-          <div class="record-body"><span class="record-artist">CAZUZA</span><h3>Brasil</h3><p>Um retrato inconformado de problemas políticos e sociais, longe do patriotismo sem questionamentos.</p><a href="https://youtu.be/kCUZr_K8et8?is=OaU8g8vS9VH5PDBc" target="_blank" rel="noopener noreferrer" class="listen-link">OUVIR NO YOUTUBE <span aria-hidden="true">↗</span></a></div>
-        </article>
+    <section class="instructions" id="como-funciona" aria-labelledby="instructions-title">
+      <div class="section-topline"><span>01 / O PERCURSO</span><span>LEIA · INVESTIGUE · RESPONDA</span></div>
+      <div class="instructions-heading">
+        <h2 id="instructions-title">A RESPOSTA<br><em>NÃO ESTÁ AQUI.</em></h2>
+        <p>Este site é apenas o desafio. O material de consulta é o cartaz físico: procure as informações nele antes de marcar sua alternativa.</p>
       </div>
-      <p class="record-disclaimer">* Canções de 1980, 1987 e 1988. Não pertencem ao Modernismo de 1922, mas dialogam com sua liberdade crítica e de linguagem.</p>
+      <div class="steps">
+        <article class="step"><span class="step-number">01</span><h3>OBSERVE</h3><p>Olhe o mural inteiro. Há pistas em diferentes cores, alturas e recortes.</p></article>
+        <article class="step"><span class="step-number">02</span><h3>ENCONTRE</h3><p>Leia manchetes, títulos, imagens e cartões de música. Cada pergunta indica onde procurar.</p></article>
+        <article class="step"><span class="step-number">03</span><h3>RESPONDA</h3><p>Marque uma opção. Se errar, volte à parede e tente novamente, no seu ritmo.</p></article>
+      </div>
     </section>
 
-    <section id="experiencia" class="quiz-section" aria-labelledby="quiz-title">
-      <div class="quiz-heading"><div><span class="section-meta">03 / PARTICIPE</span><h2 id="quiz-title">AGORA,<br><em>É COM VOCÊ.</em></h2></div><div class="quiz-description"><span class="quiz-tape">COMO FUNCIONA</span><p><strong>Ouça uma música. Responda duas perguntas fáceis.</strong> Depois, continue para a próxima canção. Não há pistas escondidas nem nada para mexer na parede.</p></div></div>
-      <div id="quiz-app" class="quiz-app" aria-live="polite"><div class="initial-quiz"><p class="mini-prelude">PRONTO PARA COMEÇAR?</p><h3>Três músicas.<br>Seis perguntas.<br><em>Seu olhar.</em></h3><p>A experiência dura poucos minutos e funciona inteiramente pelo celular.</p><button class="button button-light" id="start-quiz" type="button">INICIAR PERGUNTAS <span aria-hidden="true">↗</span></button></div></div>
+    <section class="clue-section" id="pistas" aria-labelledby="clues-title">
+      <div class="section-topline"><span>02 / MAPA DE INVESTIGAÇÃO</span><span>SEM SPOILERS</span></div>
+      <div class="clue-heading"><h2 id="clues-title">QUATRO JEITOS<br>DE <em>LER.</em></h2><p>Nem tudo está escrito como notícia. Use os olhos e conecte as linguagens do cartaz.</p></div>
+      <div class="clue-grid">
+        <article class="clue-card clue-yellow"><span class="clue-index">A /</span><span class="clue-symbol" aria-hidden="true">Aa</span><h3>LITERATURA</h3><p>Procure nomes, obras e referências nos recortes.</p></article>
+        <article class="clue-card clue-purple"><span class="clue-index">B /</span><span class="clue-symbol" aria-hidden="true">!</span><h3>MANCHETES</h3><p>Observe os fatos, os lugares e os números.</p></article>
+        <article class="clue-card clue-green"><span class="clue-index">C /</span><span class="clue-symbol" aria-hidden="true">♫</span><h3>CANÇÕES</h3><p>Encontre as vozes e os títulos nos cartões musicais.</p></article>
+        <article class="clue-card clue-blue"><span class="clue-index">D /</span><span class="clue-symbol" aria-hidden="true">?</span><h3>PROVOCAÇÕES</h3><p>Preste atenção também às frases em destaque.</p></article>
+      </div>
     </section>
 
-    <section class="closing-band"><div class="closing-paper"><span>NO FIM, FICA A PERGUNTA</span><strong>CRITICAR O PAÍS É<br><em>DEIXAR DE AMÁ-LO?</em></strong></div><div class="closing-stamp" aria-hidden="true">PENSE<br>OUTRA<br>VEZ.</div></section>
+    <section class="quiz-section" id="experiencia" aria-labelledby="quiz-title">
+      <div class="section-topline"><span>03 / O DESAFIO</span><span>AGORA, É COM VOCÊ</span></div>
+      <div class="quiz-header">
+        <div><p class="quiz-kicker">A PAREDE PERGUNTA</p><h2 id="quiz-title">VOCÊ <em>ENCONTRA?</em></h2></div>
+        <p>São nove perguntas sobre elementos realmente presentes no mural. Nenhuma resposta será mostrada antes de você acertar. <strong>Levante os olhos do celular e investigue.</strong></p>
+      </div>
+      <div id="quiz-app" class="quiz-app" aria-live="polite">
+        <div class="quiz-intro"><span>PRONTO PARA INVESTIGAR?</span><h3>NOVE PISTAS.<br>UMA PAREDE.<br><em>O SEU OLHAR.</em></h3><p>As respostas estão no mural físico.</p><button type="button" class="button button-light" id="start-quiz">INICIAR PERGUNTAS ↗</button></div>
+      </div>
+      <p class="quiz-footnote">O desafio funciona no próprio navegador e guarda seu progresso neste dispositivo. Não precisa de conta.</p>
+    </section>
+
+    <section class="end-band"><span class="end-stamp" aria-hidden="true">✳</span><div><p>UMA ÚLTIMA PROVOCAÇÃO</p><h2>OLHAR É FÁCIL.<br><em>ENXERGAR É OUTRA HISTÓRIA.</em></h2></div></section>
   </main>
-  <footer class="footer"><div class="footer-logo">A PAREDE <span>FALA.</span></div><div class="footer-center">ARTE • MÚSICA • CRÍTICA <span>© 2026</span><a href="FONTES.md" target="_blank" rel="noopener">CRÉDITOS DAS IMAGENS ↗</a></div><div class="footer-author"><small>DESENVOLVIMENTO DO WEBSITE</small><strong>Murilo Gabriel</strong><span>Desenvolvedor do website</span></div></footer>
+
+  <footer class="footer">
+    <a href="#inicio" class="footer-brand">A PAREDE <span>FALA.</span></a>
+    <span>PROJETO INTERATIVO · 2026</span>
+    <div class="footer-author"><small>DESENVOLVIMENTO DO WEBSITE</small><strong>Murilo Gabriel</strong></div>
+  </footer>
 </body>
 </html>

@@ -1,15 +1,17 @@
-# Créditos e fontes — O Brasil em Três Canções
+# Fonte primária das perguntas — A Parede Fala
 
-As imagens são **referenciadas diretamente nos sites de origem**, não são redistribuídas no ZIP.
+A fonte é a **fotografia do mural físico enviada pela organização (novembro de 2026)**, intitulada “E se o modernismo fosse hoje?”. As perguntas pedem exclusivamente elementos que podem ser observados no cartaz.
 
-- **Raul Seixas:** fotografia exibida no [perfil Last.fm](https://www.last.fm/music/Raul%2BSeixas). URL da fotografia: https://lastfm.freetls.fastly.net/i/u/ar0/fa813ffde42679d4e07db1c37093287d.jpg
-- **Legião Urbana:** capa do álbum *Que País É Este 1978/1987*, reproduzida por [Raw Music Store](https://rawmusicstore.com/product/legiao-urbana-que-pais-e-este-1978-1987/). URL: https://rawmusicstore.com/product/legiao-urbana-que-pais-e-este-1978-1987/2401-208-3.jpg
-- **Cazuza:** imagem de performance publicada em [matéria da Terra](https://www.terra.com.br/diversao/a-musica-de-cazuza-que-o-convenceu-a-revelar-diagnostico-de-aids,cd9c63ac9dbe0d0630b9b500de90cd03yghfdjto.html). URL: https://p2.trrsf.com/image/fget/cf/1200/900/middle/images.terra.com/2025/06/27/1858155718-cazuza-1988-foto-reproducao-youtube.jpg
+| Nº | Parte do mural | Informação conferida na imagem |
+| --- | --- | --- |
+| 1 | Título recortado no topo amarelo | “E se o modernismo fosse hoje?” |
+| 2 | Retrato da lateral direita | Identificação “Lima Barreto” |
+| 3 | Capa de livro no topo direito | *Triste fim de Policarpo Quaresma* |
+| 4 | Manchete sobre incêndio | Universidade Federal de Pernambuco |
+| 5 | Manchete sobre violência política | 45 casos |
+| 6 | Manchete sobre agressões nas eleições | Rio Verde |
+| 7 | Manchete sobre ameaças a indígenas | MS (Mato Grosso do Sul) |
+| 8 | Cartão musical na faixa verde | “Que País É Este” — Legião Urbana |
+| 9 | Placa azul e amarela inferior | “O Brasil não tem povo, tem público” — atribuição a Lima Barreto, como aparece no mural |
 
-## Identificação e contexto das músicas
-
-- Raul Seixas, [*Aluga-se*](https://www.opovo.com.br/amp/noticias/brasil/2019/08/20/ha-30-anos--o-brasil-se-despedia-de-raul-seixas--louco--visionario--roqueiro.html)
-- Legião Urbana, [*Que País É Este*](https://renatorusso.com.br/album/que-pais-e-este/) e [Museu da Língua Portuguesa](https://acervo.museudalinguaportuguesa.org.br/acervos/museologico/8617/que-pais-e-esse)
-- Cazuza, [*Brasil*](https://www.institutoclaro.org.br/cidadania/nossas-novidades/podcasts/65-anos-de-cazuza-cancoes-sobre-politica-e-desigualdade-social-permanecem-atuais/)
-
-As perguntas são paráfrases originais baseadas na leitura crítica das músicas. Não há reprodução da letra ou uso de arquivos de áudio. Reprodução de vídeo somente por link externo ao YouTube.
+**Observação:** as notícias são tratadas como *recortes da exposição*, não como acontecimentos atuais verificados em 2026. O site não afirma que essas manchetes ainda são recentes, e não depende dos QR codes. Para a experiência, vale o texto exibido na parede.

@@ -1,33 +1,35 @@
-# A Parede Fala — O Brasil em Três Canções
+# A Parede Fala — investigação do mural
 
-Site estático independente, desenvolvido por **Murilo Gabriel**.
+Experiência interativa estática, em português, desenvolvida por **Murilo Gabriel** para acompanhar o mural físico **“E se o modernismo fosse hoje?”**.
 
-## Nova experiência
+## Como funciona
 
-Três músicas indicadas pela organização:
+O visitante fica diante do cartaz e usa o celular para responder a **nove perguntas**. Para encontrar as respostas, precisa observar o mural físico (título, recortes, autor, capa de livro, manchetes, cartões musicais e frase na parte inferior). O próprio site **não exibe uma cópia do mural nem entrega respostas antecipadamente**.
 
-1. **Aluga-se**, Raul Seixas — https://youtu.be/d3iI-ktX2WI?is=1yUYdp_tKhb2sOEx
-2. **Que País É Este**, Legião Urbana — https://youtu.be/vA-3BYOW2wo?is=EOaK3CR3gpI-I2Rr
-3. **Brasil**, Cazuza — https://youtu.be/kCUZr_K8et8?is=OaU8g8vS9VH5PDBc
+O quiz oferece pistas de **localização no mural**, não de conteúdo. Respostas erradas permitem nova tentativa; somente a resposta correta desbloqueia a próxima pergunta. Ao acertar, o visitante recebe uma explicação curta. Há indicador de progresso, resultado final e reinício. O progresso é salvo com `localStorage` (chave nova para não reaproveitar respostas da versão anterior).
 
-O visitante responde **seis perguntas de múltipla escolha**, duas para cada música, sem interação física com a parede. As respostas são verificadas localmente, com explicações curtas e resultado final. O progresso permanece no navegador até a experiência ser reiniciada.
+## De onde vêm as perguntas?
 
-## Como rodar
+Da fotografia do mural físico fornecida pela organização, em novembro de 2026. Confira [FONTES.md](FONTES.md) para a relação de elementos usados. **Se o cartaz físico for alterado, revise as perguntas de `app.js`** para garantir que os alunos encontrem todas as respostas sem consultar a internet.
 
-Abra `index.html` com Live Server ou um servidor estático (`python -m http.server 8000`). Sem npm, framework ou build. Testado em telas pequenas e desktop.
+Não é necessário ler ou escanear os QR codes para concluir o quiz.
 
-## Arquivos
+## Como editar perguntas
 
-- `index.html`: layout e conteúdo.
-- `styles.css`: colagens, tipografia, composição, responsividade e animações.
-- `app.js`: as seis perguntas, validação, resultado e persistência local.
-- `assets/`: texturas e elementos gráficos originais do projeto anterior.
-- `FONTES.md`: imagens externas e pesquisa factual.
+No arquivo `app.js`, modifique o array `questions`. Cada entrada inclui `section`, `area` (pista espacial), `question`, `choices`, `correct` (índice começando em zero), `hint` e `explanation`. Mantenha a resposta presente no mural.
 
-## Imagens
+## Como executar
 
-As três fotografias/capa são carregadas de fontes externas públicas (Last.fm, Raw Music Store e Terra). O site preserva sua composição mesmo caso alguma dessas fontes fique temporariamente indisponível. A disponibilidade depende dos sites de origem. Os créditos estão em `FONTES.md`.
+Abra `index.html` com Live Server ou qualquer servidor de arquivos estáticos, por exemplo `python -m http.server 8000`. Não há dependências de npm, framework, API ou serviços externos.
 
-## Publicação
+Para publicar na Vercel: projeto vinculado a `DevMurilo0/A_Parede_Fala`, branch `main`, preset `Other`, sem comando de build. Se preferir GitHub Pages, o site também funciona diretamente.
 
-Para publicar no Vercel: importação do repositório independente `DevMurilo0/A_Parede_Fala`, framework `Other`, raiz `./`, branch de produção `main`, sem build command e sem output directory.
+## Estrutura
+
+- `index.html`: apresentação do mural, instruções e experiência.
+- `styles.css`: identidade editorial responsiva inspirada nas cores e recortes do cartaz.
+- `app.js`: nove perguntas, verificação, novas tentativas, resultado e persistência.
+- `assets/favicon.svg`: ícone do projeto.
+- `FONTES.md`: descrição da fonte das perguntas.
+
+O website foi propositalmente desenhado sem fotografias externas para que as respostas continuem no **mural real**.
