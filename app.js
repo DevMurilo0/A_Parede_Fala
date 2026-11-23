@@ -152,17 +152,30 @@
     save();
   }
 
-  function start() {
-    const input = document.getElementById('rank-nickname');
-    const candidate = (input?.value || window.WallRanking?.nickname() || '').trim();
-    if (window.WallRanking && !window.WallRanking.validName(candidate)) {
-      const warning = document.getElementById('nickname-warning');
-      if (warning) warning.textContent = 'Escolha um apelido com 2 a 22 caracteres para começar.';
-      input?.focus();
+  let starting = false;
+  async function start() {
+    if (starting) return false;
+    const button = document.getElementById('start-quiz');
+    const status = document.getElementById('player-start-status');
+    starting = true;
+    if (button) {
+      button.disabled = true;
+      button.textContent = 'REGISTRANDO SEU PLAYER...';
+    }
+    try {
+      if (!window.WallRanking) throw new Error('Ranking indisponível. Atualize a página.');
+      await window.WallRanking.begin();
+    } catch (error) {
+      if (status) status.textContent = 'Não foi possível iniciar o ranking. Verifique a conexão e tente novamente.';
+      if (button) {
+        button.disabled = false;
+        button.innerHTML = 'INICIAR PERGUNTAS <span aria-hidden="true">↗</span>';
+      }
+      starting = false;
       return false;
     }
+    starting = false;
     setBeginInvitation(false);
-    window.WallRanking?.begin(candidate);
     state = empty();
     state.started = true;
     state.startedAt = Date.now();
@@ -178,8 +191,7 @@
     if (time) time.textContent = formatTime(elapsedMs());
   }, 250);
 
-  // O apelido vem antes do cronometro para nao penalizar quem digita devagar.
-  // A partida e o tempo comecam no botao de iniciar perguntas.
+  // O registro automatico acontece primeiro; a contagem comeca apos o servidor responder.
 
   // A página desliza até o cartão de perguntas, com aceleração e desaceleração suave.
   // A posição é recalculada durante o movimento porque o cabeçalho do quiz se recolhe.
@@ -220,18 +232,16 @@
       <span class="quiz-intro-kicker">PRONTO PARA INVESTIGAR?</span>
       <h3>NOVE PISTAS.<br>UMA PAREDE.<br><em>O SEU OLHAR.</em></h3>
       <p>Antes de começar, fique diante do mural. Você vai encontrar cada resposta nele.</p>
-      <form id="nickname-form" class="nickname-form">
-        <label for="rank-nickname">COMO VOCÊ QUER APARECER NO RANKING?</label>
-        <input id="rank-nickname" name="nickname" type="text" maxlength="22" minlength="2"
-          autocomplete="nickname" placeholder="Escolha seu apelido" required
-          value="${escapeHTML(window.WallRanking?.nickname() || '')}">
-        <p id="nickname-warning" class="nickname-warning" aria-live="polite">O cronômetro começa quando você iniciar as perguntas.</p>
-        <button type="submit" class="button button-light" id="start-quiz">INICIAR PERGUNTAS <span aria-hidden="true">↗</span></button>
-      </form>
+      <div class="auto-player-start">
+        <p class="player-assignment">${window.WallRanking?.playerLabel()
+          ? 'VOCÊ É ' + escapeHTML(window.WallRanking.playerLabel().toUpperCase())
+          : 'SEU NÚMERO DE PLAYER É AUTOMÁTICO'}</p>
+        <p id="player-start-status" class="player-start-status" aria-live="polite">Toque no botão e descubra seu número. O cronômetro começa quando o servidor iniciar sua partida.</p>
+        <button type="button" class="button button-light" id="start-quiz">INICIAR PERGUNTAS <span aria-hidden="true">↗</span></button>
+      </div>
     </div>`;
-    document.getElementById('nickname-form').addEventListener('submit', event => {
-      event.preventDefault();
-      if (start()) scrollToQuiz(() => animateQuestion(true));
+    document.getElementById('start-quiz').addEventListener('click', async () => {
+      if (await start()) scrollToQuiz(() => animateQuestion(true));
     });
   }
 
@@ -240,6 +250,7 @@
     const solved = state.solved[state.index] !== null;
     const percent = Math.round((state.index / questions.length) * 100);
     app.innerHTML = `
+      <div class="quiz-player-id">${escapeHTML((window.WallRanking?.playerLabel() || 'PLAYER').toUpperCase())}</div>
       <div class="quiz-timer" aria-label="Tempo da investigação"><span>SEU TEMPO</span><strong data-quiz-clock>${formatTime(elapsedMs())}</strong><span class="timer-best">${getBest() === null ? 'ENCONTRE SEU PRIMEIRO RECORDE' : 'RECORDE ' + formatTime(getBest())}</span></div>
       <div class="quiz-progress-header"><span>PISTA ${String(state.index + 1).padStart(2, '0')} / ${String(questions.length).padStart(2, '0')}</span><span>${escapeHTML(q.section)}</span></div>
       <div class="progress-track" role="progressbar" aria-label="Progresso do desafio" aria-valuemin="0" aria-valuemax="${questions.length}" aria-valuenow="${state.index}"><span style="width:${percent}%"></span></div>
@@ -301,12 +312,12 @@
     });
   }
 
-  function restartWithNickname() {
+  function restartForRanking() {
     state = empty();
     save();
     render();
     scrollToQuiz(() => {
-      document.getElementById('rank-nickname')?.focus({ preventScroll: true });
+      document.getElementById('start-quiz')?.focus({ preventScroll: true });
     });
   }
 
@@ -338,13 +349,13 @@
         </div>
         <button type="button" id="play-again" class="button button-dark">JOGAR NOVAMENTE NO RANKING <span aria-hidden="true">↗</span></button>
     </div>`;
-    document.getElementById('play-again').addEventListener('click', restartWithNickname);
+    document.getElementById('play-again').addEventListener('click', restartForRanking);
     window.WallRanking?.showResult();
     window.WallRanking?.loadBoard(true);
   }
 
   app.addEventListener('click', event => {
-    if (event.target.closest('#join-ranking-now')) restartWithNickname();
+    if (event.target.closest('#join-ranking-now')) restartForRanking();
   });
 
   function render() {
@@ -358,7 +369,7 @@
   begin.addEventListener('click', () => {
     setBeginInvitation(false);
     scrollToQuiz(() => {
-      if (!state.started) document.getElementById('rank-nickname')?.focus({ preventScroll: true });
+      if (!state.started) document.getElementById('start-quiz')?.focus({ preventScroll: true });
       else animateQuestion(true);
     });
   });

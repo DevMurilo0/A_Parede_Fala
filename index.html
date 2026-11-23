@@ -148,22 +148,23 @@
       <div class="section-topline"><span>03 / O DESAFIO</span><span>AGORA, É COM VOCÊ</span></div>
       <div class="quiz-header">
         <div><p class="quiz-kicker">A PAREDE PERGUNTA</p><h2 id="quiz-title">VOCÊ <em>ENCONTRA?</em></h2></div>
-        <p>São nove perguntas sobre elementos realmente presentes no mural. Escolha um apelido para participar do ranking de velocidade. <strong>Levante os olhos do celular e investigue.</strong></p>
+        <p>São nove perguntas sobre elementos realmente presentes no mural. O servidor cria automaticamente seu número de Player ao começar. <strong>Levante os olhos do celular e investigue.</strong></p>
       </div>
       <div id="quiz-app" class="quiz-app" aria-live="polite">
         <div class="quiz-intro"><span>PRONTO PARA INVESTIGAR?</span><h3>NOVE PISTAS.<br>UMA PAREDE.<br><em>O SEU OLHAR.</em></h3><p>As respostas estão no mural físico.</p><button type="button" class="button button-light" id="start-quiz">INICIAR PERGUNTAS ↗</button></div>
       </div>
-      <p class="quiz-footnote">O progresso e o recorde pessoal ficam salvos neste dispositivo. Ao terminar, seu apelido e melhor tempo podem aparecer na classificação pública. Não é necessário criar conta.</p>
+      <p class="quiz-footnote">O progresso e o recorde pessoal ficam salvos neste dispositivo. Ao terminar, seu número de Player e melhor tempo podem aparecer na classificação pública. Não é necessário criar conta.</p>
     </section>
     <section class="ranking-section" id="ranking" aria-labelledby="ranking-title">
       <div class="section-topline"><span>04 / A COMPETIÇÃO</span><span>UM MURAL. MUITOS INVESTIGADORES.</span></div>
       <div class="ranking-header">
         <div><p class="quiz-kicker">OS OLHOS MAIS RÁPIDOS</p><h2 id="ranking-title">QUEM <em>LIDEROU?</em></h2></div>
-        <p>Complete as nove pistas para entrar no ranking. Cada pessoa aparece com seu melhor tempo e pode tentar novamente para subir de posição.</p>
+        <p>Você recebe um número de Player automaticamente quando começa. O ranking é organizado pelo menor tempo, não pela ordem de entrada.</p>
       </div>
       <div class="ranking-paper">
+        <p class="ranking-leader" id="ranking-leader">CONSULTANDO QUEM ESTÁ EM PRIMEIRO...</p>
         <div class="ranking-paper-top"><span>CLASSIFICAÇÃO GLOBAL</span><button type="button" id="refresh-ranking" class="text-button">ATUALIZAR ↻</button></div>
-        <div class="ranking-entry ranking-columns" aria-hidden="true"><span>POSIÇÃO</span><span>INVESTIGADOR</span><span>TEMPO</span></div>
+        <div class="ranking-entry ranking-columns" aria-hidden="true"><span>POSIÇÃO</span><span>JOGADOR</span><span>TEMPO</span></div>
         <div id="ranking-list" class="ranking-list" aria-live="polite"><div class="ranking-empty">Carregando os melhores tempos...</div></div>
         <p id="ranking-status" class="ranking-status" role="status">Consultando a classificação...</p>
       </div>

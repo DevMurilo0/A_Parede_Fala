@@ -97,3 +97,8 @@ O código da função Supabase está versionado em `supabase/functions/wall-rank
 ## Ranking também na tela final
 
 A tela de conclusão agora exibe uma prévia pública dos cinco melhores tempos e um link para a classificação completa, mesmo quando a partida salva é anterior à criação do ranking. Nesses casos, mostra uma explicação em português e um botão para começar uma nova rodada com apelido. O botão de jogar novamente retorna ao formulário sem apagar o recorde pessoal; a rodada anterior não é enviada retroativamente porque o servidor precisa validar as nove respostas e medir o tempo.
+
+
+## Numeração automática dos jogadores
+
+Não existe cadastro nem campo para escolher apelido. Cada navegador recebe no servidor um identificador estável na primeira vez que clicar em Iniciar Perguntas. A tabela wall_registrations e uma sequência PostgreSQL atribuem Player 1, Player 2, Player 3 na ordem das primeiras entradas, de forma atômica. O mesmo navegador mantém seu número em novas tentativas. O ranking é ordenado pelo menor tempo finalizado, independente do número recebido: Player 7 pode ser o primeiro colocado. Uma faixa informa Em primeiro lugar está: Player 7 quando houver resultados. Participantes que não terminarem ainda recebem seu número, mas não aparecem entre os melhores tempos. O cronômetro só começa após o servidor confirmar o registro. A estrutura adicional está na migração supabase/migrations/automatic_player_registration_order.sql.

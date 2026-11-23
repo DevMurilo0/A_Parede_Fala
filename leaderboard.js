@@ -5,7 +5,7 @@
   const RUN_KEY = 'wall-ranking-run-v1';
   const API = 'https://jwkydvtvjwcrdqfmvrrk.supabase.co/functions/v1/wall-ranking';
   let identity = '';
-  let nickname = '';
+  let playerNumber = null;
   let run = null;
   let requestQueue = Promise.resolve();
   let lastError = '';
@@ -14,21 +14,17 @@
   try {
     const saved = JSON.parse(localStorage.getItem(PROFILE_KEY) || 'null');
     identity = typeof saved?.identity === 'string' ? saved.identity : '';
-    nickname = typeof saved?.nickname === 'string' ? saved.nickname : '';
+    playerNumber = Number.isSafeInteger(saved?.playerNumber) && saved.playerNumber > 0 ? saved.playerNumber : null;
     run = JSON.parse(localStorage.getItem(RUN_KEY) || 'null');
     if (!run || typeof run !== 'object' || typeof run.token !== 'string') run = null;
   } catch (_) { /* Navegacao privada */ }
 
   function persist() {
     try {
-      localStorage.setItem(PROFILE_KEY, JSON.stringify({ identity, nickname }));
+      localStorage.setItem(PROFILE_KEY, JSON.stringify({ identity, playerNumber }));
       if (run) localStorage.setItem(RUN_KEY, JSON.stringify(run));
       else localStorage.removeItem(RUN_KEY);
     } catch (_) {}
-  }
-  function validName(name) {
-    return typeof name === 'string' && /^[\p{L}\p{N}][\p{L}\p{N} ._]{1,21}$/u.test(name.trim()) &&
-      name.trim().length >= 2 && name.trim().length <= 22;
   }
   function sanitizeText(str) {
     return String(str).replace(/[&<>"']/g, c => ({
@@ -59,7 +55,9 @@
   function previewMarkup(result) {
     const players = Array.isArray(result?.players) ? result.players.slice(0, 5) : [];
     const top = '<div class="rank-preview-title"><strong>RANKING GLOBAL</strong>' +
-      '<a href="#ranking">VER RANKING COMPLETO ↗</a></div>';
+      '<a href="#ranking">VER RANKING COMPLETO ↗</a></div>' +
+      (players.length ? '<p class="rank-preview-leader">EM PRIMEIRO LUGAR ESTÁ: <strong>' +
+        sanitizeText(players[0].nickname.toUpperCase()) + '</strong></p>' : '');
     if (!players.length) return top +
       '<p class="rank-preview-empty">Ainda não há tempos registrados. Você pode ser a primeira pessoa no ranking!</p>';
     const list = players.map(player =>
@@ -87,21 +85,22 @@
     const status = document.getElementById('ranking-status');
     if (status && !loadedBoard) status.textContent = message;
   }
-  function begin(name) {
-    nickname = String(name || '').trim();
-    run = null;
+  function begin() {
     lastError = '';
-    persist();
-    requestQueue = request('start', { nickname, identity })
+    requestQueue = request('start', { identity })
       .then(data => {
+        const number = Number(data.playerNumber);
+        if (!Number.isSafeInteger(number) || number < 1) {
+          throw new Error('Não foi possível identificar o número do jogador.');
+        }
         identity = data.playerKey;
-        run = { token: data.session, progress: 0, completed: null };
+        playerNumber = number;
+        run = { token: data.session, progress: 0, completed: null, playerNumber };
         persist();
         return run;
       }).catch(error => {
         lastError = error.message;
-        showUnavailable('Seu quiz funciona normalmente. ' + error.message);
-        return null;
+        throw error;
       });
     return requestQueue;
   }
@@ -136,7 +135,8 @@
     if (!element) return;
     if (run?.completed) {
       const result = run.completed;
-      element.innerHTML = '<div class="rank-finish-card"><span>RESULTADO GLOBAL</span>' +
+      element.innerHTML = '<div class="rank-finish-card"><span>RESULTADO GLOBAL · ' +
+        sanitizeText('PLAYER ' + (run.playerNumber || playerNumber || '?')) + '</span>' +
         '<strong>' + (result.position ? result.position + 'º LUGAR' : 'CONCLUIDO') + '</strong>' +
         '<p>Tempo registrado no ranking: <b>' + time(result.elapsedMs) + '</b></p>' +
         '<p>Seu melhor tempo global: <b>' + time(result.bestMs) + '</b></p>' +
@@ -146,7 +146,7 @@
     } else if (!run) {
       element.innerHTML = '<div class="rank-legacy-notice">' +
         '<strong>SEU TEMPO AINDA NÃO ESTÁ NO RANKING</strong>' +
-        '<p>Esta partida foi iniciada antes do ranking global ou sem uma sessão registrada. Seu recorde pessoal continua salvo, mas, para concorrer, você precisa responder às nove perguntas em uma nova tentativa.</p>' +
+        '<p>Esta partida foi iniciada antes da integração com o ranking ou sem uma sessão registrada. Seu recorde pessoal continua salvo. Comece uma nova tentativa para participar automaticamente como Player numerado.</p>' +
         '<button id="join-ranking-now" type="button" class="button button-dark">PARTICIPAR DO RANKING <span aria-hidden="true">↗</span></button>' +
         '</div>';
     } else {
@@ -164,6 +164,10 @@
       loadedBoard = true;
       latestBoard = result;
       renderPreview(result);
+      const leader = document.getElementById('ranking-leader');
+      if (leader) leader.textContent = result.players?.length
+        ? 'EM PRIMEIRO LUGAR ESTÁ: ' + result.players[0].nickname.toUpperCase()
+        : 'O PRIMEIRO LUGAR AINDA ESTÁ LIVRE';
       if (!Array.isArray(result.players) || !result.players.length) {
         list.innerHTML = '<div class="ranking-empty">Ainda nao existem recordes registrados. Seja a primeira pessoa a completar as nove pistas!</div>';
       } else {
@@ -180,6 +184,8 @@
     } catch (error) {
       loadedBoard = false;
       if (!latestBoard) renderPreview(null, 'A classificação está temporariamente indisponível. Tente atualizar.');
+      const leader = document.getElementById('ranking-leader');
+      if (leader && !latestBoard) leader.textContent = 'CLASSIFICAÇÃO TEMPORARIAMENTE INDISPONÍVEL';
       if (status) status.textContent = error.code === 'unconfigured'
         ? 'Ranking global aguardando a conexao com o banco de dados.'
         : 'Nao foi possivel carregar a classificacao agora.';
@@ -192,7 +198,8 @@
     loadBoard();
   });
   window.WallRanking = {
-    begin, sync, showResult, loadBoard, nickname: () => nickname,
-    validName, hasRun: () => Boolean(run), getRun: () => run
+    begin, sync, showResult, loadBoard,
+    playerNumber: () => playerNumber, playerLabel: () => playerNumber ? 'Player ' + playerNumber : null,
+    hasRun: () => Boolean(run), getRun: () => run
   };
 })();

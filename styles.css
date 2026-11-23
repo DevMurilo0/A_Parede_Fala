@@ -695,3 +695,14 @@ body{overflow-x:clip}
   .rank-preview-player strong{font-size:13px}
   .rank-preview-player b{font-size:15px}
 }
+
+/* O nome e atribuido pelo servidor automaticamente, sem campo de texto. */
+.auto-player-start{max-width:550px;margin:22px auto 0;display:flex;flex-direction:column;align-items:center;gap:12px}
+.player-assignment{background:var(--yellow);border:2px solid var(--ink);box-shadow:4px 5px 0 var(--purple);padding:12px 18px;font-weight:1000;font-size:clamp(15px,2.4vw,22px);letter-spacing:.02em;text-align:center}
+.quiz-intro .player-start-status{font-size:13px;font-weight:800;line-height:1.5;max-width:440px;margin:4px auto}
+.auto-player-start>.button{width:100%;max-width:450px}
+.auto-player-start>.button:disabled{cursor:wait;opacity:.6}
+.quiz-player-id{display:inline-flex;align-items:center;padding:8px 13px;margin-bottom:16px;background:var(--yellow);border:2px solid var(--ink);box-shadow:3px 3px 0 var(--purple);font-size:12px;font-weight:1000;letter-spacing:.12em}
+.ranking-leader{background:var(--yellow);border:3px solid var(--ink);padding:16px 20px;margin:0 0 20px;text-align:center;font-size:clamp(18px,3vw,30px);font-weight:1000;line-height:1.25;letter-spacing:-.03em;box-shadow:5px 5px 0 var(--purple)}
+.rank-preview-leader{background:var(--yellow);border:2px solid var(--ink);padding:12px;margin:15px 0 8px!important;text-align:center;font-size:clamp(14px,2.3vw,21px)!important;font-weight:1000!important;line-height:1.45}
+.rank-preview-leader strong{display:inline-block}

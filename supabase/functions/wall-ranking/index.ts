@@ -66,12 +66,6 @@ async function verify(input) {
     return valid ? JSON.parse(decoder.decode(dec(pieces[0]))) : null;
   } catch (_) { return null; }
 }
-function alias(value) {
-  if (typeof value !== "string") return null;
-  const name = value.trim().replace(/\s+/g," ");
-  return name.length >= 2 && name.length <= 22 &&
-    /^[\p{L}\p{N}][\p{L}\p{N} ._]{1,21}$/u.test(name) ? name : null;
-}
 function isUUID(value) {
   return typeof value === "string" &&
     /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);
@@ -99,6 +93,7 @@ async function board(id) {
   return {
     ok:true, enabled:true,
     players:(rows || []).map((r,i) => ({position:i+1,nickname:r.nickname,bestMs:r.best_ms,attempts:r.attempts})),
+    leader:rows?.length ? rows[0].nickname : null,
     myPosition:await placement(id)
   };
 }
@@ -119,14 +114,19 @@ Deno.serve(async req => {
       return json(req,await board(ident?.kind === "identity" && isUUID(ident.id) ? ident.id : null));
     }
     if (body.action === "start") {
-      const nickname = alias(body.nickname);
-      if (!nickname) return failure(req,400,"Digite um apelido entre 2 e 22 caracteres.","nickname");
       const old = await verify(body.identity);
       const id = old?.kind === "identity" && isUUID(old.id) ? old.id : crypto.randomUUID();
+      const number = await db("rpc/wall_register_player","POST",{p_player_id:id});
+      if (!Number.isSafeInteger(number) || number < 1)
+        throw new Error("numero do jogador invalido");
+      const startedAt = Date.now();
       const session = await sign({
-        kind:"session",id,sid:crypto.randomUUID(),nickname,index:0,startedAt:Date.now()
+        kind:"session",id,sid:crypto.randomUUID(),index:0,startedAt
       });
-      return json(req,{ok:true,session,playerKey:await sign({kind:"identity",id}),startedAt:Date.now()});
+      return json(req,{
+        ok:true,session,playerKey:await sign({kind:"identity",id}),
+        startedAt,playerNumber:number,playerName:"Player "+number
+      });
     }
     if (body.action === "answer") {
       const session = await verify(body.session);
@@ -152,7 +152,7 @@ Deno.serve(async req => {
         return failure(req,422,"Tempo fora dos limites do ranking. Tente novamente.","duration");
       }
       const best = await db("rpc/wall_save_result","POST",{
-        p_session_id:session.sid,p_player_id:session.id,p_nickname:session.nickname,p_ms:ms
+        p_session_id:session.sid,p_player_id:session.id,p_nickname:"AUTOMATICO",p_ms:ms
       });
       return json(req,{
         ok:true,correct:true,completed:true,elapsedMs:ms,
