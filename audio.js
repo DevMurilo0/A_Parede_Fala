@@ -10,6 +10,8 @@
   const AudioAPI = window.AudioContext || window.webkitAudioContext;
   let ctx = null, master = null, musicTimer = null, clockTimer = null;
   let step = 0, tickStep = 0;
+  // Volume amplificado para uso em celulares, limitado por compressor para evitar estouros.
+  const LOUDNESS_BOOST = 4.5;
 
   function updateButton() {
     button.setAttribute('aria-pressed', String(enabled));
@@ -24,7 +26,7 @@
     osc.type = wave;
     osc.frequency.setValueAtTime(freq, start);
     gain.gain.setValueAtTime(.0001, start);
-    gain.gain.linearRampToValueAtTime(volume, start + .012);
+    gain.gain.linearRampToValueAtTime(Math.min(.65, volume * LOUDNESS_BOOST), start + .012);
     gain.gain.exponentialRampToValueAtTime(.0001, start + duration);
     osc.connect(gain); gain.connect(master);
     osc.start(start); osc.stop(start + duration + .04);
@@ -92,8 +94,19 @@
       if (!ctx) {
         ctx = new AudioAPI();
         master = ctx.createGain();
-        master.gain.value = .5;
-        master.connect(ctx.destination);
+        master.gain.value = .9;
+        if (typeof ctx.createDynamicsCompressor === 'function') {
+          const compressor = ctx.createDynamicsCompressor();
+          compressor.threshold.value = -18;
+          compressor.knee.value = 16;
+          compressor.ratio.value = 5;
+          compressor.attack.value = .004;
+          compressor.release.value = .18;
+          master.connect(compressor);
+          compressor.connect(ctx.destination);
+        } else {
+          master.connect(ctx.destination);
+        }
       }
       if (ctx.state !== 'running') await ctx.resume();
       if (ctx.state === 'running') { startLoops(); return true; }

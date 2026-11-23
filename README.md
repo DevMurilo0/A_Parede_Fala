@@ -66,3 +66,8 @@ O contador é iniciado ao clicar em qualquer botão que inicia a investigação 
 ## Sons e trilha
 
 A abertura dura aproximadamente 1,35 segundo. O arquivo `audio.js` gera música instrumental original discreta e efeitos para botões, início, acertos, erros, conclusão e tique do relógio durante o cronômetro. O som começa configurado como ligado e pode ser silenciado pelo controle no cabeçalho. O ajuste fica salvo no navegador. Se o dispositivo bloquear áudio antes do primeiro gesto, a reprodução começa após o primeiro toque ou clique permitido. Não há serviços externos nem arquivos musicais de terceiros.
+
+
+## Volume reforçado
+
+Os efeitos e a trilha foram amplificados significativamente. Um compressor de dinâmica evita picos excessivos quando vários sons tocam juntos. O botão de som continua permitindo silenciar a experiência e o volume final ainda depende das configurações do aparelho e do navegador.
