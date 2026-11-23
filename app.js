@@ -80,13 +80,15 @@
   ];
 
   const STORAGE_KEY = 'a-parede-fala-mural-2026-v2';
+  const RECORD_KEY = 'a-parede-fala-best-time-v1';
   const app = document.getElementById('quiz-app');
   const begin = document.getElementById('begin-button');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const empty = () => ({
     started: false, index: 0,
     solved: Array(questions.length).fill(null),
-    errors: Array(questions.length).fill(0)
+    errors: Array(questions.length).fill(0),
+    startedAt: null, finishedAt: null
   });
 
   function load() {
@@ -97,7 +99,12 @@
         && Array.isArray(saved.solved) && saved.solved.length === questions.length
         && saved.solved.every((value, i) => value === null || value === questions[i].correct)
         && Array.isArray(saved.errors) && saved.errors.length === questions.length
-        && saved.errors.every(value => Number.isInteger(value) && value >= 0)) return saved;
+        && saved.errors.every(value => Number.isInteger(value) && value >= 0)) {
+        const validTime = value => Number.isFinite(value) && value > 0;
+        if (saved.started && !validTime(saved.startedAt)) saved.startedAt = Date.now();
+        if (!validTime(saved.finishedAt) || saved.finishedAt < saved.startedAt) saved.finishedAt = null;
+        return saved;
+      }
     } catch (_) { /* localStorage pode estar desativado */ }
     return empty();
   }
@@ -113,11 +120,60 @@
     })[char]);
   }
 
+  function elapsedMs() {
+    if (!state.startedAt) return 0;
+    return Math.max(0, (state.finishedAt || Date.now()) - state.startedAt);
+  }
+
+  function formatTime(milliseconds) {
+    const seconds = Math.floor(milliseconds / 1000);
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainder = String(seconds % 60).padStart(2, '0');
+    return hours ? hours + ':' + String(minutes).padStart(2, '0') + ':' + remainder
+      : String(minutes).padStart(2, '0') + ':' + remainder;
+  }
+
+  function getBest() {
+    try {
+      const best = Number(localStorage.getItem(RECORD_KEY));
+      return Number.isFinite(best) && best > 0 ? best : null;
+    } catch (_) { return null; }
+  }
+
+  function finish() {
+    if (state.finishedAt || !state.startedAt) return;
+    state.finishedAt = Date.now();
+    const best = getBest();
+    if (best === null || elapsedMs() < best) {
+      try { localStorage.setItem(RECORD_KEY, String(elapsedMs())); } catch (_) { /* armazenamento opcional */ }
+    }
+    save();
+  }
+
   function start() {
     state = empty();
     state.started = true;
+    state.startedAt = Date.now();
     save();
     render();
+  }
+
+  // Cronômetro discreto, calculado pelo relógio real mesmo que a aba fique em segundo plano.
+  window.setInterval(() => {
+    const time = app.querySelector('[data-quiz-clock]');
+    if (time) time.textContent = formatTime(elapsedMs());
+  }, 250);
+
+  // Também inicia se o visitante chegar à seção rolando a página.
+  if ('IntersectionObserver' in window) {
+    const section = document.getElementById('experiencia');
+    if (section) {
+      const observer = new IntersectionObserver(entries => {
+        if (entries.some(entry => entry.isIntersecting) && !state.started) start();
+      }, { threshold: 0.15 });
+      observer.observe(section);
+    }
   }
 
   // A página desliza até o cartão de perguntas, com aceleração e desaceleração suave.
@@ -172,6 +228,7 @@
     const solved = state.solved[state.index] !== null;
     const percent = Math.round((state.index / questions.length) * 100);
     app.innerHTML = `
+      <div class="quiz-timer" aria-label="Tempo da investigação"><span>SEU TEMPO</span><strong data-quiz-clock>${formatTime(elapsedMs())}</strong><span class="timer-best">${getBest() === null ? 'ENCONTRE SEU PRIMEIRO RECORDE' : 'RECORDE ' + formatTime(getBest())}</span></div>
       <div class="quiz-progress-header"><span>PISTA ${String(state.index + 1).padStart(2, '0')} / ${String(questions.length).padStart(2, '0')}</span><span>${escapeHTML(q.section)}</span></div>
       <div class="progress-track" role="progressbar" aria-label="Progresso do desafio" aria-valuemin="0" aria-valuemax="${questions.length}" aria-valuenow="${state.index}"><span style="width:${percent}%"></span></div>
       <div class="question-area">
@@ -221,6 +278,7 @@
         return;
       }
       state.solved[state.index] = value;
+      if (state.index === questions.length - 1) finish();
       save();
       render();
       document.querySelector('.quiz-app .question-title')?.focus();
@@ -228,11 +286,20 @@
   }
 
   function renderResult() {
+    if (!state.finishedAt) finish();
     const firstTry = state.errors.filter(count => count === 0).length;
+    const best = getBest();
+    const thisTime = elapsedMs();
+    const newRecord = best !== null && thisTime <= best;
     app.innerHTML = `<div class="result">
       <span class="result-kicker">TODAS AS PISTAS ENCONTRADAS</span>
       <h3 class="result-title" tabindex="-1">VOCÊ LEU<br><em>A PAREDE!</em></h3>
       <div class="result-score"><strong>09 / 09</strong><span>PISTAS CONCLUÍDAS</span></div>
+      <div class="result-times">
+        <div><span>SEU TEMPO</span><strong>${formatTime(thisTime)}</strong></div>
+        <div><span>SEU RECORDE</span><strong>${best === null ? formatTime(thisTime) : formatTime(best)}</strong></div>
+      </div>
+      <p class="result-challenge">${newRecord ? 'NOVO RECORDE! Você completou o desafio no seu melhor tempo. Será que consegue superar essa marca?' : 'VOCÊ CONSEGUE SER MAIS RÁPIDO! Tente novamente e bata o seu próprio recorde.'}</p>
       <p>Você encontrou informações na literatura, nas notícias, na música e nas frases do mural. O importante é olhar para além da primeira impressão.</p>
       <p class="result-detail">Pistas resolvidas na primeira tentativa: <strong>${firstTry} de ${questions.length}</strong>.</p>
       <div class="result-gallery" aria-label="Imagens reveladas depois de concluir o quiz">

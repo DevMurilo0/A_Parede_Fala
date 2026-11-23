@@ -530,3 +530,23 @@ body{overflow-x:clip}
   .hero-description{font-size:14px}
   .hero .button{min-height:46px}
 }
+
+/* Cronômetro e recorde com estética editorial da exposição */
+.quiz-timer{display:flex;align-items:center;gap:15px;flex-wrap:wrap;margin:0 0 28px;padding:12px 16px;background:#f6df53;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.quiz-timer>span:first-child{font-size:11px;font-weight:1000;letter-spacing:.1em}
+.quiz-timer strong{font-size:clamp(23px,3vw,37px);font-weight:1000;letter-spacing:-.045em;font-variant-numeric:tabular-nums}
+.quiz-timer .timer-best{margin-left:auto;font-size:11px;font-weight:900;letter-spacing:.04em}
+.result-times{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:28px auto 12px;max-width:570px}
+.result-times>div{background:var(--yellow);border:2px solid var(--ink);box-shadow:5px 5px 0 var(--purple);padding:18px 12px;display:flex;flex-direction:column;gap:6px}
+.result-times>div:nth-child(2){background:#d9ebd6}
+.result-times span{font-size:11px;font-weight:1000;letter-spacing:.06em}
+.result-times strong{font-size:clamp(28px,4vw,49px);font-weight:1000;letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.result .result-challenge{max-width:550px;background:#e8e1fa;border-left:5px solid var(--purple);padding:17px;font-size:clamp(17px,2vw,21px);font-weight:900}
+@media(max-width:560px){
+ .quiz-timer{gap:7px 15px;padding:11px}
+ .quiz-timer .timer-best{width:100%;margin-left:0;font-size:10px}
+ .result-times{gap:9px}
+ .result-times>div{padding:14px 6px}
+ .result-times span{font-size:9px}
+ .result-times strong{font-size:clamp(22px,7vw,34px)}
+}

@@ -56,3 +56,8 @@ A abertura agora tem duração maior, com a logo deslizando suavemente e a lupa 
 ## Lupa com percurso contínuo
 
 A animação inicial agora leva aproximadamente 8,65 segundos. O símbolo aparece primeiro e a lupa segue uma única curva Bézier, calculada continuamente pelo JavaScript com requestAnimationFrame, do topo da tela ao botão principal. A revelação circular só começa perto do fim do trajeto. Não há mudanças abruptas de caminho nem pulos no pouso. Em celulares, a lupa usa dimensões menores, a posição do botão é calculada no tamanho real da tela e as tipografias e os cartões têm ajustes para aparelhos compactos. A opção de reduzir movimentos e o botão de pular abertura permanecem disponíveis.
+
+
+## Cronômetro e recorde pessoal
+
+O contador é iniciado ao clicar em qualquer botão que inicia a investigação ou quando a seção de perguntas entra na área visível da página. O tempo é salvo com o progresso no navegador e continua contando ao atualizar ou sair da aba. Quando a nona resposta é acertada, o tempo é encerrado e comparado ao menor tempo anterior do mesmo navegador. A tela final mostra o tempo da rodada, o melhor recorde e incentiva o participante a tentar novamente. Reiniciar inicia uma nova contagem sem apagar o recorde. Os dados são armazenados apenas no dispositivo, sem ranking global ou cadastro.
