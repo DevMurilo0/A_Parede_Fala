@@ -166,7 +166,7 @@
       renderPreview(result);
       const leader = document.getElementById('ranking-leader');
       if (leader) leader.textContent = result.players?.length
-        ? 'EM PRIMEIRO LUGAR ESTÁ: ' + result.String(players[0].nickname).replace(/^Player\s+/i, 'Jogador ').toUpperCase()
+        ? 'EM PRIMEIRO LUGAR ESTÁ: ' + String(result.players[0].nickname).replace(/^Player\s+/i, 'Jogador ').toUpperCase()
         : 'O PRIMEIRO LUGAR AINDA ESTÁ LIVRE';
       if (!Array.isArray(result.players) || !result.players.length) {
         list.innerHTML = '<div class="ranking-empty">Ainda nao existem recordes registrados. Seja a primeira pessoa a completar as nove pistas!</div>';
