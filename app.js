@@ -155,33 +155,25 @@
   let starting = false;
   async function start() {
     if (starting) return false;
-    const button = document.getElementById('start-quiz');
-    const status = document.getElementById('player-start-status');
     starting = true;
-    if (button) {
-      button.disabled = true;
-      button.textContent = 'REGISTRANDO SEU PLAYER...';
-    }
     try {
       if (!window.WallRanking) throw new Error('Ranking indisponível. Atualize a página.');
       await window.WallRanking.begin();
     } catch (error) {
-      if (status) status.textContent = 'Não foi possível iniciar o ranking. Verifique a conexão e tente novamente.';
-      if (button) {
-        button.disabled = false;
-        button.innerHTML = 'INICIAR PERGUNTAS <span aria-hidden="true">↗</span>';
+      const feedback = document.getElementById('feedback');
+      if (feedback) {
+        feedback.className = 'feedback warning';
+        feedback.textContent = 'Não foi possível iniciar o cronômetro online. Verifique a conexão e tente novamente.';
       }
       starting = false;
       return false;
     }
     starting = false;
     setBeginInvitation(false);
-    state = empty();
     state.started = true;
     state.startedAt = Date.now();
     window.WallAudio?.play('start');
     save();
-    render();
     return true;
   }
 
@@ -227,30 +219,11 @@
     window.requestAnimationFrame(move);
   }
 
-  function renderStart() {
-    app.innerHTML = `<div class="quiz-intro">
-      <span class="quiz-intro-kicker">PRONTO PARA INVESTIGAR?</span>
-      <h3>NOVE PISTAS.<br>UMA PAREDE.<br><em>O SEU OLHAR.</em></h3>
-      <p>Antes de começar, fique diante do mural. Você vai encontrar cada resposta nele.</p>
-      <div class="auto-player-start">
-        <p class="player-assignment">${window.WallRanking?.playerLabel()
-          ? 'VOCÊ É ' + escapeHTML(window.WallRanking.playerLabel().toUpperCase())
-          : 'SEU NÚMERO DE PLAYER É AUTOMÁTICO'}</p>
-        <p id="player-start-status" class="player-start-status" aria-live="polite">Toque no botão e descubra seu número. O cronômetro começa quando o servidor iniciar sua partida.</p>
-        <button type="button" class="button button-light" id="start-quiz">INICIAR PERGUNTAS <span aria-hidden="true">↗</span></button>
-      </div>
-    </div>`;
-    document.getElementById('start-quiz').addEventListener('click', async () => {
-      if (await start()) scrollToQuiz(() => animateQuestion(true));
-    });
-  }
-
   function renderQuestion() {
     const q = questions[state.index];
     const solved = state.solved[state.index] !== null;
     const percent = Math.round((state.index / questions.length) * 100);
     app.innerHTML = `
-      <div class="quiz-player-id">${escapeHTML((window.WallRanking?.playerLabel() || 'PLAYER').toUpperCase())}</div>
       <div class="quiz-timer" aria-label="Tempo da investigação"><span>SEU TEMPO</span><strong data-quiz-clock>${formatTime(elapsedMs())}</strong><span class="timer-best">${getBest() === null ? 'ENCONTRE SEU PRIMEIRO RECORDE' : 'RECORDE ' + formatTime(getBest())}</span></div>
       <div class="quiz-progress-header"><span>PISTA ${String(state.index + 1).padStart(2, '0')} / ${String(questions.length).padStart(2, '0')}</span><span>${escapeHTML(q.section)}</span></div>
       <div class="progress-track" role="progressbar" aria-label="Progresso do desafio" aria-valuemin="0" aria-valuemax="${questions.length}" aria-valuenow="${state.index}"><span style="width:${percent}%"></span></div>
@@ -274,8 +247,8 @@
         </form>
       </div>`;
 
-    document.getElementById('restart-quiz').addEventListener('click', start);
-    document.getElementById('question-form').addEventListener('submit', event => {
+    document.getElementById('restart-quiz').addEventListener('click', restartForRanking);
+    document.getElementById('question-form').addEventListener('submit', async event => {
       event.preventDefault();
       if (state.solved[state.index] !== null) {
         state.index += 1;
@@ -294,6 +267,24 @@
         return;
       }
       const value = Number(choice.value);
+      if (!state.startedAt) {
+        const submit = document.querySelector('#question-form button[type="submit"]');
+        if (submit) {
+          submit.disabled = true;
+          submit.textContent = 'INICIANDO CRONÔMETRO...';
+        }
+        if (!(await start())) {
+          if (submit) {
+            submit.disabled = false;
+            submit.innerHTML = 'CONFERIR RESPOSTA <span aria-hidden="true">↗</span>';
+          }
+          return;
+        }
+        if (submit) {
+          submit.disabled = false;
+          submit.innerHTML = 'CONFERIR RESPOSTA <span aria-hidden="true">↗</span>';
+        }
+      }
       if (value !== q.correct) {
         state.errors[state.index] += 1;
         save();
@@ -317,7 +308,7 @@
     save();
     render();
     scrollToQuiz(() => {
-      document.getElementById('start-quiz')?.focus({ preventScroll: true });
+      document.querySelector('.quiz-app .question-title')?.focus({ preventScroll: true });
     });
   }
 
@@ -338,7 +329,7 @@
       <p class="result-challenge">${newRecord ? 'NOVO RECORDE! Você completou o desafio no seu melhor tempo. Será que consegue superar essa marca?' : 'VOCÊ CONSEGUE SER MAIS RÁPIDO! Tente novamente e bata o seu próprio recorde.'}</p>
       <p>Você encontrou informações na literatura, nas notícias, na música e nas frases do mural. O importante é olhar para além da primeira impressão.</p>
       <p class="result-detail">Pistas resolvidas na primeira tentativa: <strong>${firstTry} de ${questions.length}</strong>.</p>
-      <div id="rank-summary" class="rank-summary"><p>Consultando sua posição no ranking...</p></div>
+      <div id="rank-summary" class="rank-summary"><p>Consultando sua colocação e número de jogador...</p></div>
       <section id="rank-preview" class="rank-preview" aria-label="Classificação global">
         <div class="rank-preview-title"><strong>RANKING GLOBAL</strong><a href="#ranking">VER RANKING COMPLETO ↗</a></div>
         <p class="rank-preview-loading">Carregando a classificação...</p>
@@ -360,8 +351,7 @@
 
   function render() {
     document.getElementById('experiencia')?.classList.toggle('is-playing', state.started);
-    if (!state.started) renderStart();
-    else if (state.index >= questions.length) renderResult();
+    if (state.index >= questions.length) renderResult();
     else renderQuestion();
     if (state.started) window.WallRanking?.sync(state.solved.slice());
   }
@@ -369,8 +359,7 @@
   begin.addEventListener('click', () => {
     setBeginInvitation(false);
     scrollToQuiz(() => {
-      if (!state.started) document.getElementById('start-quiz')?.focus({ preventScroll: true });
-      else animateQuestion(true);
+      animateQuestion(true);
     });
   });
   render();

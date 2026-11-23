@@ -57,12 +57,12 @@
     const top = '<div class="rank-preview-title"><strong>RANKING GLOBAL</strong>' +
       '<a href="#ranking">VER RANKING COMPLETO ↗</a></div>' +
       (players.length ? '<p class="rank-preview-leader">EM PRIMEIRO LUGAR ESTÁ: <strong>' +
-        sanitizeText(players[0].nickname.toUpperCase()) + '</strong></p>' : '');
+        sanitizeText(String(players[0].nickname).replace(/^Player\s+/i, 'Jogador ').toUpperCase()) + '</strong></p>' : '');
     if (!players.length) return top +
       '<p class="rank-preview-empty">Ainda não há tempos registrados. Você pode ser a primeira pessoa no ranking!</p>';
     const list = players.map(player =>
       '<div class="rank-preview-player"><span>' + Number(player.position) + 'º</span>' +
-      '<strong>' + sanitizeText(player.nickname) + '</strong>' +
+      '<strong>' + sanitizeText(String(player.nickname).replace(/^Player\s+/i, 'Jogador ')) + '</strong>' +
       '<b>' + time(player.bestMs) + '</b></div>').join('');
     const placement = result.myPosition
       ? '<p class="rank-preview-position">Sua colocação atual: <b>' + Number(result.myPosition) + 'º lugar</b></p>'
@@ -136,7 +136,7 @@
     if (run?.completed) {
       const result = run.completed;
       element.innerHTML = '<div class="rank-finish-card"><span>RESULTADO GLOBAL · ' +
-        sanitizeText('PLAYER ' + (run.playerNumber || playerNumber || '?')) + '</span>' +
+        sanitizeText('JOGADOR ' + (run.playerNumber || playerNumber || '?')) + '</span>' +
         '<strong>' + (result.position ? result.position + 'º LUGAR' : 'CONCLUIDO') + '</strong>' +
         '<p>Tempo registrado no ranking: <b>' + time(result.elapsedMs) + '</b></p>' +
         '<p>Seu melhor tempo global: <b>' + time(result.bestMs) + '</b></p>' +
@@ -146,7 +146,7 @@
     } else if (!run) {
       element.innerHTML = '<div class="rank-legacy-notice">' +
         '<strong>SEU TEMPO AINDA NÃO ESTÁ NO RANKING</strong>' +
-        '<p>Esta partida foi iniciada antes da integração com o ranking ou sem uma sessão registrada. Seu recorde pessoal continua salvo. Comece uma nova tentativa para participar automaticamente como Player numerado.</p>' +
+        '<p>Esta partida foi iniciada antes da integração com o ranking ou sem uma sessão registrada. Seu recorde pessoal continua salvo. Comece uma nova tentativa para participar automaticamente como jogador numerado.</p>' +
         '<button id="join-ranking-now" type="button" class="button button-dark">PARTICIPAR DO RANKING <span aria-hidden="true">↗</span></button>' +
         '</div>';
     } else {
@@ -166,7 +166,7 @@
       renderPreview(result);
       const leader = document.getElementById('ranking-leader');
       if (leader) leader.textContent = result.players?.length
-        ? 'EM PRIMEIRO LUGAR ESTÁ: ' + result.players[0].nickname.toUpperCase()
+        ? 'EM PRIMEIRO LUGAR ESTÁ: ' + result.String(players[0].nickname).replace(/^Player\s+/i, 'Jogador ').toUpperCase()
         : 'O PRIMEIRO LUGAR AINDA ESTÁ LIVRE';
       if (!Array.isArray(result.players) || !result.players.length) {
         list.innerHTML = '<div class="ranking-empty">Ainda nao existem recordes registrados. Seja a primeira pessoa a completar as nove pistas!</div>';
@@ -174,7 +174,7 @@
         list.innerHTML = result.players.map((player, i) =>
           '<div class="ranking-entry">' +
           '<span class="ranking-position">' + (i === 0 ? '★ ' : '') + Number(player.position) + 'º</span>' +
-          '<strong class="ranking-name">' + sanitizeText(player.nickname) + '</strong>' +
+          '<strong class="ranking-name">' + sanitizeText(String(player.nickname).replace(/^Player\s+/i, 'Jogador ')) + '</strong>' +
           '<span class="ranking-time">' + time(player.bestMs) + '</span></div>'
         ).join('');
       }
@@ -199,7 +199,7 @@
   });
   window.WallRanking = {
     begin, sync, showResult, loadBoard,
-    playerNumber: () => playerNumber, playerLabel: () => playerNumber ? 'Player ' + playerNumber : null,
+    playerNumber: () => playerNumber, playerLabel: () => playerNumber ? 'Jogador ' + playerNumber : null,
     hasRun: () => Boolean(run), getRun: () => run
   };
 })();
