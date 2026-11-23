@@ -199,12 +199,16 @@
   function renderResult() {
     const firstTry = state.errors.filter(count => count === 0).length;
     app.innerHTML = `<div class="result">
-      <span class="result-kicker">TODAS AS PISTAS ENCONTRADAS ✳</span>
+      <span class="result-kicker">TODAS AS PISTAS ENCONTRADAS</span>
       <h3 class="result-title" tabindex="-1">VOCÊ LEU<br><em>A PAREDE!</em></h3>
       <div class="result-score"><strong>09 / 09</strong><span>PISTAS CONCLUÍDAS</span></div>
       <p>Você encontrou informações na literatura, nas notícias, na música e nas frases do mural. O importante é olhar para além da primeira impressão.</p>
       <p class="result-detail">Pistas resolvidas na primeira tentativa: <strong>${firstTry} de ${questions.length}</strong>.</p>
-      <button type="button" id="play-again" class="button button-dark">INVESTIGAR DE NOVO <span aria-hidden="true">↗</span></button>
+      <div class="result-gallery" aria-label="Imagens reveladas depois de concluir o quiz">
+          <figure><img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/LimaBarreto.jpg" alt="Retrato histórico do escritor Lima Barreto" width="472" height="704" loading="lazy" decoding="async"><figcaption>UM DOS ROSTOS DO MURAL</figcaption></figure>
+          <figure><img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Triste_fim_de_policarpo_quaresma_1a_edicao.png" alt="Capa da primeira edição de Triste fim de Policarpo Quaresma de 1915" width="339" height="551" loading="lazy" decoding="async"><figcaption>UMA OBRA REVELADA</figcaption></figure>
+        </div>
+        <button type="button" id="play-again" class="button button-dark">INVESTIGAR DE NOVO <span aria-hidden="true">↗</span></button>
     </div>`;
     document.getElementById('play-again').addEventListener('click', start);
   }

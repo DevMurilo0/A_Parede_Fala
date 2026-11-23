@@ -33,3 +33,9 @@ Para publicar na Vercel: projeto vinculado a `DevMurilo0/A_Parede_Fala`, branch 
 - `FONTES.md`: descrição da fonte das perguntas.
 
 O website foi propositalmente desenhado sem fotografias externas para que as respostas continuem no **mural real**.
+
+## Edição com fotografias e símbolo gráfico
+
+O visual agora incorpora fotografias históricas de artistas modernistas, com fontes abertas do Wikimedia Commons e crédito em `FONTES.md`. A marca anterior com letras foi substituída por um símbolo vetorial sem letras. Todos os símbolos decorativos pedidos para remover foram retirados.
+
+As duas imagens que revelam diretamente respostas do questionário só são exibidas depois da conclusão das nove perguntas. Os títulos e textos de interface não usam hífens.

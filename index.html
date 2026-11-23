@@ -16,13 +16,13 @@
   <a class="skip-link" href="#experiencia">Ir direto para a experiência</a>
 
   <div class="ribbon" aria-hidden="true">
-    <span>EXPOSIÇÃO INTERATIVA</span><span class="ribbon-mark">✳</span>
-    <span>ARTE + LITERATURA + SOCIEDADE</span><span class="ribbon-mark">✳</span>
+    <span>EXPOSIÇÃO INTERATIVA</span><span class="ribbon-dot" aria-hidden="true"></span>
+    <span>ARTE + LITERATURA + SOCIEDADE</span><span class="ribbon-dot" aria-hidden="true"></span>
     <span>2026 / EDIÇÃO DO MURAL</span>
   </div>
 
   <header class="site-header" id="inicio">
-    <a class="brand" href="#inicio" aria-label="A Parede Fala, início"><span class="brand-icon">AP<span>.</span></span><span class="brand-text">A PAREDE<br>FALA</span></a>
+    <a class="brand" href="#inicio" aria-label="A Parede Fala, início"><img class="brand-symbol" src="assets/logo.svg" alt="" width="60" height="60"><span class="brand-text">A PAREDE<br>FALA</span></a>
     <nav aria-label="Navegação">
       <a href="#como-funciona">COMO FUNCIONA</a>
       <a href="#pistas">ONDE OLHAR</a>
@@ -33,29 +33,28 @@
   <main>
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-content">
-        <p class="overline"><span class="overline-star">✳</span> UMA EXPERIÊNCIA PARA QUEM OLHA ALÉM</p>
+        <p class="overline"><span class="overline-dot" aria-hidden="true"></span> UMA EXPERIÊNCIA PARA QUEM OLHA ALÉM</p>
         <h1 id="hero-title"><span>UMA</span><span class="cut-yellow">PAREDE.</span><span>MIL <i>VOZES.</i></span></h1>
-        <p class="hero-description">Há perguntas espalhadas entre recortes, livros, músicas e notícias. Para respondê-las, você precisa <strong>observar o mural à sua frente.</strong></p>
+        <p class="hero-description">Há perguntas espalhadas entre recortes, livros, músicas e notícias. Para responder a elas, você precisa <strong>observar o mural à sua frente.</strong></p>
         <div class="hero-actions">
           <button id="begin-button" type="button" class="button button-dark">COMEÇAR A INVESTIGAÇÃO <span aria-hidden="true">↗</span></button>
           <span class="count-label">09 PISTAS <b> / </b> 01 MURAL</span>
         </div>
         <p class="hero-small">SEM PESQUISAR NA INTERNET. SEM ADIVINHAR.<br>O MURAL É SUA FONTE.</p>
       </div>
-      <div class="hero-art" aria-hidden="true">
-        <div class="art-sheet art-yellow"></div>
-        <div class="art-sheet art-purple"></div>
-        <div class="art-sheet art-green"></div>
-        <div class="art-paper art-paper-top"><span>OLHE</span><span>DE NOVO!</span></div>
-        <div class="art-note art-note-one">?!</div>
-        <div class="art-note art-note-two">✳</div>
-        <div class="art-frame">
-          <div class="art-line art-line-a">ARTE</div>
-          <div class="art-line art-line-b">NÃO</div>
-          <div class="art-line art-line-c">SE CALA.</div>
-        </div>
-        <div class="art-paper art-paper-bottom">RECORTES DO PRESENTE <span>↗</span></div>
-        <div class="art-label">UMA PAREDE VIVA. UMA LEITURA SUA.</div>
+      <div class="hero-art" aria-label="Colagem com fotografias de artistas brasileiros">
+        <div class="art-sheet art-yellow" aria-hidden="true"></div><div class="art-sheet art-purple" aria-hidden="true"></div><div class="art-sheet art-green" aria-hidden="true"></div>
+        <figure class="photo-cutout hero-photo-main">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/c/c4/Arte-moderna-1922.jpg" alt="Grupo de artistas brasileiros reunidos em 1922" width="620" height="758" loading="eager" fetchpriority="high" decoding="async">
+          <figcaption>ARTE QUE SE MOVE</figcaption>
+        </figure>
+        <figure class="photo-cutout hero-photo-secondary">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Modernistas_1922.jpg" alt="Artistas modernistas brasileiros fotografados em grupo em 1922" width="1128" height="1878" loading="lazy" decoding="async">
+          <figcaption>1922 / VOZES EM MOVIMENTO</figcaption>
+        </figure>
+        <img class="hero-art-logo" src="assets/logo.svg" width="150" height="150" alt="" aria-hidden="true">
+        <div class="collage-caption">ARTE, MEMÓRIA<br>E PRESENTE.</div>
+        <span class="collage-circle" aria-hidden="true"></span>
       </div>
     </section>
 
@@ -72,6 +71,24 @@
       </div>
     </section>
 
+    <section class="archive-section" id="arquivo" aria-labelledby="archive-title">
+      <div class="section-topline"><span>ARQUIVO VISUAL</span><span>VOZES, OLHARES E MEMÓRIAS</span></div>
+      <div class="archive-heading">
+        <div><p class="archive-label">IMAGENS DO PASSADO, QUESTÕES DO PRESENTE</p><h2 id="archive-title">A HISTÓRIA<br><em>TAMBÉM TEM ROSTO.</em></h2></div>
+        <p>Fotografias de época ajudam a lembrar que a arte e a crítica social foram feitas por pessoas. No desafio, as respostas continuam na parede.</p>
+      </div>
+      <div class="archive-grid">
+        <figure class="archive-card archive-card-wide">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Mario_de_Andrade_1927.jpg" alt="Mário de Andrade à esquerda de um grupo de pessoas em viagem pela Amazônia em 1927" width="1496" height="892" loading="lazy" decoding="async">
+          <figcaption><span>01 / OUTROS OLHARES</span><strong>A CULTURA EM MOVIMENTO</strong></figcaption>
+        </figure>
+        <figure class="archive-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Modernistas_1922.jpg" alt="Fotografia coletiva de escritores e artistas modernistas em 1922" width="1128" height="1878" loading="lazy" decoding="async">
+          <figcaption><span>02 / MEMÓRIA</span><strong>RETRATOS DE UMA GERAÇÃO</strong></figcaption>
+        </figure>
+      </div>
+      <p class="archive-caption">Fotografias históricas do Wikimedia Commons. Fontes e créditos no rodapé.</p>
+    </section>
     <section class="clue-section" id="pistas" aria-labelledby="clues-title">
       <div class="section-topline"><span>02 / MAPA DE INVESTIGAÇÃO</span><span>SEM SPOILERS</span></div>
       <div class="clue-heading"><h2 id="clues-title">QUATRO JEITOS<br>DE <em>LER.</em></h2><p>Nem tudo está escrito como notícia. Use os olhos e conecte as linguagens do cartaz.</p></div>
@@ -95,12 +112,12 @@
       <p class="quiz-footnote">O desafio funciona no próprio navegador e guarda seu progresso neste dispositivo. Não precisa de conta.</p>
     </section>
 
-    <section class="end-band"><span class="end-stamp" aria-hidden="true">✳</span><div><p>UMA ÚLTIMA PROVOCAÇÃO</p><h2>OLHAR É FÁCIL.<br><em>ENXERGAR É OUTRA HISTÓRIA.</em></h2></div></section>
+    <section class="end-band"><img class="end-stamp" src="assets/logo.svg" alt="" width="160" height="160"><div><p>UMA ÚLTIMA PROVOCAÇÃO</p><h2>OLHAR É FÁCIL.<br><em>ENXERGAR É OUTRA HISTÓRIA.</em></h2></div></section>
   </main>
 
   <footer class="footer">
     <a href="#inicio" class="footer-brand">A PAREDE <span>FALA.</span></a>
-    <span>PROJETO INTERATIVO · 2026</span>
+    <span>PROJETO INTERATIVO · 2026</span><a href="FONTES.md" class="credits-link" target="_blank" rel="noopener noreferrer">CRÉDITOS DAS IMAGENS</a>
     <div class="footer-author"><small>DESENVOLVIMENTO DO WEBSITE</small><strong>Murilo Gabriel</strong></div>
   </footer>
 </body>
