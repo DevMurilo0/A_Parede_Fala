@@ -302,10 +302,13 @@
     const lensSize = Math.max(74, lens.getBoundingClientRect().width || 100);
     const endX = buttonRect.left + buttonRect.width / 2;
     const endY = buttonRect.top + buttonRect.height / 2;
+    const startX = width * .73;
+    const startY = -lensSize * 1.25;
+    // Pontos ordenados garantem deslocamento sempre na mesma direção.
     const path = [
-      { x: width * .63, y: -lensSize * 1.25 },
-      { x: width * .72, y: height * .24 },
-      { x: endX + Math.min(width * .16, 150), y: endY - Math.min(height * .22, 140) },
+      { x: startX, y: startY },
+      { x: startX + (endX - startX) * .18, y: endY * .3 },
+      { x: endX + (startX - endX) * .18, y: endY * .74 },
       { x: endX, y: endY }
     ];
     const ease = t => t * t * t * (t * (t * 6 - 15) + 10);
@@ -341,11 +344,12 @@
         const y = cubic(path[0].y, path[1].y, path[2].y, path[3].y, t);
         // O centro da lente, e não a ponta do cabo, pousa no botão.
         const scale = .94 - .28 * t;
-        const shiftX = lensSize * (.5 - .38 * scale);
-        const shiftY = lensSize * (.5 - .36 * scale);
+        const shiftX = lensSize * (.5 - .12 * scale);
+        const shiftY = lensSize * (.5 - .14 * scale);
         lens.style.transform = 'translate3d(' + (x - shiftX).toFixed(2)
           + 'px,' + (y - shiftY).toFixed(2) + 'px,0) scale(' + scale.toFixed(4) + ')';
-        lens.style.opacity = String(Math.min(1, elapsed / 900));
+        const fadeOut = 1 - ease(Math.min(1, Math.max(0, (raw - .91) / .09)));
+        lens.style.opacity = String(fadeOut);
         // A página abre pelo círculo da lupa somente no fim do trajeto.
         const open = ease(Math.min(1, Math.max(0, (raw - .72) / .28)));
         const radius = Math.hypot(width, height) * 1.45 * open;
