@@ -153,13 +153,23 @@
   }
 
   function start() {
+    const input = document.getElementById('rank-nickname');
+    const candidate = (input?.value || window.WallRanking?.nickname() || '').trim();
+    if (window.WallRanking && !window.WallRanking.validName(candidate)) {
+      const warning = document.getElementById('nickname-warning');
+      if (warning) warning.textContent = 'Escolha um apelido com 2 a 22 caracteres para começar.';
+      input?.focus();
+      return false;
+    }
     setBeginInvitation(false);
+    window.WallRanking?.begin(candidate);
     state = empty();
     state.started = true;
     state.startedAt = Date.now();
     window.WallAudio?.play('start');
     save();
     render();
+    return true;
   }
 
   // Cronômetro discreto, calculado pelo relógio real mesmo que a aba fique em segundo plano.
@@ -168,16 +178,8 @@
     if (time) time.textContent = formatTime(elapsedMs());
   }, 250);
 
-  // Também inicia se o visitante chegar à seção rolando a página.
-  if ('IntersectionObserver' in window) {
-    const section = document.getElementById('experiencia');
-    if (section) {
-      const observer = new IntersectionObserver(entries => {
-        if (entries.some(entry => entry.isIntersecting) && !state.started) start();
-      }, { threshold: 0.15 });
-      observer.observe(section);
-    }
-  }
+  // O apelido vem antes do cronometro para nao penalizar quem digita devagar.
+  // A partida e o tempo comecam no botao de iniciar perguntas.
 
   // A página desliza até o cartão de perguntas, com aceleração e desaceleração suave.
   // A posição é recalculada durante o movimento porque o cabeçalho do quiz se recolhe.
@@ -218,11 +220,18 @@
       <span class="quiz-intro-kicker">PRONTO PARA INVESTIGAR?</span>
       <h3>NOVE PISTAS.<br>UMA PAREDE.<br><em>O SEU OLHAR.</em></h3>
       <p>Antes de começar, fique diante do mural. Você vai encontrar cada resposta nele.</p>
-      <button type="button" class="button button-light" id="start-quiz">INICIAR PERGUNTAS <span aria-hidden="true">↗</span></button>
+      <form id="nickname-form" class="nickname-form">
+        <label for="rank-nickname">COMO VOCÊ QUER APARECER NO RANKING?</label>
+        <input id="rank-nickname" name="nickname" type="text" maxlength="22" minlength="2"
+          autocomplete="nickname" placeholder="Escolha seu apelido" required
+          value="${escapeHTML(window.WallRanking?.nickname() || '')}">
+        <p id="nickname-warning" class="nickname-warning" aria-live="polite">O cronômetro começa quando você iniciar as perguntas.</p>
+        <button type="submit" class="button button-light" id="start-quiz">INICIAR PERGUNTAS <span aria-hidden="true">↗</span></button>
+      </form>
     </div>`;
-    document.getElementById('start-quiz').addEventListener('click', () => {
-      start();
-      scrollToQuiz(() => animateQuestion(true));
+    document.getElementById('nickname-form').addEventListener('submit', event => {
+      event.preventDefault();
+      if (start()) scrollToQuiz(() => animateQuestion(true));
     });
   }
 
@@ -283,6 +292,7 @@
         return;
       }
       state.solved[state.index] = value;
+      window.WallRanking?.sync(state.solved.slice());
       if (state.index === questions.length - 1) finish();
       else window.WallAudio?.play('success');
       save();
@@ -308,13 +318,17 @@
       <p class="result-challenge">${newRecord ? 'NOVO RECORDE! Você completou o desafio no seu melhor tempo. Será que consegue superar essa marca?' : 'VOCÊ CONSEGUE SER MAIS RÁPIDO! Tente novamente e bata o seu próprio recorde.'}</p>
       <p>Você encontrou informações na literatura, nas notícias, na música e nas frases do mural. O importante é olhar para além da primeira impressão.</p>
       <p class="result-detail">Pistas resolvidas na primeira tentativa: <strong>${firstTry} de ${questions.length}</strong>.</p>
+      <div id="rank-summary" class="rank-summary"><p>Consultando sua posição no ranking...</p></div>
       <div class="result-gallery" aria-label="Imagens reveladas depois de concluir o quiz">
           <figure><img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/LimaBarreto.jpg" alt="Retrato histórico do escritor Lima Barreto" width="472" height="704" loading="lazy" decoding="async"><figcaption>UM DOS ROSTOS DO MURAL</figcaption></figure>
           <figure><img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Triste_fim_de_policarpo_quaresma_1a_edicao.png" alt="Capa da primeira edição de Triste fim de Policarpo Quaresma de 1915" width="339" height="551" loading="lazy" decoding="async"><figcaption>UMA OBRA REVELADA</figcaption></figure>
         </div>
         <button type="button" id="play-again" class="button button-dark">INVESTIGAR DE NOVO <span aria-hidden="true">↗</span></button>
     </div>`;
-    document.getElementById('play-again').addEventListener('click', start);
+    document.getElementById('play-again').addEventListener('click', () => {
+      if (start()) scrollToQuiz(() => animateQuestion(true));
+    });
+    window.WallRanking?.showResult();
   }
 
   function render() {
@@ -322,12 +336,15 @@
     if (!state.started) renderStart();
     else if (state.index >= questions.length) renderResult();
     else renderQuestion();
+    if (state.started) window.WallRanking?.sync(state.solved.slice());
   }
 
   begin.addEventListener('click', () => {
     setBeginInvitation(false);
-    if (!state.started) start();
-    scrollToQuiz(() => animateQuestion(true));
+    scrollToQuiz(() => {
+      if (!state.started) document.getElementById('rank-nickname')?.focus({ preventScroll: true });
+      else animateQuestion(true);
+    });
   });
   render();
 

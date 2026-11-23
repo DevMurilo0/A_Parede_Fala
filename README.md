@@ -81,3 +81,11 @@ A trilha instrumental original agora tem uma melodia mais presente, com harmonia
 ## Destaque na chamada da abertura
 
 Ao terminar a entrada da lupa, o botão principal da investigação recebe uma pulsação roxa com contorno amarelo e um recorte editorial convidando a pessoa a apertá-lo. O destaque também é oferecido quando a abertura é pulada e respeita a preferência por animações reduzidas. O aviso desaparece ao iniciar o quiz e lembra como aumentar o volume no celular. Os navegadores não têm permissão para consultar ou alterar o volume físico do telefone; a reprodução segue com o áudio do site já amplificado.
+
+## Ranking global
+
+O site inclui uma classificacao global por apelido e melhor tempo. O visitante informa um apelido antes de iniciar as perguntas; o cronometro comeca quando ele inicia a partida. O navegador envia respostas sucessivas para a API da Vercel em /api/ranking, que usa tokens assinados e mede o tempo no servidor. Ao terminar, somente a melhor marca do dispositivo entra na classificacao. Uma partida antiga concluida antes de configurar o banco nao entra retroativamente no ranking. O recorde pessoal local permanece funcional quando o banco esta indisponivel.
+
+O backend necessita um projeto Supabase. Execute o arquivo supabase/leaderboard.sql no SQL Editor de um projeto e configure no projeto Vercel as variaveis SUPABASE_URL, SUPABASE_SECRET_KEY (chave secreta, nunca publicada) e LEADERBOARD_SECRET (sequencia aleatoria de pelo menos 32 caracteres). Use os ambientes Production e Preview conforme necessario e publique novamente. O arquivo SQL ativa RLS e restringe consultas e atualizacoes ao backend. O ranking nao coleta e-mails, nomes legais ou senhas; apelidos e tempos sao publicos. A identidade anonima fica em armazenamento local. Nao existe protecao infalivel contra usuarios maliciosos, pois o codigo das perguntas e publico, mas o servidor valida a sequencia e cronometra o desafio.
+
+Se o banco ainda nao estiver vinculado, a lista informa claramente que o ranking nao esta disponivel e nenhum participante ficticio aparece. Para testar um deploy, acesse /api/ranking: antes da configuracao retorna 503 com code unconfigured; depois retorna a lista JSON.
