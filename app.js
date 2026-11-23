@@ -258,6 +258,7 @@
       event.preventDefault();
       if (state.solved[state.index] !== null) {
         state.index += 1;
+        window.WallAudio?.play('page');
         save();
         render();
         if (state.index < questions.length) animateQuestion(false);
@@ -445,6 +446,7 @@
   }
 
   function animateQuestion(burst) {
+    window.WallAudio?.play('reveal');
     if (reduceMotion.matches) return;
     app.classList.remove('is-question-revealing');
     void app.offsetWidth;

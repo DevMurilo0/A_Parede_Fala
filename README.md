@@ -71,3 +71,8 @@ A abertura dura aproximadamente 1,35 segundo. O arquivo `audio.js` gera música 
 ## Volume reforçado
 
 Os efeitos e a trilha foram amplificados significativamente. Um compressor de dinâmica evita picos excessivos quando vários sons tocam juntos. O botão de som continua permitindo silenciar a experiência e o volume final ainda depende das configurações do aparelho e do navegador.
+
+
+## Sons para todas as interações
+
+A trilha instrumental original agora tem uma melodia mais presente, com harmonia reforçada e o mesmo compressor de áudio. O site tenta iniciar o áudio ao carregar e solicita a liberação no primeiro toque, inclusive durante a animação da lupa. Os cliques têm sons distintos para botões, navegação, seleção de alternativas, reinício, mudança de pergunta e cartões de conteúdo, além de sons para seções, respostas, resultado e tique do relógio. O áudio continua ligado por padrão e respeita a opção de silenciar. Navegadores que bloqueiam autoplay precisam de uma interação real antes da reprodução.
