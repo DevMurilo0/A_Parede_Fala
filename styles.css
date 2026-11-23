@@ -670,3 +670,28 @@ body{overflow-x:clip}
   .ranking-entry.ranking-columns{font-size:8px;letter-spacing:0}
   .ranking-time{font-size:17px}
 }
+
+
+/* Classificação visível também na conclusão, inclusive em partidas antigas. */
+.rank-preview{background:var(--paper);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--purple);padding:clamp(13px,3vw,25px);margin:34px 0 40px;text-align:left}
+.rank-preview-title{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding-bottom:12px;border-bottom:2px solid var(--ink);font-weight:1000;letter-spacing:.03em}
+.rank-preview-title strong{font-size:clamp(17px,2.8vw,25px)}
+.rank-preview-title a{font-size:11px;text-decoration:underline;text-underline-offset:3px;font-weight:1000;color:var(--purple);padding:7px 0}
+.rank-preview-list{display:grid;gap:7px;margin-top:12px}
+.rank-preview-player{display:grid;grid-template-columns:44px minmax(0,1fr) 78px;gap:9px;align-items:center;min-height:48px;padding:9px 11px;border:1px solid #cbc1ae;background:#f0ebdf;font-variant-numeric:tabular-nums}
+.rank-preview-player:first-child{background:var(--yellow);border-color:var(--ink)}
+.rank-preview-player span{font-size:19px;font-weight:1000}
+.rank-preview-player strong{overflow-wrap:anywhere;font-size:15px}
+.rank-preview-player b{font-size:17px;justify-self:end}
+.result .rank-preview-empty,.result .rank-preview-loading,.result .rank-preview-position{font-size:14px;line-height:1.5;margin:13px 0 0;font-weight:700}
+.result .rank-preview-position{padding:10px;background:#e5dff6}
+.rank-legacy-notice{background:#e5dff6;border-left:5px solid var(--purple);padding:20px 16px;text-align:center}
+.rank-legacy-notice strong{display:block;font-weight:1000;font-size:clamp(16px,3vw,22px)}
+.result .rank-legacy-notice p{font-size:15px;line-height:1.55;margin:12px auto}
+.rank-legacy-notice .button{margin:8px auto 0;font-size:12px;max-width:100%}
+@media(max-width:440px){
+  .rank-preview-player{grid-template-columns:34px minmax(0,1fr) 65px;padding:8px 6px;gap:6px}
+  .rank-preview-player span{font-size:17px}
+  .rank-preview-player strong{font-size:13px}
+  .rank-preview-player b{font-size:15px}
+}

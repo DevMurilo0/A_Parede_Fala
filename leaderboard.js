@@ -10,6 +10,7 @@
   let requestQueue = Promise.resolve();
   let lastError = '';
   let loadedBoard = false;
+  let latestBoard = null;
   try {
     const saved = JSON.parse(localStorage.getItem(PROFILE_KEY) || 'null');
     identity = typeof saved?.identity === 'string' ? saved.identity : '';
@@ -55,6 +56,30 @@
     }
     return result;
   }
+  function previewMarkup(result) {
+    const players = Array.isArray(result?.players) ? result.players.slice(0, 5) : [];
+    const top = '<div class="rank-preview-title"><strong>RANKING GLOBAL</strong>' +
+      '<a href="#ranking">VER RANKING COMPLETO ↗</a></div>';
+    if (!players.length) return top +
+      '<p class="rank-preview-empty">Ainda não há tempos registrados. Você pode ser a primeira pessoa no ranking!</p>';
+    const list = players.map(player =>
+      '<div class="rank-preview-player"><span>' + Number(player.position) + 'º</span>' +
+      '<strong>' + sanitizeText(player.nickname) + '</strong>' +
+      '<b>' + time(player.bestMs) + '</b></div>').join('');
+    const placement = result.myPosition
+      ? '<p class="rank-preview-position">Sua colocação atual: <b>' + Number(result.myPosition) + 'º lugar</b></p>'
+      : '';
+    return top + '<div class="rank-preview-list">' + list + '</div>' + placement;
+  }
+  function renderPreview(result, errorText) {
+    const preview = document.getElementById('rank-preview');
+    if (!preview) return;
+    if (result) preview.innerHTML = previewMarkup(result);
+    else preview.innerHTML = '<div class="rank-preview-title"><strong>RANKING GLOBAL</strong>' +
+      '<a href="#ranking">VER RANKING COMPLETO ↗</a></div>' +
+      '<p class="rank-preview-empty">' + sanitizeText(errorText || 'Não foi possível carregar a classificação agora.') + '</p>';
+  }
+
   function showUnavailable(message) {
     const summary = document.getElementById('rank-summary');
     if (summary) summary.innerHTML =
@@ -119,10 +144,15 @@
     } else if (lastError) {
       showUnavailable('Seu tempo pessoal foi salvo. ' + lastError);
     } else if (!run) {
-      element.innerHTML = '<p class="ranking-unavailable">Esta partida nao tem registro global. Comece uma nova partida para participar do ranking.</p>';
+      element.innerHTML = '<div class="rank-legacy-notice">' +
+        '<strong>SEU TEMPO AINDA NÃO ESTÁ NO RANKING</strong>' +
+        '<p>Esta partida foi iniciada antes do ranking global ou sem uma sessão registrada. Seu recorde pessoal continua salvo, mas, para concorrer, você precisa responder às nove perguntas em uma nova tentativa.</p>' +
+        '<button id="join-ranking-now" type="button" class="button button-dark">PARTICIPAR DO RANKING <span aria-hidden="true">↗</span></button>' +
+        '</div>';
     } else {
       element.innerHTML = '<p class="ranking-wait">Verificando respostas e registrando seu tempo no ranking...</p>';
     }
+    if (latestBoard) renderPreview(latestBoard);
   }
   async function loadBoard(force = false) {
     const list = document.getElementById('ranking-list');
@@ -132,6 +162,8 @@
     try {
       const result = await request('board', { identity });
       loadedBoard = true;
+      latestBoard = result;
+      renderPreview(result);
       if (!Array.isArray(result.players) || !result.players.length) {
         list.innerHTML = '<div class="ranking-empty">Ainda nao existem recordes registrados. Seja a primeira pessoa a completar as nove pistas!</div>';
       } else {
@@ -147,6 +179,7 @@
         : 'Os melhores tempos ficam salvos online. Cada visitante aparece uma vez.';
     } catch (error) {
       loadedBoard = false;
+      if (!latestBoard) renderPreview(null, 'A classificação está temporariamente indisponível. Tente atualizar.');
       if (status) status.textContent = error.code === 'unconfigured'
         ? 'Ranking global aguardando a conexao com o banco de dados.'
         : 'Nao foi possivel carregar a classificacao agora.';

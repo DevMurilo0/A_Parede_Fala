@@ -301,6 +301,15 @@
     });
   }
 
+  function restartWithNickname() {
+    state = empty();
+    save();
+    render();
+    scrollToQuiz(() => {
+      document.getElementById('rank-nickname')?.focus({ preventScroll: true });
+    });
+  }
+
   function renderResult() {
     if (!state.finishedAt) finish();
     const firstTry = state.errors.filter(count => count === 0).length;
@@ -319,17 +328,24 @@
       <p>Você encontrou informações na literatura, nas notícias, na música e nas frases do mural. O importante é olhar para além da primeira impressão.</p>
       <p class="result-detail">Pistas resolvidas na primeira tentativa: <strong>${firstTry} de ${questions.length}</strong>.</p>
       <div id="rank-summary" class="rank-summary"><p>Consultando sua posição no ranking...</p></div>
+      <section id="rank-preview" class="rank-preview" aria-label="Classificação global">
+        <div class="rank-preview-title"><strong>RANKING GLOBAL</strong><a href="#ranking">VER RANKING COMPLETO ↗</a></div>
+        <p class="rank-preview-loading">Carregando a classificação...</p>
+      </section>
       <div class="result-gallery" aria-label="Imagens reveladas depois de concluir o quiz">
           <figure><img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/LimaBarreto.jpg" alt="Retrato histórico do escritor Lima Barreto" width="472" height="704" loading="lazy" decoding="async"><figcaption>UM DOS ROSTOS DO MURAL</figcaption></figure>
           <figure><img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Triste_fim_de_policarpo_quaresma_1a_edicao.png" alt="Capa da primeira edição de Triste fim de Policarpo Quaresma de 1915" width="339" height="551" loading="lazy" decoding="async"><figcaption>UMA OBRA REVELADA</figcaption></figure>
         </div>
-        <button type="button" id="play-again" class="button button-dark">INVESTIGAR DE NOVO <span aria-hidden="true">↗</span></button>
+        <button type="button" id="play-again" class="button button-dark">JOGAR NOVAMENTE NO RANKING <span aria-hidden="true">↗</span></button>
     </div>`;
-    document.getElementById('play-again').addEventListener('click', () => {
-      if (start()) scrollToQuiz(() => animateQuestion(true));
-    });
+    document.getElementById('play-again').addEventListener('click', restartWithNickname);
     window.WallRanking?.showResult();
+    window.WallRanking?.loadBoard(true);
   }
+
+  app.addEventListener('click', event => {
+    if (event.target.closest('#join-ranking-now')) restartWithNickname();
+  });
 
   function render() {
     document.getElementById('experiencia')?.classList.toggle('is-playing', state.started);

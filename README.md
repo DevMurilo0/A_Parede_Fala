@@ -92,3 +92,8 @@ Se o banco ainda nao estiver vinculado, a lista informa claramente que o ranking
 
 
 O código da função Supabase está versionado em `supabase/functions/wall-ranking/index.ts`, enquanto o SQL está em `supabase/leaderboard.sql`. O ranking só usa o tempo real medido no servidor e não aceita dados de cronometragem enviados pelo navegador. Os testes finais devem incluir a função online e a mesma classificação em dois aparelhos distintos.
+
+
+## Ranking também na tela final
+
+A tela de conclusão agora exibe uma prévia pública dos cinco melhores tempos e um link para a classificação completa, mesmo quando a partida salva é anterior à criação do ranking. Nesses casos, mostra uma explicação em português e um botão para começar uma nova rodada com apelido. O botão de jogar novamente retorna ao formulário sem apagar o recorde pessoal; a rodada anterior não é enviada retroativamente porque o servidor precisa validar as nove respostas e medir o tempo.
