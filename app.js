@@ -120,40 +120,38 @@
     render();
   }
 
-  function scrollToQuiz() {
-    // Desce até a caixa da pergunta e não apenas ao início da seção roxa.
-    app.scrollIntoView({
-      behavior: reduceMotion.matches ? 'auto' : 'smooth',
-      block: 'start'
-    });
-  }
+  // A página desliza até o cartão de perguntas, com aceleração e desaceleração suave.
+  // A posição é recalculada durante o movimento porque o cabeçalho do quiz se recolhe.
+  let scrollSequence = 0;
+  function scrollToQuiz(onArrive) {
+    const sequence = ++scrollSequence;
+    if (reduceMotion.matches || typeof window.scrollTo !== 'function') {
+      app.scrollIntoView({ behavior: 'auto', block: 'start' });
+      onArrive?.();
+      return;
+    }
 
-  let revealTimer = null;
-  function revealQuestionAfterScroll() {
-    if (reduceMotion.matches) return;
-    if (revealTimer !== null) {
-      window.clearTimeout(revealTimer);
-      revealTimer = null;
-    }
-    let revealed = false;
-    function reveal() {
-      if (revealed) return;
-      revealed = true;
-      if (revealTimer !== null) {
-        window.clearTimeout(revealTimer);
-        revealTimer = null;
+    const initialY = window.scrollY || window.pageYOffset || 0;
+    const duration = 1480;
+    let startedAt = null;
+    const smoothStep = progress => progress * progress * (3 - 2 * progress);
+
+    function move(timestamp) {
+      if (sequence !== scrollSequence) return;
+      if (startedAt === null) startedAt = timestamp;
+      const progress = Math.min((timestamp - startedAt) / duration, 1);
+      const position = window.scrollY || window.pageYOffset || 0;
+      const targetY = position + app.getBoundingClientRect().top - 14;
+      const nextY = initialY + (targetY - initialY) * smoothStep(progress);
+      window.scrollTo({ top: nextY, behavior: 'instant' });
+      if (progress < 1) {
+        window.requestAnimationFrame(move);
+      } else {
+        window.scrollTo({ top: targetY, behavior: 'instant' });
+        onArrive?.();
       }
-      if (window.removeEventListener) window.removeEventListener('scrollend', reveal);
-      // Ajusta a posição caso o scroll suave seja interrompido cedo.
-      const rect = app.getBoundingClientRect();
-      if (rect.top > window.innerHeight * .5 || rect.bottom < 0) {
-        app.scrollIntoView({ behavior: 'auto', block: 'start' });
-      }
-      animateQuestion(true);
     }
-    if (window.addEventListener) window.addEventListener('scrollend', reveal, { once: true });
-    // Fallback para navegadores sem scrollend ou rolagem interrompida.
-    revealTimer = window.setTimeout(reveal, 1100);
+    window.requestAnimationFrame(move);
   }
 
   function renderStart() {
@@ -165,8 +163,7 @@
     </div>`;
     document.getElementById('start-quiz').addEventListener('click', () => {
       start();
-      scrollToQuiz();
-      revealQuestionAfterScroll();
+      scrollToQuiz(() => animateQuestion(true));
     });
   }
 
@@ -256,8 +253,7 @@
 
   begin.addEventListener('click', () => {
     if (!state.started) start();
-    scrollToQuiz();
-    revealQuestionAfterScroll();
+    scrollToQuiz(() => animateQuestion(true));
   });
   render();
 
@@ -293,6 +289,8 @@
     const offsetY = focusY - window.innerHeight / 2;
     opening.style.setProperty('--drop-x', offsetX + 'px');
     opening.style.setProperty('--drop-y', offsetY + 'px');
+    opening.style.setProperty('--glide-x', (offsetX * .63) + 'px');
+    opening.style.setProperty('--glide-y', (offsetY * .63) + 'px');
 
     let closed = false;
     let finishTimer;
@@ -311,7 +309,7 @@
     };
     skip.addEventListener('click', complete);
     window.requestAnimationFrame(() => opening.classList.add('is-running'));
-    finishTimer = window.setTimeout(complete, 2560);
+    finishTimer = window.setTimeout(complete, 4220);
   }
 
   function animateQuestion(burst) {
@@ -320,7 +318,7 @@
     void app.offsetWidth;
     app.classList.add('is-question-revealing');
     if (!burst) {
-      window.setTimeout(() => app.classList.remove('is-question-revealing'), 900);
+      window.setTimeout(() => app.classList.remove('is-question-revealing'), 1560);
       return;
     }
     app.querySelector('.quiz-burst')?.remove();
@@ -338,13 +336,13 @@
     const colors = ['#f6df53', '#5141a6', '#29895a', '#ef9daa', '#4da7d8'];
     for (let i = 0; i < 20; i++) {
       const a = (Math.PI * 2 * i) / 20;
-      const range = 110 + (i % 5) * 30;
+      const range = 94 + (i % 5) * 24;
       const scrap = document.createElement('span');
       scrap.className = 'quiz-burst-piece';
       scrap.style.setProperty('--dx', (Math.cos(a) * range).toFixed(1) + 'px');
       scrap.style.setProperty('--dy', (Math.sin(a) * range).toFixed(1) + 'px');
-      scrap.style.setProperty('--spin', (i % 2 === 0 ? 220 : -260) + 'deg');
-      scrap.style.setProperty('--piece-delay', ((i % 4) * 24) + 'ms');
+      scrap.style.setProperty('--spin', (i % 2 === 0 ? 128 : -148) + 'deg');
+      scrap.style.setProperty('--piece-delay', ((i % 5) * 36) + 'ms');
       scrap.style.setProperty('--piece-w', (10 + i % 4 * 5) + 'px');
       scrap.style.setProperty('--piece-h', (14 + i % 3 * 7) + 'px');
       scrap.style.setProperty('--piece-color', colors[i % colors.length]);
@@ -354,7 +352,7 @@
     window.setTimeout(() => {
       effect.remove();
       app.classList.remove('is-question-revealing');
-    }, 1250);
+    }, 2130);
   }
 
   // O selo da abertura não é uma etapa do questionário.

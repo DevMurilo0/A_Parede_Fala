@@ -46,3 +46,8 @@ As duas imagens que revelam diretamente respostas do questionário só são exib
 A lupa animada entra da parte superior da tela, faz um movimento de ampliação e desce sobre o botão da página inicial. Em telas de desktop menores, a seção inicial reduz sua altura e os espaços para exibir o botão sem exigir rolagem adicional.
 
 Ao começar o desafio, o cabeçalho da seção é recolhido e o navegador rola diretamente até o cartão da pergunta. O efeito de explosão fica fixo na área visível e é acionado ao terminar a rolagem, com um tempo limite de segurança para navegadores que não disparam o evento de finalização. As preferências de movimento reduzido seguem respeitadas.
+
+
+## Movimento suave
+
+A abertura agora tem duração maior, com a logo deslizando suavemente e a lupa entrando de cima até o botão principal. A rolagem até o desafio utiliza uma curva de aceleração e desaceleração de aproximadamente 1,5 segundo e só então exibe a animação de entrada da pergunta. Os recortes e círculos se movem mais devagar e com menos saltos e rotações. A preferência do dispositivo por movimento reduzido continua sendo respeitada.
